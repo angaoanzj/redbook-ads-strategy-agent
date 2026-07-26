@@ -200,6 +200,11 @@ class CompetitorInputTests(unittest.TestCase):
         self.assertIn("地域/场景", titles)
         self.assertIn("兴趣词包", titles)
         self.assertIn("到港游客", comp["targeting_cards"][0]["body"])
+        gaps = result.modules["module_1_market_competitor"]["competitor_full_funnel"]["content_gaps"]
+        self.assertIn("样本内未覆盖候选", gaps["decision_conclusion"])
+        self.assertNotIn("可规模化空白机会", gaps["decision_conclusion"])
+        self.assertTrue(all(row["stage"] == "sample_uncovered" for row in gaps["candidates"]))
+        self.assertIn("用户需求", " ".join(gaps["missing_evidence"]))
 
     def test_evidence_wins_over_duplicate_link(self) -> None:
         url = "https://www.xiaohongshu.com/explore/69a81ab6000000002602f416"

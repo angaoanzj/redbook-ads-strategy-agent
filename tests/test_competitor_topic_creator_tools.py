@@ -36,6 +36,9 @@ class CompetitorToolTest(unittest.TestCase):
         self.assertEqual(ranking[1]["avg_interactions"], 1500.0)
         # 牛油香浓被覆盖，低糖健康/送礼体面为缺口
         self.assertEqual(result["content_gaps"], ["低糖健康", "送礼体面"])
+        self.assertEqual(result["content_gap_stage"], "sample_uncovered")
+        self.assertIn("样本内未覆盖", result["content_gap_policy"])
+        self.assertNotIn("市场空白", result["content_gap_policy"])
         self.assertEqual(result["ad_labeled_count"], 1)
 
     def test_no_ad_label_forbids_budget_inference(self) -> None:
@@ -77,6 +80,8 @@ class CompetitorToolTest(unittest.TestCase):
         self.assertEqual(result["hot_format_ranking"], [])
         # content_gaps = 全部卖点
         self.assertEqual(result["content_gaps"], ["牛油香浓", "低糖健康", "送礼体面"])
+        self.assertEqual(result["content_gap_stage"], "evidence_insufficient")
+        self.assertIn("样本覆盖本身未知", result["content_gap_policy"])
         self.assertEqual(result["ad_labeled_count"], 0)
         self.assertEqual(result["budget_inference_policy"], "无竞品证据：禁止推测竞品预算")
         self.assertEqual(result["evidence_status"], "无竞品证据，需补采")

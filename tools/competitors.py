@@ -22,6 +22,8 @@ _NO_COMPETITOR_BUDGET_POLICY = "无竞品证据：禁止推测竞品预算"
 # 有广告标识时也只给口径文本，绝不给数字
 _HAS_AD_BUDGET_POLICY = "可按投放时长×档位区间粗估，需人工核验"
 _TARGETING_POLICY = "评论画像仅可生成定向测试假设，不得表述为竞品真实定向"
+_SAMPLE_UNCOVERED_POLICY = "自身卖点未命中当前竞品主题，只能视为样本内未覆盖候选；需用户需求与效果测试后升级。"
+_EVIDENCE_INSUFFICIENT_GAP_POLICY = "无竞品证据：样本覆盖本身未知，content_gaps 仅为待核验候选；需先补采竞品样本。"
 
 
 class CompetitorItem(BaseModel):
@@ -69,13 +71,15 @@ def summarize_competitor_landscape(args: CompetitorLandscapeArgs) -> dict[str, A
             "hot_format_ranking": [],
             "common_patterns": [],
             "content_gaps": list(args.own_selling_points),
+            "content_gap_stage": "evidence_insufficient",
+            "content_gap_policy": _EVIDENCE_INSUFFICIENT_GAP_POLICY,
             "covered_themes": list(args.covered_themes),
             "ad_labeled_count": 0,
             "budget_inference_policy": _NO_COMPETITOR_BUDGET_POLICY,
             "targeting_hypothesis_policy": _TARGETING_POLICY,
             "evidence_status": "无竞品证据，需补采",
             "decision_rationale": args.rationale,
-            "policy": "无竞品证据：不做竞品聚合，content_gaps 视全部卖点为缺口，禁止编造竞品与预算数字",
+            "policy": "无竞品证据：不做竞品聚合，content_gaps 仅作待核验候选，禁止编造竞品与预算数字",
         }
 
     # 按笔记形态聚合计数与互动均值
@@ -122,6 +126,8 @@ def summarize_competitor_landscape(args: CompetitorLandscapeArgs) -> dict[str, A
         "competitor_count": len(args.competitors),
         "hot_format_ranking": format_stats,
         "content_gaps": content_gaps,
+        "content_gap_stage": "sample_uncovered",
+        "content_gap_policy": _SAMPLE_UNCOVERED_POLICY,
         "covered_themes": list(args.covered_themes),
         "ad_labeled_count": ad_labeled_count,
         "budget_inference_policy": budget_policy,
