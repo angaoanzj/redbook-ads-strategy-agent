@@ -272,25 +272,21 @@ def apply_module1_agent_overlay(
         section_organic["peak_caption"] = peak
 
     section_comp = board.setdefault("section_competitor", {})
-    if overlay_competitor_section:
-        commonality_rows: list[dict[str, Any]] = []
-        if patterns:
-            commonality_rows.append(
-                {"dimension": "爆款共性", "observation": "；".join(patterns[:4])}
-            )
-        if gaps:
-            commonality_rows.append(
-                {"dimension": "内容空白", "observation": "；".join(gaps[:4])}
-            )
-        if form_advice:
-            commonality_rows.append(
-                {"dimension": "形式建议", "observation": "；".join(form_advice[:3])}
-            )
-        if commonality_rows:
-            section_comp["commonality_rows"] = commonality_rows
-    if hypotheses:
-        # 追加为额外卡片，不整表替换本地定向拆解；自动看板亦保留本地事实行。
+    agent_interpretation: list[str] = []
+    if patterns:
+        agent_interpretation.append("爆款共性行动解读：" + "；".join(patterns[:4]))
+    if gaps:
+        agent_interpretation.append("待验证切口：" + "；".join(gaps[:4]))
+    if form_advice:
+        agent_interpretation.append("形式测试建议：" + "；".join(form_advice[:3]))
+    if agent_interpretation or hypotheses:
+        # 本地事实行始终保留；Agent 解读与定向假设只追加为可执行卡片。
         cards = list(section_comp.get("targeting_cards") or [])
+        if agent_interpretation:
+            cards.append({
+                "title": "Agent 行动解读",
+                "body": "；".join(agent_interpretation),
+            })
         cards.extend(
             {
                 "title": f"Agent 定向测试假设 {index}",

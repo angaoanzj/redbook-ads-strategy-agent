@@ -131,6 +131,50 @@ class AgentBoardOverlayTests(unittest.TestCase):
         self.assertEqual(board["section_organic"]["summary"], "本地心智摘要")
         self.assertIn("图集为主（3/3）", board["section_organic"]["commonalities"][0])
 
+    def test_enabled_overlay_preserves_authoritative_fact_rows(self):
+        board = _base_board()
+        local_rows = [{
+            "dimension": "内容空白",
+            "observation": "样本内未覆盖候选：低糖；尚缺需求证据",
+            "conclusion_type": "hypothesis",
+            "confidence": "low",
+            "coverage": 0.0,
+        }]
+        board["section_competitor"]["commonality_rows"] = local_rows
+        modules = {
+            "module_1_market_competitor": {
+                "agent_decision": {
+                    "grounding_check": {"passed": True},
+                    "output": {
+                        "organic_landscape": {
+                            "peak_hour_hypothesis": "假设晚间",
+                            "content_form_advice": ["短视频展示断面"],
+                            "boundary_note": "样本≠大盘",
+                        },
+                        "competitor_breakdown": {
+                            "common_patterns": ["竞品A 的清单内容可转成收藏测试"],
+                            "content_gaps": ["低糖健康待验证"],
+                            "ad_labeled_count": 0,
+                            "targeting_hypotheses": ["假设送礼人群关注低糖卖点"],
+                        },
+                        "risk_alerts": [],
+                        "human_review_items": [],
+                    },
+                }
+            }
+        }
+
+        apply_module1_agent_overlay(board, modules, overlay_competitor_section=True)
+
+        self.assertEqual(board["section_competitor"]["commonality_rows"], local_rows)
+        interpretation = next(
+            card["body"]
+            for card in board["section_competitor"]["targeting_cards"]
+            if card["title"] == "Agent 行动解读"
+        )
+        self.assertIn("清单内容", interpretation)
+        self.assertIn("低糖健康待验证", interpretation)
+
     def test_failed_grounding_skips_overlay(self):
         board = _base_board()
         modules = {
