@@ -77,6 +77,13 @@ class MockWebTests(unittest.TestCase):
         self.assertIn("function donutChart", script)
         self.assertNotIn("chart.js", script.casefold())
 
+    def test_competitor_board_shows_evidence_quality_columns(self):
+        app_js = (ROOT / "app.js").read_text(encoding="utf-8")
+
+        self.assertIn('label: "证据/样本"', app_js)
+        self.assertIn('label: "结论类型"', app_js)
+        self.assertIn('label: "置信度"', app_js)
+
     def test_frontend_persists_sends_and_displays_session_state(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         script = (ROOT / "app.js").read_text(encoding="utf-8")

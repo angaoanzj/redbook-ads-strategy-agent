@@ -184,6 +184,12 @@ class CompetitorInputTests(unittest.TestCase):
         dims = [row["dimension"] for row in comp["commonality_rows"]]
         self.assertIn("选题", dims)
         self.assertIn("互动引擎", dims)
+        rows = {row["dimension"]: row for row in comp["commonality_rows"]}
+        self.assertEqual(rows["选题"]["total_samples"], 3)
+        self.assertEqual(rows["选题"]["confidence"], "low")
+        self.assertTrue(rows["选题"]["evidence"])
+        self.assertNotIn("现金", rows["信任机制"]["observation"])
+        self.assertIn("样本内未覆盖", rows["内容空白"]["observation"])
         self.assertEqual(comp.get("source"), "local_engine")
         self.assertTrue(comp["paid_note_rows"])
         self.assertEqual(comp["paid_note_rows"][0]["ad_label"], "否")

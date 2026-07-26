@@ -9,6 +9,7 @@ import re
 from datetime import datetime
 from typing import Any
 
+from competitor_insight_analysis import build_competitor_insight_rows
 from models import CampaignRequest, CompetitorBenchmarkBrief, CompetitorEvidence
 from organic_benchmark_insights import build_organic_benchmark_insights
 from risk_signals import build_risk_signal_pack
@@ -429,62 +430,11 @@ def build_section_competitor_from_engine(
     blob = _blob_from_competitor(competitor, evidence)
 
     theme_names = [str(row.get("theme") or "").strip() for row in themes if row.get("theme")]
-    topic_bits = theme_names[:6] or _pick_matches(
-        blob, ("排序测评", "避坑", "地图", "开箱", "必买", "口味", "伴手礼", "探店")
+    commonality_rows = build_competitor_insight_rows(
+        evidence,
+        content_gap_analysis=gaps,
+        observed_formats=formats,
     )
-    density_bits = _pick_matches(
-        blob,
-        ("地址", "交通", "时段", "支付", "现金", "必买", "Top", "Top3", "排队", "限购", "门店"),
-    )
-    trust_bits = _pick_matches(
-        blob,
-        ("本地人", "正版", "真假", "假店", "实拍", "店招", "限购", "现金", "官方"),
-    )
-    engine_bits = audience[:6] or _pick_matches(
-        blob, ("代购", "寄送", "价格", "游客", "机场", "避坑", "现金支付", "到港")
-    )
-    risk_bits = _pick_matches(
-        blob, ("更好吃", "原料", "香精", "仿品", "导流", "假店", "质疑", "替代")
-    )
-
-    commonality_rows: list[dict[str, Any]] = []
-    if topic_bits:
-        commonality_rows.append({"dimension": "选题", "observation": "、".join(topic_bits)})
-    if density_bits:
-        commonality_rows.append(
-            {"dimension": "信息密度", "observation": "、".join(density_bits)}
-        )
-    if trust_bits:
-        commonality_rows.append(
-            {"dimension": "信任机制", "observation": "、".join(trust_bits)}
-        )
-    if engine_bits:
-        commonality_rows.append(
-            {"dimension": "互动引擎", "observation": "、".join(engine_bits)}
-        )
-    if risk_bits:
-        commonality_rows.append(
-            {"dimension": "扩散风险", "observation": "、".join(risk_bits)}
-        )
-    if not commonality_rows and common.get("decision_conclusion"):
-        commonality_rows.append(
-            {"dimension": "样本结论", "observation": str(common["decision_conclusion"])}
-        )
-    if formats:
-        commonality_rows.append(
-            {
-                "dimension": "内容形式",
-                "observation": "、".join(
-                    f"{row.get('format')}×{row.get('sample_count')}"
-                    for row in formats[:4]
-                    if row.get("format")
-                ),
-            }
-        )
-    if gaps.get("decision_conclusion"):
-        commonality_rows.append(
-            {"dimension": "内容空白", "observation": str(gaps["decision_conclusion"])}
-        )
 
     accounts = list(competitor.get("accounts") or [])
     paid_note_rows = [

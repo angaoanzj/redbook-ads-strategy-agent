@@ -849,9 +849,23 @@ function competitorBenchmarkBoardHtml(board, marketSection=null) {
     {label: "CPM", value: "cpm"},
     {label: "CTR", value: "ctr"},
   ], "暂无聚光月度明细（需导入投流月度表或 brief.spotlight_monthly）");
+  const insightSample = row => {
+    const n = row.sample_count ?? 0;
+    const total = row.total_samples ?? 0;
+    const pct = row.coverage == null ? "—" : `${Math.round(Number(row.coverage) * 100)}%`;
+    const signals = (row.evidence || []).slice(0, 2).map(item => item.signal).filter(Boolean);
+    return `${n}/${total} (${pct})${signals.length ? ` · ${signals.join("；")}` : ""}`;
+  };
+  const conclusionLabel = row => ({
+    fact: "事实", inference: "推断", hypothesis: "待验证假设",
+    sample_observation: "单篇观察", evidence_insufficient: "证据不足",
+  }[row.conclusion_type] || row.conclusion_type || "—");
   const commonality = reportTable(comp.commonality_rows || [], [
     {label: "维度", value: "dimension"},
     {label: "观察", value: "observation"},
+    {label: "证据/样本", value: insightSample},
+    {label: "结论类型", value: conclusionLabel},
+    {label: "置信度", value: row => row.confidence || "—"},
   ], "暂无爆款共性明细（需对标笔记主题/形式证据）");
   const paidNotes = reportTable(comp.paid_note_rows || [], [
     {label: "笔记", value: "note"},
