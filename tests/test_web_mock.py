@@ -84,6 +84,13 @@ class MockWebTests(unittest.TestCase):
         self.assertIn('label: "结论类型"', app_js)
         self.assertIn('label: "置信度"', app_js)
 
+    def test_competitor_evidence_cell_includes_identity_provenance_and_missing_context(self):
+        app_js = (ROOT / "app.js").read_text(encoding="utf-8")
+
+        self.assertIn("item.note_id || item.url", app_js)
+        self.assertIn("来源：", app_js)
+        self.assertIn("待补：", app_js)
+
     def test_frontend_persists_sends_and_displays_session_state(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         script = (ROOT / "app.js").read_text(encoding="utf-8")

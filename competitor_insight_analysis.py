@@ -5,8 +5,10 @@ turn a missing competitor mention into a market-wide conclusion.
 """
 from __future__ import annotations
 
-from collections import Counter
+import re
+from collections import Counter, defaultdict
 from typing import Any, Mapping, Sequence
+from urllib.parse import urlsplit, urlunsplit
 
 from models import CompetitorEvidence
 
@@ -44,10 +46,13 @@ INTERACTION_SIGNALS: Mapping[str, tuple[str, ...]] = {
 }
 RISK_SIGNALS: Mapping[str, tuple[str, ...]] = {
     "竞品导流": ("导流",),
-    "原料/口感争议": ("质疑", "香精", "人造奶油", "更好吃"),
+    "原料/口感争议": ("质疑", "香精", "人造奶油"),
     "仿品/名誉争议": ("仿品", "无证据指控"),
 }
-COMMENT_MARKERS = ("评论", "咨询", "问")
+COMMENT_MARKERS = ("评论", "咨询")
+COMPARATIVE_RISK_TERMS = ("更好吃",)
+DISPUTE_MARKERS = ("争议", "争论", "质疑", "拉踩", "吐槽", "贬低", "引战")
+FRAGMENT_SEPARATOR = re.compile(r"[；;。！？!?\n]+")
 
 
 def _text(item: CompetitorEvidence) -> str:
@@ -67,12 +72,97 @@ def _matches(text: str, signal_map: Mapping[str, tuple[str, ...]]) -> list[str]:
     return [label for label, terms in signal_map.items() if any(term in text for term in terms)]
 
 
-def _ref(item: CompetitorEvidence, signal: str, source: str) -> dict[str, str]:
+def _source_fragments(item: CompetitorEvidence) -> list[tuple[str, str]]:
+    return [
+        ("title", item.title or ""),
+        *(("content_themes", value) for value in (item.content_themes or [])),
+        *(("observed_audience", value) for value in (item.observed_audience or [])),
+        ("notes", item.notes or ""),
+    ]
+
+
+def _matched_sources(
+    item: CompetitorEvidence,
+    signal_map: Mapping[str, tuple[str, ...]],
+) -> list[tuple[str, str]]:
+    matches: list[tuple[str, str]] = []
+    for label, terms in signal_map.items():
+        sources = list(dict.fromkeys(
+            source
+            for source, text in _source_fragments(item)
+            if any(term in text for term in terms)
+        ))
+        if sources:
+            matches.append((label, "/".join(sources)))
+    return matches
+
+
+def _marked_comment_fragments(item: CompetitorEvidence) -> list[tuple[str, str]]:
+    fragments: list[tuple[str, str]] = []
+    sources = [
+        *(("observed_audience", value) for value in (item.observed_audience or [])),
+        ("notes", item.notes or ""),
+    ]
+    for source, text in sources:
+        for fragment in FRAGMENT_SEPARATOR.split(text):
+            fragment = fragment.strip()
+            if fragment and any(marker in fragment for marker in COMMENT_MARKERS):
+                fragments.append((f"{source}:comment_fragment", fragment))
+    return fragments
+
+
+def _all_fragments(item: CompetitorEvidence) -> list[tuple[str, str]]:
+    return [
+        (source, fragment.strip())
+        for source, text in _source_fragments(item)
+        for fragment in FRAGMENT_SEPARATOR.split(text)
+        if fragment.strip()
+    ]
+
+
+def _canonical_url(raw_url: str) -> str:
+    raw_url = str(raw_url or "").strip()
+    if not raw_url:
+        return ""
+    parts = urlsplit(raw_url)
+    path = parts.path.rstrip("/") or parts.path
+    return urlunsplit((parts.scheme.lower(), parts.netloc.lower(), path, "", ""))
+
+
+def _note_identity(url: str) -> str:
+    match = re.search(r"/explore/([^/?#]+)", url)
+    return f"xhs-note:{match.group(1)}" if match else url
+
+
+def _ref(item: CompetitorEvidence, signal: str, source: str) -> dict[str, Any]:
+    url = _canonical_url(item.profile_or_note_url)
     return {
         "account": item.account_name,
         "title": item.title or "",
         "signal": signal,
         "source": source,
+        "url": url,
+        "note_id": _note_identity(url),
+        "provenance": "raw_note",
+    }
+
+
+def _aggregate_format_ref(
+    name: str,
+    count: int,
+    matched: int,
+    normalized_name: str,
+) -> dict[str, Any]:
+    missing = count - matched
+    return {
+        "account": "",
+        "title": "",
+        "signal": f"{name}×{count}",
+        "source": "observed_formats",
+        "url": "",
+        "note_id": f"aggregate:note_format:{normalized_name}",
+        "provenance": "aggregate_only",
+        "provenance_note": f"聚合计数 {count}；缺少 {missing} 条匹配 note_format 的原始笔记",
     }
 
 
@@ -89,13 +179,18 @@ def _confidence(total: int, support: int, conclusion_type: str) -> str:
 def _row(
     dimension: str,
     observation: str,
-    refs: list[dict[str, str]],
+    refs: list[dict[str, Any]],
     total: int,
     *,
     conclusion_type: str | None = None,
     missing_evidence: Sequence[str] = (),
 ) -> dict[str, Any]:
-    support = len({ref["account"] + "\x00" + ref["title"] for ref in refs})
+    support = len({
+        str(ref.get("note_id") or ref.get("url"))
+        for ref in refs
+        if ref.get("provenance") != "aggregate_only"
+        and (ref.get("note_id") or ref.get("url"))
+    })
     if conclusion_type is None:
         conclusion_type = "inference" if support >= 2 else "sample_observation"
     if not refs:
@@ -149,14 +244,42 @@ def assess_content_gaps(
             stage, conclusion_type = "opportunity_hypothesis", "hypothesis"
         else:
             stage, conclusion_type = "sample_uncovered", "hypothesis"
+        evidence_basis = {
+            "validated_opportunity": "当前竞品样本未覆盖；已提供用户需求与效果验证",
+            "opportunity_hypothesis": "当前竞品样本未覆盖；已有用户需求或搜索信号支持",
+            "sample_uncovered": "当前竞品样本未覆盖该卖点",
+        }[stage]
         candidates.append({
             "point": point,
             "stage": stage,
             "conclusion_type": conclusion_type,
-            "evidence_basis": "当前竞品样本未覆盖该卖点",
+            "evidence_basis": evidence_basis,
             "validation_required": stage != "validated_opportunity",
         })
-    missing = ["用户需求或搜索信号", "自然/付费测试效果"]
+
+    by_stage = {
+        stage: [row["point"] for row in candidates if row["stage"] == stage]
+        for stage in ("validated_opportunity", "opportunity_hypothesis", "sample_uncovered")
+    }
+    conclusions: list[str] = []
+    if by_stage["validated_opportunity"]:
+        conclusions.append("已验证机会：" + "、".join(by_stage["validated_opportunity"]))
+    if by_stage["opportunity_hypothesis"]:
+        conclusions.append(
+            "需求信号支持、效果待验证：" + "、".join(by_stage["opportunity_hypothesis"])
+        )
+    if by_stage["sample_uncovered"]:
+        conclusions.append(
+            "样本内未覆盖候选："
+            + "、".join(by_stage["sample_uncovered"])
+            + "；不等同于市场空白"
+        )
+
+    missing: list[str] = []
+    if by_stage["sample_uncovered"]:
+        missing.append("用户需求或搜索信号")
+    if by_stage["sample_uncovered"] or by_stage["opportunity_hypothesis"]:
+        missing.append("自然/付费测试效果")
     if not evidence:
         missing.insert(0, "可用竞品样本")
     return {
@@ -164,8 +287,14 @@ def assess_content_gaps(
         "gap_selling_points": [row["point"] for row in candidates],
         "candidates": candidates,
         "opportunities": [row for row in candidates if row["stage"] != "sample_uncovered"],
-        "decision_conclusion": "样本内未覆盖候选，不等同于市场空白；需补充用户需求与效果测试。",
-        "status": "evidence_insufficient" if not evidence else "sample_assessment",
+        "decision_conclusion": "；".join(conclusions) + ("。" if conclusions else ""),
+        "status": (
+            "evidence_insufficient"
+            if not evidence
+            else "validated_opportunity"
+            if candidates and all(row["stage"] == "validated_opportunity" for row in candidates)
+            else "sample_assessment"
+        ),
         "missing_evidence": missing,
     }
 
@@ -180,34 +309,42 @@ def build_competitor_insight_rows(
     items = list(evidence)
     total = len(items)
 
-    topic_refs: list[dict[str, str]] = []
+    topic_refs: list[dict[str, Any]] = []
     topic_labels: list[str] = []
-    decision_refs: list[dict[str, str]] = []
+    decision_refs: list[dict[str, Any]] = []
     decision_labels: list[str] = []
-    trust_refs: list[dict[str, str]] = []
+    trust_refs: list[dict[str, Any]] = []
     trust_labels: list[str] = []
-    interaction_refs: list[dict[str, str]] = []
+    interaction_refs: list[dict[str, Any]] = []
     interaction_labels: list[str] = []
-    risk_refs: list[dict[str, str]] = []
+    risk_refs: list[dict[str, Any]] = []
     risk_labels: list[str] = []
     for item in items:
-        text = _text(item)
-        for label in _matches(text, TOPIC_SIGNALS):
+        for label, source in _matched_sources(item, TOPIC_SIGNALS):
             topic_labels.append(label)
-            topic_refs.append(_ref(item, label, "title/content_themes/notes"))
-        for label in _matches(text, DECISION_INFORMATION_SIGNALS):
+            topic_refs.append(_ref(item, label, source))
+        for label, source in _matched_sources(item, DECISION_INFORMATION_SIGNALS):
             decision_labels.append(label)
-            decision_refs.append(_ref(item, label, "title/content_themes/notes"))
-        for label in _matches(text, TRUST_SIGNALS):
+            decision_refs.append(_ref(item, label, source))
+        for label, source in _matched_sources(item, TRUST_SIGNALS):
             trust_labels.append(label)
-            trust_refs.append(_ref(item, label, "title/content_themes/notes"))
-        if any(marker in text for marker in COMMENT_MARKERS):
-            for label in _matches(text, INTERACTION_SIGNALS):
+            trust_refs.append(_ref(item, label, source))
+        for source, fragment in _marked_comment_fragments(item):
+            for label in _matches(fragment, INTERACTION_SIGNALS):
                 interaction_labels.append(label)
-                interaction_refs.append(_ref(item, f"评论/咨询：{label}", "notes/observed_audience"))
-        for label in _matches(text, RISK_SIGNALS):
+                interaction_refs.append(_ref(item, f"评论/咨询：{label}", source))
+        for label, source in _matched_sources(item, RISK_SIGNALS):
             risk_labels.append(label)
-            risk_refs.append(_ref(item, label, "title/content_themes/notes"))
+            risk_refs.append(_ref(item, label, source))
+        comparison_sources = list(dict.fromkeys(
+            source
+            for source, fragment in _all_fragments(item)
+            if any(term in fragment for term in COMPARATIVE_RISK_TERMS)
+            and any(marker in fragment for marker in DISPUTE_MARKERS)
+        ))
+        if comparison_sources:
+            risk_labels.append("原料/口感争议")
+            risk_refs.append(_ref(item, "原料/口感争议", "/".join(comparison_sources)))
 
     def unique(labels: Sequence[str]) -> list[str]:
         return list(dict.fromkeys(labels))
@@ -251,26 +388,35 @@ def build_competitor_insight_rows(
     ]
 
     format_counts = Counter()
-    format_refs: list[dict[str, str]] = []
+    format_refs: list[dict[str, Any]] = []
+    format_missing: list[str] = []
     if observed_formats:
-        # ``observed_formats`` is an aggregate observation about these same
-        # samples.  Attach each declared format count to a supplied sample so
-        # the displayed count and evidence metadata cannot contradict.
-        available_items = iter(items)
+        items_by_format: dict[str, list[CompetitorEvidence]] = defaultdict(list)
+        for item in items:
+            normalized = str(item.note_format or "").strip().casefold()
+            if normalized:
+                items_by_format[normalized].append(item)
+        consumed: Counter[str] = Counter()
         for row in observed_formats:
             name = str(row.get("format") or "").strip()
             count = int(row.get("sample_count") or 0)
             if not name or count <= 0:
                 continue
-            matched = 0
-            for _ in range(count):
-                item = next(available_items, None)
-                if item is None:
-                    break
-                matched += 1
+            format_counts[name] += count
+            normalized = name.casefold()
+            start = consumed[normalized]
+            matched_items = items_by_format.get(normalized, [])[start:start + count]
+            consumed[normalized] += len(matched_items)
+            for item in matched_items:
                 format_refs.append(_ref(item, name, "observed_formats"))
-            if matched:
-                format_counts[name] += matched
+            if len(matched_items) < count:
+                missing = count - len(matched_items)
+                format_refs.append(
+                    _aggregate_format_ref(name, count, len(matched_items), normalized)
+                )
+                format_missing.append(
+                    f"{name}×{count} 缺少 {missing} 条 note_format 匹配的原始笔记"
+                )
     else:
         format_counts.update((item.note_format or "未知").strip() or "未知" for item in items)
         format_refs = [
@@ -283,23 +429,43 @@ def build_competitor_insight_rows(
         f"观察到的内容形式：{format_observation}" if format_observation else "未提供内容形式样本。",
         format_refs,
         total,
-        conclusion_type="fact" if format_refs else "evidence_insufficient",
-        missing_evidence=("需补充笔记形式或样本计数",) if not format_refs else (),
+        conclusion_type=(
+            "fact"
+            if format_refs and not format_missing
+            else "evidence_insufficient"
+        ),
+        missing_evidence=(
+            format_missing
+            or (["需补充笔记形式或样本计数"] if not format_refs else [])
+        ),
     ))
 
     gaps = content_gap_analysis or assess_content_gaps((), items)
     candidates = list(gaps.get("candidates") or [])
     gap_refs = [_ref(item, "当前竞品样本", "competitor_evidence") for item in items] if candidates else []
     if candidates:
-        gap_text = "样本内未覆盖候选：" + "、".join(str(row.get("point")) for row in candidates[:5]) + "；尚缺用户需求与效果证据。"
+        gap_text = str(gaps.get("decision_conclusion") or "").strip()
+        gap_conclusion_type = (
+            "fact"
+            if all(row.get("conclusion_type") == "fact" for row in candidates)
+            else "hypothesis"
+        )
     else:
         gap_text = "未提供待比较的自有卖点；无法判断内容空白。"
-    rows.append(_row(
+        gap_conclusion_type = "evidence_insufficient"
+    gap_missing = (
+        gaps["missing_evidence"]
+        if "missing_evidence" in gaps
+        else ["需提供自有卖点、用户需求与效果测试"]
+    )
+    gap_row = _row(
         "内容空白",
         gap_text,
         gap_refs,
         total,
-        conclusion_type="hypothesis" if candidates else "evidence_insufficient",
-        missing_evidence=gaps.get("missing_evidence") or ["需提供自有卖点、用户需求与效果测试"],
-    ))
+        conclusion_type=gap_conclusion_type,
+        missing_evidence=gap_missing,
+    )
+    gap_row["candidate_stages"] = candidates
+    rows.append(gap_row)
     return rows

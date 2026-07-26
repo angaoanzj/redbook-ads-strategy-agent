@@ -196,6 +196,35 @@ class AgentBoardOverlayTests(unittest.TestCase):
         self.assertFalse(board["agent_insight"]["applied"])
         self.assertEqual(board["section_organic"]["commonalities"], ["高频主题：送礼"])
 
+    def test_disabled_competitor_overlay_does_not_create_empty_section(self):
+        board = {
+            "available": True,
+            "pills": [],
+            "section_organic": {},
+        }
+        modules = {
+            "module_1_market_competitor": {
+                "agent_decision": {
+                    "grounding_check": {"passed": True},
+                    "output": {
+                        "organic_landscape": {},
+                        "competitor_breakdown": {},
+                        "risk_alerts": [],
+                        "human_review_items": [],
+                    },
+                }
+            }
+        }
+
+        apply_module1_agent_overlay(
+            board,
+            modules,
+            overlay_competitor_section=False,
+            overlay_organic_copy=False,
+        )
+
+        self.assertNotIn("section_competitor", board)
+
 
 if __name__ == "__main__":
     unittest.main()

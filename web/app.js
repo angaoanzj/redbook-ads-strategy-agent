@@ -853,8 +853,18 @@ function competitorBenchmarkBoardHtml(board, marketSection=null) {
     const n = row.sample_count ?? 0;
     const total = row.total_samples ?? 0;
     const pct = row.coverage == null ? "—" : `${Math.round(Number(row.coverage) * 100)}%`;
-    const signals = (row.evidence || []).slice(0, 2).map(item => item.signal).filter(Boolean);
-    return `${n}/${total} (${pct})${signals.length ? ` · ${signals.join("；")}` : ""}`;
+    const traces = (row.evidence || []).slice(0, 2).map(item => {
+      const identity = item.note_id || item.url || "聚合统计";
+      const provenance = item.provenance === "aggregate_only"
+        ? (item.provenance_note || "仅有聚合计数，缺原始笔记")
+        : [item.account, item.title].filter(Boolean).join("/");
+      const source = item.source ? `来源：${item.source}` : "";
+      return [identity, provenance, item.signal, source].filter(Boolean).join(" · ");
+    }).filter(Boolean);
+    const missing = (row.missing_evidence || []).slice(0, 2);
+    return `${n}/${total} (${pct})`
+      + (traces.length ? ` · ${traces.join("；")}` : "")
+      + (missing.length ? ` · 待补：${missing.join("；")}` : "");
   };
   const conclusionLabel = row => ({
     fact: "事实", inference: "推断", hypothesis: "待验证假设",

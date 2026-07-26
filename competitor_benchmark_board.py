@@ -271,7 +271,6 @@ def apply_module1_agent_overlay(
     if peak and overlay_organic_copy:
         section_organic["peak_caption"] = peak
 
-    section_comp = board.setdefault("section_competitor", {})
     agent_interpretation: list[str] = []
     if patterns:
         agent_interpretation.append("爆款共性行动解读：" + "；".join(patterns[:4]))
@@ -281,6 +280,7 @@ def apply_module1_agent_overlay(
         agent_interpretation.append("形式测试建议：" + "；".join(form_advice[:3]))
     if agent_interpretation or hypotheses:
         # 本地事实行始终保留；Agent 解读与定向假设只追加为可执行卡片。
+        section_comp = board.setdefault("section_competitor", {})
         cards = list(section_comp.get("targeting_cards") or [])
         if agent_interpretation:
             cards.append({
