@@ -189,6 +189,29 @@ class CompetitorInputTests(unittest.TestCase):
             set(rows),
             {"选题", "信息密度", "信任机制", "互动引擎", "扩散风险", "内容形式", "内容空白"},
         )
+        required_evidence_metadata = {
+            "sample_count",
+            "total_samples",
+            "coverage",
+            "conclusion_type",
+            "confidence",
+            "evidence",
+            "missing_evidence",
+        }
+        self.assertTrue(
+            all(required_evidence_metadata.issubset(row) for row in rows.values())
+        )
+        self.assertTrue(
+            all(
+                isinstance(row["sample_count"], int)
+                and isinstance(row["total_samples"], int)
+                and isinstance(row["coverage"], (int, float))
+                and row["conclusion_type"] in {"fact", "inference", "hypothesis"}
+                and isinstance(row["evidence"], list)
+                and isinstance(row["missing_evidence"], list)
+                for row in rows.values()
+            )
+        )
         self.assertIn("门店", rows["信息密度"]["observation"])
         self.assertIn("支付", rows["信息密度"]["observation"])
         self.assertIn("正版", rows["信任机制"]["observation"])
