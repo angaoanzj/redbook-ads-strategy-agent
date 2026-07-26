@@ -605,16 +605,6 @@ def _analyze_core(
         existing=list(request.competitor_evidence),
         fetch_enabled=fetch_competitors,
     )
-    if checkpoint:
-        checkpoint(
-            "competitor_fetch",
-            {
-                "fetch_enabled": fetch_competitors,
-                "link_count": len(request.competitor_links or []),
-                "fetched": sum(1 for row in competitor_fetch_trace if row.get("status") == "fetched"),
-                "trace": competitor_fetch_trace,
-            },
-        )
     inferred_competitors: list[CompetitorEvidence] = []
     # 用户已粘贴对标链接时，以实时抓取为准，禁止掺入知识库候选空账号（如「帝苑」占位行）
     if not request.competitor_links:
@@ -694,7 +684,8 @@ def _analyze_core(
                 ),
             },
         )
-    previous_snapshot = STATE.get_cache(
+    # Mock 报告要求同 seed 可复现；不能读取前一次真实/Mock 报告留下的监控快照。
+    previous_snapshot = None if allow_mock else STATE.get_cache(
         "competitor_monitor",
         f"brand:{request.brand_name}",
         source_version="v1",
@@ -713,7 +704,7 @@ def _analyze_core(
     )
     monitor = response.modules.get("bonus_competitor_monitor") or {}
     snapshot = monitor.get("snapshot")
-    if isinstance(snapshot, dict):
+    if isinstance(snapshot, dict) and not allow_mock:
         STATE.set_cache(
             "competitor_monitor",
             f"brand:{request.brand_name}",

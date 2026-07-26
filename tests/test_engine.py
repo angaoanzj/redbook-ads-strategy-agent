@@ -485,7 +485,8 @@ class StrategyEngineTests(unittest.TestCase):
                 "source_name": "Mock 时段样本",
                 "is_mock": True,
             }
-            for hour in (8, 12, 19, 20, 21)
+            # published_at 按 UTC 输入，排期以北京时间解释；04:00 UTC 即午间 12:00 北京时间。
+            for hour in (4, 8, 11, 12, 13)
             for _repeat in range(3)  # 单时段需≥3条才输出高峰建议
         ]
         payload["paid_risk_demo_scenarios"] = [
