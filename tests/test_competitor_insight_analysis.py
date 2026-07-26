@@ -74,6 +74,26 @@ class CompetitorInsightAnalysisTests(unittest.TestCase):
         self.assertEqual(row["conclusion_type"], "evidence_insufficient")
         self.assertTrue(row["missing_evidence"])
 
+    def test_observed_formats_supply_consistent_format_metadata(self):
+        rows = build_competitor_insight_rows(
+            [
+                CompetitorEvidence(
+                    account_name="A",
+                    profile_or_note_url="https://www.xiaohongshu.com/explore/a",
+                ),
+                CompetitorEvidence(
+                    account_name="B",
+                    profile_or_note_url="https://www.xiaohongshu.com/explore/b",
+                ),
+            ],
+            observed_formats=[{"format": "图集", "sample_count": 2}],
+        )
+        format_row = next(row for row in rows if row["dimension"] == "内容形式")
+        self.assertEqual(format_row["sample_count"], 2)
+        self.assertEqual(format_row["coverage"], 1.0)
+        self.assertEqual(format_row["conclusion_type"], "fact")
+        self.assertEqual(len(format_row["evidence"]), 2)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -251,14 +251,32 @@ def build_competitor_insight_rows(
     ]
 
     format_counts = Counter()
+    format_refs: list[dict[str, str]] = []
     if observed_formats:
-        format_counts.update({str(row.get("format")): int(row.get("sample_count") or 0) for row in observed_formats if row.get("format")})
+        # ``observed_formats`` is an aggregate observation about these same
+        # samples.  Attach each declared format count to a supplied sample so
+        # the displayed count and evidence metadata cannot contradict.
+        available_items = iter(items)
+        for row in observed_formats:
+            name = str(row.get("format") or "").strip()
+            count = int(row.get("sample_count") or 0)
+            if not name or count <= 0:
+                continue
+            matched = 0
+            for _ in range(count):
+                item = next(available_items, None)
+                if item is None:
+                    break
+                matched += 1
+                format_refs.append(_ref(item, name, "observed_formats"))
+            if matched:
+                format_counts[name] += matched
     else:
         format_counts.update((item.note_format or "未知").strip() or "未知" for item in items)
-    format_refs = [
-        _ref(item, item.note_format or "未知", "note_format")
-        for item in items if item.note_format or not observed_formats
-    ]
+        format_refs = [
+            _ref(item, item.note_format or "未知", "note_format")
+            for item in items
+        ]
     format_observation = "、".join(f"{name}×{count}" for name, count in format_counts.most_common())
     rows.append(_row(
         "内容形式",
