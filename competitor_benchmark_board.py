@@ -271,8 +271,8 @@ def apply_module1_agent_overlay(
     if peak and overlay_organic_copy:
         section_organic["peak_caption"] = peak
 
+    section_comp = board.setdefault("section_competitor", {})
     if overlay_competitor_section:
-        section_comp = board.setdefault("section_competitor", {})
         commonality_rows: list[dict[str, Any]] = []
         if patterns:
             commonality_rows.append(
@@ -288,17 +288,17 @@ def apply_module1_agent_overlay(
             )
         if commonality_rows:
             section_comp["commonality_rows"] = commonality_rows
-        if hypotheses:
-            # 追加为额外卡片，不整表替换本地定向拆解
-            cards = list(section_comp.get("targeting_cards") or [])
-            cards.extend(
-                {
-                    "title": f"Agent 定向测试假设 {index}",
-                    "body": hypo,
-                }
-                for index, hypo in enumerate(hypotheses[:3], start=1)
-            )
-            section_comp["targeting_cards"] = cards[:6]
+    if hypotheses:
+        # 追加为额外卡片，不整表替换本地定向拆解；自动看板亦保留本地事实行。
+        cards = list(section_comp.get("targeting_cards") or [])
+        cards.extend(
+            {
+                "title": f"Agent 定向测试假设 {index}",
+                "body": hypo,
+            }
+            for index, hypo in enumerate(hypotheses[:3], start=1)
+        )
+        section_comp["targeting_cards"] = cards[:6]
 
     counter_actions: list[dict[str, Any]] = []
     for index, gap in enumerate(gaps[:3], start=1):

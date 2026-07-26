@@ -82,7 +82,12 @@ class AgentBoardOverlayTests(unittest.TestCase):
 
     def test_overlay_can_preserve_local_competitor_section(self):
         board = _base_board()
-        local_rows = [{"dimension": "选题", "observation": "排序测评"}]
+        local_rows = [{
+            "dimension": "内容空白",
+            "observation": "样本内未覆盖候选：低糖；尚缺需求证据",
+            "conclusion_type": "hypothesis",
+            "confidence": "low",
+        }]
         board["section_competitor"]["commonality_rows"] = local_rows
         board["section_competitor"]["paid_conclusion"] = "本地投流结论"
         modules = {
@@ -117,6 +122,10 @@ class AgentBoardOverlayTests(unittest.TestCase):
         )
         self.assertEqual(board["section_competitor"]["commonality_rows"], local_rows)
         self.assertEqual(board["section_competitor"]["paid_conclusion"], "本地投流结论")
+        self.assertTrue(any(
+            card["title"].startswith("Agent 定向测试假设")
+            for card in board["section_competitor"]["targeting_cards"]
+        ))
         self.assertTrue(board["agent_insight"]["competitor_section_preserved"])
         self.assertTrue(board["agent_insight"]["organic_copy_preserved"])
         self.assertEqual(board["section_organic"]["summary"], "本地心智摘要")
