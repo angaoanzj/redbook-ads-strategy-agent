@@ -12,6 +12,7 @@ from uuid import uuid4
 import httpx
 
 from competitor_input import normalize_competitor_inputs
+from competitor_insight_analysis import assess_content_gaps
 from mock_agents import run_mock_subagents
 from mock_scenarios import (
     MOCK_DATA_TYPE,
@@ -1665,34 +1666,18 @@ def _competitor_market_summary(
         for theme, count in user_theme_counts.most_common(8)
     ]
     top_themes = user_theme_rows[:5] or note_clusters[:5]
-
-    covered_points: list[str] = []
-    gap_points: list[str] = []
-    theme_blob = " ".join(item["theme"] for item in top_themes).casefold()
-    title_blob = " ".join(
-        " ".join(item.get("evidence_titles") or []) for item in top_themes
-    ).casefold()
-    notes_blob = " ".join(
-        f"{item.title or ''} {item.notes or ''} {' '.join(item.content_themes or [])}"
-        for item in req.competitor_evidence
-    ).casefold()
-    corpus = f"{theme_blob} {title_blob} {notes_blob}"
-    for point in req.selling_points:
-        point_key = point.casefold()
-        tokens = [
-            token
-            for token in re.split(r"[/／|｜,，、;；\s\-－—]+", point_key)
-            if len(token) >= 2
-        ]
-        theme_hit = any(
-            theme.casefold() in point_key or point_key in theme.casefold()
-            for theme in (item["theme"] for item in top_themes)
-            if len(theme) >= 2
-        )
-        if point_key in corpus or any(token in corpus for token in tokens) or theme_hit:
-            covered_points.append(point)
-        else:
-            gap_points.append(point)
+    gap_assessment = assess_content_gaps(req.selling_points, req.competitor_evidence)
+    gap_opportunities = [
+        {
+            "opportunity": f"测试卖点「{row['point']}」的对比/体验内容",
+            "reason": "当前对标样本未覆盖；尚缺用户需求与效果证据",
+            "evidence_basis": row["evidence_basis"],
+            "stage": row["stage"],
+            "conclusion_type": row["conclusion_type"],
+            "validation_required": row["validation_required"],
+        }
+        for row in gap_assessment["candidates"][:5]
+    ]
 
     merged_formats = format_counts or note_format_counts
     observed_formats = [
@@ -1707,26 +1692,6 @@ def _competitor_market_summary(
             f"内容形式以“{top_format}”为主。"
             "优先拆解高互动对标笔记的标题、封面与决策信息密度。"
         )
-        gap_status = "基于自有卖点 vs 对标主题覆盖差计算"
-        gap_opportunities = [
-            {
-                "opportunity": f"强化卖点「{point}」的对比/体验内容",
-                "reason": "对标主题中覆盖不足，可作为差异化测试方向",
-                "evidence_basis": "selling_points ∩ competitor_themes = 空或弱匹配",
-            }
-            for point in gap_points[:5]
-        ] or [
-            {
-                "opportunity": "在已覆盖卖点上做形式差异（短视频拆解/开箱对比）",
-                "reason": "卖点已被对标主题覆盖，空白更多在表达形式与证据强度",
-                "evidence_basis": f"已覆盖：{'、'.join(covered_points[:3])}",
-            }
-        ]
-        gap_conclusion = (
-            f"空白候选：{'、'.join(gap_points) if gap_points else '卖点已被对标主题覆盖，转形式差异'}；"
-            f"已覆盖卖点：{'、'.join(covered_points) if covered_points else '无'}。"
-            "先小预算验证，再认定为可规模化空白机会。"
-        )
     elif note_clusters:
         commonality_status = "基于品类笔记样本统计（对标主题尚未拆解）"
         top_format = merged_formats.most_common(1)[0][0] if merged_formats else "未知"
@@ -1735,26 +1700,6 @@ def _competitor_market_summary(
             f"内容形式以“{top_format}”为主。"
             "优先拆解高互动主题的标题、封面与卖点证据。"
         )
-        gap_status = "基于自有卖点 vs 样本主题覆盖差计算"
-        gap_opportunities = [
-            {
-                "opportunity": f"强化卖点「{point}」的对比/体验内容",
-                "reason": "样本主题中覆盖不足，可作为差异化测试方向",
-                "evidence_basis": "selling_points ∩ sample_themes = 空或弱匹配",
-            }
-            for point in gap_points[:5]
-        ] or [
-            {
-                "opportunity": "在已覆盖卖点上做形式差异（短视频拆解/开箱对比）",
-                "reason": "卖点已被样本主题覆盖，空白更多在表达形式与证据强度",
-                "evidence_basis": f"已覆盖：{'、'.join(covered_points[:3])}",
-            }
-        ]
-        gap_conclusion = (
-            f"空白候选：{'、'.join(gap_points) if gap_points else '卖点已被样本覆盖，转形式差异'}；"
-            f"已覆盖卖点：{'、'.join(covered_points) if covered_points else '无'}。"
-            "先小预算验证，再认定为可规模化空白机会。"
-        )
     else:
         commonality_status = "证据不足" if not rows else "仅有链接/条目，缺主题标注"
         commonality_conclusion = (
@@ -1762,11 +1707,6 @@ def _competitor_market_summary(
             "请对给定链接完成抓取（或检查登录墙），补全 content_themes / 互动量 / 广告标识后重跑。"
             if format_counts
             else "对标证据不足：请粘贴3–5个笔记/账号链接，系统将抓取这些给定链接。"
-        )
-        gap_status = "需用户补全对标主题或导入品类笔记后计算"
-        gap_opportunities = []
-        gap_conclusion = (
-            "当前空白点证据不足；先将自有卖点做成对比型和真实体验型素材，小预算验证后再认定空白机会。"
         )
 
     audience_signals = sorted({
@@ -1811,11 +1751,14 @@ def _competitor_market_summary(
             "decision_conclusion": commonality_conclusion,
         },
         "content_gaps": {
-            "status": gap_status,
-            "covered_selling_points": covered_points,
-            "gap_selling_points": gap_points,
+            "status": gap_assessment["status"],
+            "covered_points": gap_assessment["covered_points"],
+            "covered_selling_points": gap_assessment["covered_points"],
+            "gap_selling_points": gap_assessment["gap_selling_points"],
+            "candidates": gap_assessment["candidates"],
             "opportunities": gap_opportunities,
-            "decision_conclusion": gap_conclusion,
+            "decision_conclusion": gap_assessment["decision_conclusion"],
+            "missing_evidence": gap_assessment["missing_evidence"],
         },
         "paid_notes": {
             "confirmed_count": sum(item.is_ad_labeled is True for item in req.competitor_evidence),

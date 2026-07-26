@@ -49,7 +49,7 @@ class MockApiTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         payload = response.json()
-        self.assertEqual(len(payload["report_view"]["report_sections"]), 4)
+        self.assertEqual(len(payload["report_view"]["report_sections"]), 6)
         self.assertEqual(payload["report_view"]["report_sections"][0]["key"], "market_competitor")
         mock_trace = next(row for row in payload["trace"] if row.get("stage") == "mock_fallback")
         self.assertGreaterEqual(mock_trace.get("agent_count_activated", 0), 1)

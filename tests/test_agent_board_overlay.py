@@ -82,7 +82,12 @@ class AgentBoardOverlayTests(unittest.TestCase):
 
     def test_overlay_can_preserve_local_competitor_section(self):
         board = _base_board()
-        local_rows = [{"dimension": "选题", "observation": "排序测评"}]
+        local_rows = [{
+            "dimension": "内容空白",
+            "observation": "样本内未覆盖候选：低糖；尚缺需求证据",
+            "conclusion_type": "hypothesis",
+            "confidence": "low",
+        }]
         board["section_competitor"]["commonality_rows"] = local_rows
         board["section_competitor"]["paid_conclusion"] = "本地投流结论"
         modules = {
@@ -117,10 +122,58 @@ class AgentBoardOverlayTests(unittest.TestCase):
         )
         self.assertEqual(board["section_competitor"]["commonality_rows"], local_rows)
         self.assertEqual(board["section_competitor"]["paid_conclusion"], "本地投流结论")
+        self.assertTrue(any(
+            card["title"].startswith("Agent 定向测试假设")
+            for card in board["section_competitor"]["targeting_cards"]
+        ))
         self.assertTrue(board["agent_insight"]["competitor_section_preserved"])
         self.assertTrue(board["agent_insight"]["organic_copy_preserved"])
         self.assertEqual(board["section_organic"]["summary"], "本地心智摘要")
         self.assertIn("图集为主（3/3）", board["section_organic"]["commonalities"][0])
+
+    def test_enabled_overlay_preserves_authoritative_fact_rows(self):
+        board = _base_board()
+        local_rows = [{
+            "dimension": "内容空白",
+            "observation": "样本内未覆盖候选：低糖；尚缺需求证据",
+            "conclusion_type": "hypothesis",
+            "confidence": "low",
+            "coverage": 0.0,
+        }]
+        board["section_competitor"]["commonality_rows"] = local_rows
+        modules = {
+            "module_1_market_competitor": {
+                "agent_decision": {
+                    "grounding_check": {"passed": True},
+                    "output": {
+                        "organic_landscape": {
+                            "peak_hour_hypothesis": "假设晚间",
+                            "content_form_advice": ["短视频展示断面"],
+                            "boundary_note": "样本≠大盘",
+                        },
+                        "competitor_breakdown": {
+                            "common_patterns": ["竞品A 的清单内容可转成收藏测试"],
+                            "content_gaps": ["低糖健康待验证"],
+                            "ad_labeled_count": 0,
+                            "targeting_hypotheses": ["假设送礼人群关注低糖卖点"],
+                        },
+                        "risk_alerts": [],
+                        "human_review_items": [],
+                    },
+                }
+            }
+        }
+
+        apply_module1_agent_overlay(board, modules, overlay_competitor_section=True)
+
+        self.assertEqual(board["section_competitor"]["commonality_rows"], local_rows)
+        interpretation = next(
+            card["body"]
+            for card in board["section_competitor"]["targeting_cards"]
+            if card["title"] == "Agent 行动解读"
+        )
+        self.assertIn("清单内容", interpretation)
+        self.assertIn("低糖健康待验证", interpretation)
 
     def test_failed_grounding_skips_overlay(self):
         board = _base_board()
@@ -142,6 +195,35 @@ class AgentBoardOverlayTests(unittest.TestCase):
         apply_module1_agent_overlay(board, modules)
         self.assertFalse(board["agent_insight"]["applied"])
         self.assertEqual(board["section_organic"]["commonalities"], ["高频主题：送礼"])
+
+    def test_disabled_competitor_overlay_does_not_create_empty_section(self):
+        board = {
+            "available": True,
+            "pills": [],
+            "section_organic": {},
+        }
+        modules = {
+            "module_1_market_competitor": {
+                "agent_decision": {
+                    "grounding_check": {"passed": True},
+                    "output": {
+                        "organic_landscape": {},
+                        "competitor_breakdown": {},
+                        "risk_alerts": [],
+                        "human_review_items": [],
+                    },
+                }
+            }
+        }
+
+        apply_module1_agent_overlay(
+            board,
+            modules,
+            overlay_competitor_section=False,
+            overlay_organic_copy=False,
+        )
+
+        self.assertNotIn("section_competitor", board)
 
 
 if __name__ == "__main__":

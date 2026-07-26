@@ -132,6 +132,10 @@ class Module1HappyPathTest(unittest.TestCase):
         prompt = build_user_prompt(_sample_request())
         self.assertIn("标题：", prompt)
         self.assertIn("投手 briefing", prompt)
+        self.assertIn("确定性竞品事实层", prompt)
+        self.assertIn('"conclusion_type"', prompt)
+        self.assertIn("不得覆盖事实层", SYSTEM_PROMPT)
+        self.assertIn("样本内未覆盖", SYSTEM_PROMPT)
 
 
 class Module1RepairPathTest(unittest.TestCase):

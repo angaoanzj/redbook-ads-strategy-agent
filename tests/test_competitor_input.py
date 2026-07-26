@@ -184,6 +184,46 @@ class CompetitorInputTests(unittest.TestCase):
         dims = [row["dimension"] for row in comp["commonality_rows"]]
         self.assertIn("选题", dims)
         self.assertIn("互动引擎", dims)
+        rows = {row["dimension"]: row for row in comp["commonality_rows"]}
+        self.assertEqual(
+            set(rows),
+            {"选题", "信息密度", "信任机制", "互动引擎", "扩散风险", "内容形式", "内容空白"},
+        )
+        required_evidence_metadata = {
+            "sample_count",
+            "total_samples",
+            "coverage",
+            "conclusion_type",
+            "confidence",
+            "evidence",
+            "missing_evidence",
+        }
+        self.assertTrue(
+            all(required_evidence_metadata.issubset(row) for row in rows.values())
+        )
+        self.assertTrue(
+            all(
+                isinstance(row["sample_count"], int)
+                and isinstance(row["total_samples"], int)
+                and isinstance(row["coverage"], (int, float))
+                and row["conclusion_type"] in {"fact", "inference", "hypothesis"}
+                and isinstance(row["evidence"], list)
+                and isinstance(row["missing_evidence"], list)
+                for row in rows.values()
+            )
+        )
+        self.assertIn("门店", rows["信息密度"]["observation"])
+        self.assertIn("支付", rows["信息密度"]["observation"])
+        self.assertIn("正版", rows["信任机制"]["observation"])
+        self.assertIn("价格", rows["互动引擎"]["observation"])
+        self.assertIn("导流", rows["扩散风险"]["observation"])
+        self.assertIn("样本内未覆盖", rows["内容空白"]["observation"])
+        self.assertTrue(all(row["confidence"] == "low" for row in rows.values()))
+        self.assertEqual(rows["选题"]["total_samples"], 3)
+        self.assertEqual(rows["选题"]["confidence"], "low")
+        self.assertTrue(rows["选题"]["evidence"])
+        self.assertNotIn("现金", rows["信任机制"]["observation"])
+        self.assertIn("样本内未覆盖", rows["内容空白"]["observation"])
         self.assertEqual(comp.get("source"), "local_engine")
         self.assertTrue(comp["paid_note_rows"])
         self.assertEqual(comp["paid_note_rows"][0]["ad_label"], "否")
@@ -200,6 +240,11 @@ class CompetitorInputTests(unittest.TestCase):
         self.assertIn("地域/场景", titles)
         self.assertIn("兴趣词包", titles)
         self.assertIn("到港游客", comp["targeting_cards"][0]["body"])
+        gaps = result.modules["module_1_market_competitor"]["competitor_full_funnel"]["content_gaps"]
+        self.assertIn("样本内未覆盖候选", gaps["decision_conclusion"])
+        self.assertNotIn("可规模化空白机会", gaps["decision_conclusion"])
+        self.assertTrue(all(row["stage"] == "sample_uncovered" for row in gaps["candidates"]))
+        self.assertIn("用户需求", " ".join(gaps["missing_evidence"]))
 
     def test_evidence_wins_over_duplicate_link(self) -> None:
         url = "https://www.xiaohongshu.com/explore/69a81ab6000000002602f416"

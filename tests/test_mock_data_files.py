@@ -50,6 +50,8 @@ class MockDataFilesTests(unittest.TestCase):
             initial_audience="25-40岁女性",
             total_budget_cny=100000,
             goal="conversion",
+            # 固定演示包跨月保存；扩大窗口以验证“整包均可解析”，避免测试随日历漂移。
+            analysis_days=180,
             category_note_evidence=notes,
         )
         result = run_strategy(req, use_model=False, allow_mock=False)

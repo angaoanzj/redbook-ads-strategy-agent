@@ -8,9 +8,11 @@ LLM，但竞品结论必须先经 summarize_competitor_landscape 聚合校验；
 """
 from __future__ import annotations
 
+import json
 from collections import Counter
 from typing import Any
 
+from competitor_insight_analysis import assess_content_gaps, build_competitor_insight_rows
 from pydantic import BaseModel, Field, model_validator
 
 from models import CampaignRequest
@@ -126,6 +128,9 @@ SYSTEM_PROMPT = """你是小红书投放投手顾问，负责「模块1：赛道
    missing_notice，绝不编造。
 5. boundary_note 必须声明：本样本≠全平台大盘。
 6. 工具参数校验失败时按 details 修正重调，不要绕过工具。
+7. 确定性竞品事实层由代码计算，禁止改写其事实、覆盖率、结论类型和置信度；不得覆盖事实层。
+8. content_gaps 只能把 sample_uncovered（样本内未覆盖）改写成“待验证切口”，不得写成已验证市场空白。
+9. common_patterns 只用于生成行动解读；网页第03章事实表由本地引擎保留。
 
 完成工具调用后，只输出一个 ```json 代码块（不要多余文字）：
 {
@@ -251,6 +256,16 @@ def build_user_prompt(req: CampaignRequest) -> str:
             "（工具会返回诚实的无竞品结论，content_gaps=全部卖点、ad_labeled_count=0、"
             "预算政策=禁止推测），禁止编造竞品条目或 URL；并在 human_review_items 标注需补采竞品。"
         )
+
+    gap_assessment = assess_content_gaps(req.selling_points, req.competitor_evidence)
+    fact_rows = build_competitor_insight_rows(
+        req.competitor_evidence,
+        content_gap_analysis=gap_assessment,
+    )
+    evidence.append(
+        "确定性竞品事实层（不得覆盖，只能据此写测试动作）：\n"
+        + json.dumps(fact_rows, ensure_ascii=False)
+    )
 
     # 付费基准指标
     paid_lines: list[str] = []
