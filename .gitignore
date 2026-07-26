@@ -1,0 +1,19 @@
+# 本地密钥
+.env
+course.env
+
+# 运行库与缓存（保留 data/README.md 说明）
+data/**
+!data/README.md
+*.db
+*.db-shm
+*.db-wal
+
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+bench/reports/
+*.pyc
+.DS_Store

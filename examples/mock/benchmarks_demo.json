@@ -1,0 +1,70 @@
+{
+  "data_type": "模拟数据（Mock）",
+  "is_mock": true,
+  "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+  "as_of": "2026-07-24",
+  "warning": "仅用于方案演示和敏感性分析，不代表真实平台、竞品或账户数据。",
+  "notes": "演示投放指标情景，非账户真实报表",
+  "benchmark_evidence": [
+    {
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "source_url": null,
+      "collected_at": "2026-07-24",
+      "metric_name": "cpc",
+      "value": 3.5,
+      "unit": "CNY/click",
+      "notes": "Mock/演示样本；首轮冷启动中位 CPC 情景",
+      "evidence_grade": "M",
+      "is_mock": true,
+      "mock_seed": "d5dd8cc20d45240e",
+      "period": null,
+      "formula": null,
+      "value_kind": null
+    },
+    {
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "source_url": null,
+      "collected_at": "2026-07-24",
+      "metric_name": "cpm",
+      "value": 68.95,
+      "unit": "CNY/1000 impressions",
+      "notes": "Mock/演示样本；首轮冷启动中位 CPM 情景",
+      "evidence_grade": "M",
+      "is_mock": true,
+      "mock_seed": "d5dd8cc20d45240e",
+      "period": null,
+      "formula": null,
+      "value_kind": null
+    },
+    {
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "source_url": null,
+      "collected_at": "2026-07-24",
+      "metric_name": "ctr",
+      "value": 0.0197,
+      "unit": "ratio",
+      "notes": "品类演示 CTR 可复现随机情景",
+      "evidence_grade": "M",
+      "is_mock": true,
+      "mock_seed": "d5dd8cc20d45240e",
+      "period": null,
+      "formula": null,
+      "value_kind": null
+    },
+    {
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "source_url": null,
+      "collected_at": "2026-07-24",
+      "metric_name": "cvr",
+      "value": 0.0216,
+      "unit": "ratio",
+      "notes": "品类演示 CVR 可复现随机情景，仅用于敏感性分析",
+      "evidence_grade": "M",
+      "is_mock": true,
+      "mock_seed": "d5dd8cc20d45240e",
+      "period": null,
+      "formula": null,
+      "value_kind": null
+    }
+  ]
+}

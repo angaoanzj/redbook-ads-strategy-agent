@@ -1,0 +1,31 @@
+services:
+  agent:
+    build: .
+    image: xiaohongshu-strategy-agent
+    ports:
+      - "8010:8010"
+    volumes:
+      - ./data:/app/data
+      - ./web:/app/web
+    environment:
+      # Analyzer：模块 Agent / 报告（可指向 DeepSeek）
+      AGENT_ANALYZER_API_KEY: "${AGENT_ANALYZER_API_KEY:-}"
+      AGENT_ANALYZER_BASE_URL: "${AGENT_ANALYZER_BASE_URL:-}"
+      AGENT_ANALYZER_MODEL: "${AGENT_ANALYZER_MODEL:-}"
+      # Embedding：向量检索默认硅基
+      AGENT_EMBEDDING_API_KEY: "${AGENT_EMBEDDING_API_KEY:-}"
+      AGENT_EMBEDDING_BASE_URL: "${AGENT_EMBEDDING_BASE_URL:-https://api.siliconflow.cn/v1}"
+      AGENT_EMBEDDING_MODEL: "${AGENT_EMBEDDING_MODEL:-Qwen/Qwen3-Embedding-4B}"
+      # Critic 二审（默认关闭；开启后强模型只审策略文本）
+      AGENT_CRITIC_ENABLED: "${AGENT_CRITIC_ENABLED:-}"
+      AGENT_CRITIC_MODEL: "${AGENT_CRITIC_MODEL:-}"
+      # 兼容旧变量（Analyzer 未设时回退到这里）
+      AGENT_OPENAI_API_KEY: "${AGENT_OPENAI_API_KEY:-}"
+      AGENT_OPENAI_BASE_URL: "${AGENT_OPENAI_BASE_URL:-https://api.siliconflow.cn/v1}"
+      AGENT_OPENAI_MODEL: "${AGENT_OPENAI_MODEL:-Qwen/Qwen3-8B}"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0) if urllib.request.urlopen('http://127.0.0.1:8010/health').status==200 else sys.exit(1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

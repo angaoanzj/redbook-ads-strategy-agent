@@ -1,0 +1,917 @@
+{
+  "module1": {
+    "module": "module1_market_competitor",
+    "output": {
+      "organic_landscape": {
+        "sample_size": 40,
+        "hot_formats": [
+          {
+            "format": "图集",
+            "avg_interactions": 1180.4
+          },
+          {
+            "format": "视频",
+            "avg_interactions": 964.2
+          }
+        ],
+        "peak_hour_hypothesis": "20:00-22:00 互动最集中（基于 40 条笔记发布时段聚合的待验证假设）",
+        "content_form_advice": [
+          "首图用礼盒开箱实拍 + 30片规格标注，承接伴手礼搜索意图",
+          "正文前三行写清牛油香浓与酥脆层次，避免绝对化用语",
+          "结尾引导收藏「香港伴手礼清单」，沉淀搜索长尾"
+        ],
+        "boundary_note": "本判读仅基于 40 条品类笔记样本，不等于全平台大盘，属抽样观察结论"
+      },
+      "paid_landscape": {
+        "cpc_cny": 0.3,
+        "cpc_source": "数据需求.xlsx／投流数据／2026年1—5月加权汇总",
+        "cpm_cny": 48.22,
+        "cpm_source": "数据需求.xlsx／投流数据／2026年1—5月加权汇总",
+        "conversion_cost_cny": null,
+        "conversion_cost_source": null,
+        "missing_notice": "无转化成本类基准证据：conversion_cost_cny 留空，需投手导出聚光转化报表补齐"
+      },
+      "competitor_breakdown": {
+        "common_patterns": [
+          "图集九宫格实拍礼盒",
+          "标题绑定「香港伴手礼」搜索词"
+        ],
+        "content_gaps": [
+          "250g共30片",
+          "采用日本小麦粉与新西兰牛油"
+        ],
+        "ad_labeled_count": 0,
+        "targeting_hypotheses": [
+          "假设竞品主投到港游客与送礼人群，靠搜索承接伴手礼意图",
+          "假设竞品叠加香港旅游兴趣标签做信息流泛曝光"
+        ],
+        "budget_inference_policy": "无广告标识证据：禁止推测竞品预算"
+      },
+      "risk_alerts": [
+        {
+          "risk": "绝对化用语拒审（2026-Q2 已发生 5 次）",
+          "source": "拒审台账（演示值，待真实导出替换）",
+          "action": "素材上线前过一遍违禁词表，删除「最好/第一」类表述"
+        },
+        {
+          "risk": "食品功效暗示拒审",
+          "source": "拒审台账 + 官方规则条文",
+          "action": "改写为口感与场景描述，不提任何功效"
+        },
+        {
+          "risk": "未披露商业合作",
+          "source": "拒审台账",
+          "action": "达人笔记一律走蒲公英报备，禁止水下接单"
+        }
+      ],
+      "human_review_items": [
+        "竞品广告标识需人工打开原笔记核验后再更新 ad_labeled_count",
+        "工作簿来源需在正式交付前由数据负责人确认"
+      ]
+    },
+    "grounding_check": {
+      "passed": true,
+      "mismatches": []
+    },
+    "steps_used": 4,
+    "repair_rounds_used": 0,
+    "trace": []
+  },
+  "module2": {
+    "module": "module2_audience_content",
+    "output": {
+      "persona": {
+        "demographic": [
+          "30-55 岁",
+          "首次到港游客与家庭游客为主",
+          "一二线城市"
+        ],
+        "behavioral": [
+          "行前搜索香港伴手礼清单",
+          "机场/门店比价后决策",
+          "收藏攻略再下单"
+        ],
+        "psychological": [
+          "怕买到踩雷伴手礼",
+          "希望礼盒体面有面子",
+          "偏好经典口味不猎奇"
+        ],
+        "targeting_tags": {
+          "interest_tags": [
+            "香港伴手礼",
+            "蝴蝶酥",
+            "零食测评",
+            "香港旅游",
+            "送礼攻略"
+          ],
+          "behavior_tags": [
+            "搜索伴手礼",
+            "收藏旅行攻略",
+            "加购零食礼盒"
+          ],
+          "crowd_packages": [
+            "到港游客包",
+            "节日送礼人群包",
+            "品质零食兴趣包"
+          ]
+        },
+        "tag_status": "以上为拟投标签，标签需在聚光后台核对可用性后再建单"
+      },
+      "content_directions": [
+        {
+          "direction": "送礼场景",
+          "organic_score": 8,
+          "paid_score": 9,
+          "rationale": "礼盒规格与伴手礼搜索意图强相关，付费承接效率最高"
+        },
+        {
+          "direction": "口味测评",
+          "organic_score": 9,
+          "paid_score": 7,
+          "rationale": "口感测评类笔记在样本中互动最高，适合自然铺量"
+        },
+        {
+          "direction": "香港攻略",
+          "organic_score": 7,
+          "paid_score": 6,
+          "rationale": "攻略带流量但转化链路长，作为泛曝光补位"
+        }
+      ],
+      "topics": [
+        {
+          "title_template": "【送礼场景】送长辈：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "送长辈场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "送长辈痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "送礼场景",
+          "suitable_for_paid": true,
+          "paid_objective": "成交"
+        },
+        {
+          "title_template": "【送礼场景】商务伴手礼：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "商务伴手礼场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "商务伴手礼痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "送礼场景",
+          "suitable_for_paid": true,
+          "paid_objective": "成交"
+        },
+        {
+          "title_template": "【送礼场景】过节礼盒：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "过节礼盒场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "过节礼盒痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "送礼场景",
+          "suitable_for_paid": false,
+          "paid_objective": null
+        },
+        {
+          "title_template": "【送礼场景】同事回礼：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "同事回礼场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "同事回礼痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "送礼场景",
+          "suitable_for_paid": false,
+          "paid_objective": null
+        },
+        {
+          "title_template": "【送礼场景】婚礼回礼：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "婚礼回礼场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "婚礼回礼痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "送礼场景",
+          "suitable_for_paid": false,
+          "paid_objective": null
+        },
+        {
+          "title_template": "【口味测评】原味横评：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "原味横评场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "原味横评痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "口味测评",
+          "suitable_for_paid": true,
+          "paid_objective": "种草"
+        },
+        {
+          "title_template": "【口味测评】酥脆层次实测：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "酥脆层次实测场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "酥脆层次实测痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "口味测评",
+          "suitable_for_paid": true,
+          "paid_objective": "种草"
+        },
+        {
+          "title_template": "【口味测评】牛油含量对比：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "牛油含量对比场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "牛油含量对比痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "口味测评",
+          "suitable_for_paid": false,
+          "paid_objective": null
+        },
+        {
+          "title_template": "【口味测评】开箱试吃：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "开箱试吃场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "开箱试吃痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "口味测评",
+          "suitable_for_paid": false,
+          "paid_objective": null
+        },
+        {
+          "title_template": "【口味测评】回购理由：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "回购理由场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "回购理由痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "口味测评",
+          "suitable_for_paid": false,
+          "paid_objective": null
+        },
+        {
+          "title_template": "【香港攻略】到港必买清单：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "到港必买清单场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "到港必买清单痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "香港攻略",
+          "suitable_for_paid": true,
+          "paid_objective": "种草"
+        },
+        {
+          "title_template": "【香港攻略】机场提货攻略：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "机场提货攻略场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "机场提货攻略痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "香港攻略",
+          "suitable_for_paid": true,
+          "paid_objective": "种草"
+        },
+        {
+          "title_template": "【香港攻略】行李打包技巧：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "行李打包技巧场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "行李打包技巧痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "香港攻略",
+          "suitable_for_paid": false,
+          "paid_objective": null
+        },
+        {
+          "title_template": "【香港攻略】港岛采买路线：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "港岛采买路线场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "港岛采买路线痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "香港攻略",
+          "suitable_for_paid": false,
+          "paid_objective": null
+        },
+        {
+          "title_template": "【香港攻略】带回内地保存：250g共30片的蝴蝶酥礼盒怎么挑",
+          "cover_suggestion": "带回内地保存场景实拍 + 礼盒开盖露出30片排列",
+          "outline": [
+            "带回内地保存痛点开场",
+            "牛油香浓与层次酥脆的实拍细节",
+            "规格与价格说明"
+          ],
+          "direction": "香港攻略",
+          "suitable_for_paid": false,
+          "paid_objective": null
+        }
+      ],
+      "material_screening": {
+        "ctr_threshold": 0.16,
+        "engagement_threshold": 0.02,
+        "extra_rules": [
+          "首图必须出现礼盒与30片规格，无规格信息的素材不进测试池",
+          "含绝对化用语的标题一律不上线"
+        ]
+      },
+      "human_review_items": [
+        "定向标签需在聚光后台核对可用性，不可用的以同义标签替换",
+        "选题中的规格数字需与最新包装核对后再发布"
+      ]
+    },
+    "grounding_check": {
+      "passed": true,
+      "mismatches": []
+    },
+    "steps_used": 5,
+    "repair_rounds_used": 0,
+    "trace": []
+  },
+  "module6": {
+    "module": "module6_keyword_strategy",
+    "output": {
+      "keyword_levels": {
+        "core": [
+          {
+            "keyword": "香港伴手礼",
+            "intent": "high",
+            "lane": "search",
+            "bid_note": "搜索高意向抢位 1.0–1.3"
+          },
+          {
+            "keyword": "蝴蝶酥礼盒",
+            "intent": "high",
+            "lane": "search",
+            "bid_note": "搜索高意向抢位 1.0–1.3"
+          },
+          {
+            "keyword": "香港蝴蝶酥",
+            "intent": "high",
+            "lane": "both",
+            "bid_note": "搜索高意向抢位 1.0–1.3"
+          }
+        ],
+        "long_tail": [
+          {
+            "keyword": "香港伴手礼送长辈",
+            "intent": "mid",
+            "lane": "search",
+            "bid_note": "搜索中意向稳投 0.9–1.1"
+          },
+          {
+            "keyword": "蝴蝶酥哪个牌子好吃",
+            "intent": "mid",
+            "lane": "search",
+            "bid_note": "搜索中意向稳投 0.9–1.1"
+          },
+          {
+            "keyword": "香港机场伴手礼",
+            "intent": "mid",
+            "lane": "both",
+            "bid_note": "搜索中意向稳投 0.9–1.1"
+          },
+          {
+            "keyword": "商务送礼零食",
+            "intent": "low",
+            "lane": "feed",
+            "bid_note": "信息流稳成本 0.7–1.0"
+          },
+          {
+            "keyword": "过节礼盒推荐",
+            "intent": "low",
+            "lane": "feed",
+            "bid_note": "信息流稳成本 0.7–1.0"
+          }
+        ],
+        "blue_ocean": [
+          {
+            "keyword": "牛油曲奇层次",
+            "intent": "low",
+            "lane": "feed",
+            "bid_note": "低价试探 0.6–0.8"
+          },
+          {
+            "keyword": "30片装伴手礼",
+            "intent": "low",
+            "lane": "feed",
+            "bid_note": "低价试探 0.6–0.8"
+          }
+        ]
+      },
+      "layout_rules": [
+        {
+          "position": "标题",
+          "rule": "核心词前置，1 个核心词 + 1 个长尾词，不堆砌"
+        },
+        {
+          "position": "正文",
+          "rule": "前三行自然出现核心词，全文长尾词不超过 3 次"
+        },
+        {
+          "position": "标签",
+          "rule": "3 个核心/长尾 + 2 个蓝海词，避免无关热点词"
+        }
+      ],
+      "level_budget_split": {
+        "core": 0.5,
+        "long_tail": 0.3,
+        "blue_ocean": 0.2
+      },
+      "trending_monitor": {
+        "mechanism": "每周一由投手在聚光后台与官方榜单人工巡检一次，回填 trending_keyword_evidence",
+        "follow_criteria": [
+          "与蝴蝶酥/伴手礼语义强相关且无绝对化风险",
+          "近 7 天热度上升且已有品类笔记可承接"
+        ],
+        "data_source_status": "待接入数据源：当前热搜为人工粘贴，未接合规实时源，蓝海词均为待验证种子词",
+        "rising_keywords": [
+          {
+            "keyword": "香港伴手礼",
+            "heat_score": 88,
+            "trend": "unknown",
+            "recommendation": "观察",
+            "reason": "缺上一批热度无法判断趋势，但热度 88 不低于本批中位数 73，先入监控池"
+          },
+          {
+            "keyword": "蝴蝶酥",
+            "heat_score": 76,
+            "trend": "unknown",
+            "recommendation": "观察",
+            "reason": "缺上一批热度无法判断趋势，但热度 76 不低于本批中位数 73，先入监控池"
+          },
+          {
+            "keyword": "过节送礼清单",
+            "heat_score": 70,
+            "trend": "unknown",
+            "recommendation": "不跟进",
+            "reason": "与品类/品牌卖点无关键词匹配，属无关热点，蹭点会拉低搜索相关性"
+          },
+          {
+            "keyword": "最好吃的曲奇",
+            "heat_score": 65,
+            "trend": "unknown",
+            "recommendation": "不跟进",
+            "reason": "与品类/品牌卖点无关键词匹配，属无关热点，蹭点会拉低搜索相关性；且含绝对化风险词，不予跟进"
+          }
+        ]
+      },
+      "human_review_items": [
+        "蓝海词需人工核对搜索量后再决定是否加预算",
+        "出价区间需以聚光账户实时建议价校准"
+      ]
+    },
+    "grounding_check": {
+      "passed": true,
+      "mismatches": []
+    },
+    "steps_used": 4,
+    "repair_rounds_used": 0,
+    "trace": []
+  },
+  "module3": {
+    "module": "module3_keyword_creator",
+    "output": {
+      "keyword_tracks": {
+        "organic": {
+          "core": [
+            {
+              "keyword": "香港伴手礼",
+              "intent": "high",
+              "lane": "search"
+            },
+            {
+              "keyword": "蝴蝶酥礼盒",
+              "intent": "high",
+              "lane": "search"
+            },
+            {
+              "keyword": "香港蝴蝶酥",
+              "intent": "high",
+              "lane": "both"
+            }
+          ],
+          "long_tail": [
+            {
+              "keyword": "香港伴手礼送长辈",
+              "intent": "mid",
+              "lane": "search"
+            },
+            {
+              "keyword": "蝴蝶酥哪个牌子好吃",
+              "intent": "mid",
+              "lane": "search"
+            },
+            {
+              "keyword": "香港机场伴手礼",
+              "intent": "mid",
+              "lane": "both"
+            },
+            {
+              "keyword": "商务送礼零食",
+              "intent": "low",
+              "lane": "feed"
+            }
+          ],
+          "blue_ocean": [
+            {
+              "keyword": "牛油曲奇层次",
+              "intent": "low",
+              "lane": "feed"
+            },
+            {
+              "keyword": "30片装伴手礼",
+              "intent": "low",
+              "lane": "feed"
+            }
+          ]
+        },
+        "search_ads": [
+          {
+            "keyword": "香港伴手礼",
+            "bid_note": "搜索高意向抢位 1.0–1.3，冷启动先跑 0.27–0.33"
+          },
+          {
+            "keyword": "蝴蝶酥礼盒",
+            "bid_note": "搜索高意向抢位 1.0–1.3"
+          },
+          {
+            "keyword": "香港伴手礼送长辈",
+            "bid_note": "搜索中意向稳投 0.9–1.1"
+          },
+          {
+            "keyword": "蝴蝶酥哪个牌子好吃",
+            "bid_note": "搜索中意向稳投 0.9–1.1"
+          }
+        ],
+        "feed_ads": [
+          {
+            "keyword": "商务送礼零食",
+            "bid_note": "信息流稳成本 0.7–1.0"
+          },
+          {
+            "keyword": "过节礼盒推荐",
+            "bid_note": "信息流稳成本 0.7–1.0"
+          },
+          {
+            "keyword": "牛油曲奇层次",
+            "bid_note": "低价试探 0.6–0.8"
+          }
+        ]
+      },
+      "creator_plan": {
+        "tiers": [
+          {
+            "tier": "素人",
+            "count": 12,
+            "collaboration_budget_cny": 15000,
+            "spotlight_amplification_budget_cny": 10500
+          },
+          {
+            "tier": "达人",
+            "count": 6,
+            "collaboration_budget_cny": 10500,
+            "spotlight_amplification_budget_cny": 7350
+          },
+          {
+            "tier": "KOL",
+            "count": 2,
+            "collaboration_budget_cny": 4500,
+            "spotlight_amplification_budget_cny": 3150
+          }
+        ],
+        "amplification_pool_cny": 21000
+      },
+      "matched_creators": [
+        {
+          "name": "史蒂芬的碳水自由",
+          "tier": "素人",
+          "match_score": 75,
+          "suggested_note_budget_cny": 438,
+          "source": "知识库公开作者样本"
+        },
+        {
+          "name": "港漂小in",
+          "tier": "达人",
+          "match_score": 75,
+          "suggested_note_budget_cny": 613,
+          "source": "知识库公开作者样本"
+        },
+        {
+          "name": "礼物事务所",
+          "tier": "达人",
+          "match_score": 75,
+          "suggested_note_budget_cny": 613,
+          "source": "知识库公开作者样本"
+        },
+        {
+          "name": "小红薯芝士青年",
+          "tier": "达人",
+          "match_score": 65,
+          "suggested_note_budget_cny": 613,
+          "source": "知识库公开作者样本"
+        },
+        {
+          "name": "Janine早",
+          "tier": "达人",
+          "match_score": 65,
+          "suggested_note_budget_cny": 613,
+          "source": "知识库公开作者样本"
+        },
+        {
+          "name": "噜喵喵🐱",
+          "tier": "达人",
+          "match_score": 65,
+          "suggested_note_budget_cny": 613,
+          "source": "知识库公开作者样本"
+        },
+        {
+          "name": "明月前身",
+          "tier": "达人",
+          "match_score": 55,
+          "suggested_note_budget_cny": 613,
+          "source": "知识库公开作者样本"
+        },
+        {
+          "name": "排榜大王",
+          "tier": "达人",
+          "match_score": 55,
+          "suggested_note_budget_cny": 613,
+          "source": "知识库公开作者样本"
+        }
+      ],
+      "open_slots": [
+        {
+          "tier": "素人",
+          "slots_needed": 6
+        },
+        {
+          "tier": "KOL",
+          "slots_needed": 6
+        }
+      ],
+      "human_review_items": [
+        "素人与 KOL 名额缺口共 12 位，不编造名单，需导入 CSV/蒲公英后补齐",
+        "达人粉丝数与报价为公开样本估算/演示值，下单前必须蒲公英复核档期与异常粉"
+      ]
+    },
+    "grounding_check": {
+      "passed": true,
+      "mismatches": []
+    },
+    "steps_used": 6,
+    "repair_rounds_used": 0,
+    "trace": []
+  },
+  "module4": {
+    "module": "module4_spotlight_decision",
+    "output": {
+      "account_structure": {
+        "campaign_naming_rule": "曲奇四重奏-{推广目标}-{版位}-{上线日期}",
+        "unit_naming_rule": "{定向包}-{出价方式}-{素材批次}",
+        "campaigns": [
+          {
+            "name": "曲奇四重奏-成交-搜索",
+            "objective": "商品成交",
+            "budget_share": 0.5,
+            "placement": "搜索推广"
+          },
+          {
+            "name": "曲奇四重奏-种草-信息流",
+            "objective": "产品种草",
+            "budget_share": 0.3,
+            "placement": "信息流推广"
+          },
+          {
+            "name": "曲奇四重奏-成交-双版位",
+            "objective": "商品成交",
+            "budget_share": 0.2,
+            "placement": "搜索+信息流"
+          }
+        ]
+      },
+      "targeting_packages": [
+        {
+          "package": "精准定向",
+          "audience_desc": "香港伴手礼/蝴蝶酥搜索意图人群 + 到港游客",
+          "budget_share": 0.5,
+          "applicable_stage": "冷启动与测试期",
+          "smart_expansion": false
+        },
+        {
+          "package": "宽定向",
+          "audience_desc": "节日送礼与品质零食泛兴趣人群",
+          "budget_share": 0.3,
+          "applicable_stage": "跑量期",
+          "smart_expansion": true
+        },
+        {
+          "package": "达人相似定向",
+          "audience_desc": "已合作达人笔记互动人群的相似包",
+          "budget_share": 0.2,
+          "applicable_stage": "达人笔记二次放大期",
+          "smart_expansion": true
+        }
+      ],
+      "bidding": {
+        "cold_start": {
+          "method": "手动出价，先低后高小步试探",
+          "bid_low_cny": 0.27,
+          "bid_high_cny": 0.33,
+          "basis": "基准CPC ¥0.30 × 0.90–1.10"
+        },
+        "scaling_rules": [
+          "连续 2 日 CPA 低于 30.05 元且点击≥100，单元提价5%并同步提日预算10%",
+          "CPC 连续 2 日高于 0.45 元，降价10%并暂停低效定向包"
+        ]
+      },
+      "search_feed_split": {
+        "search": 0.6,
+        "feed": 0.4,
+        "synergy_note": "信息流做种草蓄水，搜索承接被种草后的伴手礼搜索意图"
+      },
+      "daily_schedule": [
+        {
+          "time_range": "20:00-22:00",
+          "action": "高互动时段提价5%抢量，优先跑搜索计划"
+        },
+        {
+          "time_range": "12:00-14:00",
+          "action": "午间平价投放信息流，观察 CTR 是否达 0.16"
+        }
+      ],
+      "forecast": {
+        "test_budget_cny": 3500,
+        "stop_loss_cpc_cny": 0.45,
+        "stop_loss_cpa_cny": 30.05,
+        "roi_point": 7.38,
+        "roi_band": [
+          5.16,
+          8.85
+        ],
+        "status": "证据齐全（CPC/CTR/CVR）：给出 ROI 粗算 + 测试带宽 + 止损"
+      },
+      "risk_playbook": [
+        {
+          "problem": "冷启动失败",
+          "symptom": "测试带宽 3500 元花掉 50% 仍无转化，曝光不足 3000",
+          "response": "换素材批次并放宽精准定向包，出价回到 0.27 下限重跑"
+        },
+        {
+          "problem": "成本过高",
+          "symptom": "CPA 超过止损线 30.05 元且点击≥100",
+          "response": "暂停该单元，降价10%后只保留搜索高意向词"
+        },
+        {
+          "problem": "流量跑不动",
+          "symptom": "日耗不足计划预算 30%，曝光低于 3000",
+          "response": "提价5%并打开智能放量，同步补充信息流素材"
+        },
+        {
+          "problem": "拒审",
+          "symptom": "素材命中绝对化用语或食品功效暗示（Q2 已发生 8 次）",
+          "response": "按违禁词表改写文案后重提，并复用已过审素材保投放不断档"
+        },
+        {
+          "problem": "衰退",
+          "symptom": "同素材 CTR 从 0.16 连续 3 日下滑超 30%",
+          "response": "轮换素材并把预算切到长尾搜索词，避免继续烧衰退计划"
+        }
+      ],
+      "human_review_items": [
+        "CVR 0.012 为演示补全值（待投手确认），ROI 粗算上线前必须用账户真实 CVR 复核",
+        "出价区间需以聚光账户实时建议价校准后再建单"
+      ]
+    },
+    "grounding_check": {
+      "passed": true,
+      "mismatches": []
+    },
+    "steps_used": 7,
+    "repair_rounds_used": 1,
+    "trace": []
+  },
+  "module5": {
+    "module": "module5_budget_planning",
+    "output": {
+      "budget_split": {
+        "organic_budget_cny": 30000,
+        "paid_budget_cny": 70000,
+        "organic_ratio": 0.3,
+        "needs_review": false
+      },
+      "phases": [
+        {
+          "phase": "预热期",
+          "paid_budget_cny": 14000,
+          "key_actions": [
+            "素人笔记铺量测口碑",
+            "跑通搜索高意向词的冷启动出价"
+          ]
+        },
+        {
+          "phase": "爆发期",
+          "paid_budget_cny": 42000,
+          "key_actions": [
+            "放大 CTR 达标素材",
+            "达人笔记二次放大投流"
+          ]
+        },
+        {
+          "phase": "长尾期",
+          "paid_budget_cny": 14000,
+          "key_actions": [
+            "长尾搜索词占位",
+            "收口复盘并沉淀词库"
+          ]
+        }
+      ],
+      "creator_tier_plan": {
+        "tiers": [
+          {
+            "tier": "素人",
+            "count": 12,
+            "collaboration_budget_cny": 15000,
+            "spotlight_amplification_budget_cny": 10500
+          },
+          {
+            "tier": "达人",
+            "count": 6,
+            "collaboration_budget_cny": 10500,
+            "spotlight_amplification_budget_cny": 7350
+          },
+          {
+            "tier": "KOL",
+            "count": 2,
+            "collaboration_budget_cny": 4500,
+            "spotlight_amplification_budget_cny": 3150
+          }
+        ],
+        "amplification_pool_cny": 21000
+      },
+      "bid_plan": {
+        "cold_start": {
+          "low_cny": 0.27,
+          "high_cny": 0.33
+        },
+        "scaling": {
+          "low_cny": 0.27,
+          "high_cny": 0.48
+        },
+        "basis": "基准CPC ¥0.30（数据需求.xlsx 2026年1—5月加权汇总）× 冷启动 0.90–1.10 / 放量 0.90–1.60"
+      },
+      "synergy_rules": [
+        {
+          "metric": "自然笔记互动率",
+          "threshold": "≥0.0207（工作簿 1—5 月加权均值）",
+          "action": "该笔记进入聚光测试池，先投测试带宽的 10%"
+        },
+        {
+          "metric": "付费笔记 CTR",
+          "threshold": "≥0.16 且点击≥100",
+          "action": "加入爆发期主投素材，并把对应选题回流给内容侧扩产"
+        },
+        {
+          "metric": "搜索词转化",
+          "threshold": "单词转化≥3 单",
+          "action": "把该词升到核心层并提价5%占位"
+        }
+      ],
+      "contingency_plans": [
+        {
+          "scenario": "自然互动低于预期",
+          "trigger": "预热期结束互动率不足 0.0207 的 70%",
+          "adjustment": "暂缓爆发期加预算，先换选题方向并补素人笔记"
+        },
+        {
+          "scenario": "付费转化跑不出样本",
+          "trigger": "测试带宽 3500 元耗尽仍不足 20 单转化",
+          "adjustment": "把目标降级为种草，改用 CTR 作为主要考核指标并重估 CVR"
+        }
+      ],
+      "human_review_items": [
+        "CVR 为演示补全值（待投手确认），预算节奏在拿到真实 CVR 后需重算",
+        "工作簿来源需在正式交付前由数据负责人确认"
+      ]
+    },
+    "grounding_check": {
+      "passed": true,
+      "mismatches": []
+    },
+    "steps_used": 6,
+    "repair_rounds_used": 0,
+    "trace": []
+  }
+}

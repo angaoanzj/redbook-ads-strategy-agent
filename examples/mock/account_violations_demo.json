@@ -1,0 +1,65 @@
+{
+  "data_type": "模拟数据（Mock）",
+  "is_mock": true,
+  "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+  "as_of": "2026-07-24",
+  "warning": "仅用于方案演示和敏感性分析，不代表真实平台、竞品或账户数据。",
+  "notes": "Mock 拒审台账，需替换为真实聚光导出",
+  "account_violation_evidence": [
+    {
+      "reason": "绝对化用语（最好吃/第一伴手礼）",
+      "occurrence_count": 9,
+      "period": "演示-近90天",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "notes": "Mock：标题出现“最好吃的香港曲奇”，演示拒审高发词",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "766574e30d7203aa"
+    },
+    {
+      "reason": "食品功效/养生暗示",
+      "occurrence_count": 4,
+      "period": "演示-近90天",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "notes": "Mock：正文写“养胃不长胖”，食品赛道常见功效暗示拒审",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "766574e30d7203aa"
+    },
+    {
+      "reason": "跨境/进口食品资质不全",
+      "occurrence_count": 2,
+      "period": "演示-近90天",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "notes": "Mock：礼盒含进口黄油表述但未附合规资质截图",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "766574e30d7203aa"
+    },
+    {
+      "reason": "未披露商业合作",
+      "occurrence_count": 5,
+      "period": "演示-近90天",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "notes": "Mock：达人探店笔记未打合作标识",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "766574e30d7203aa"
+    },
+    {
+      "reason": "虚假稀缺/限时误导",
+      "occurrence_count": 3,
+      "period": "演示-近90天",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "notes": "Mock：封面写“最后100盒”但无库存证据",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "766574e30d7203aa"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "data_type": "模拟数据（Mock）",
+  "is_mock": true,
+  "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+  "as_of": "2026-07-24",
+  "warning": "仅用于方案演示和敏感性分析，不代表真实平台、竞品或账户数据。",
+  "notes": "演示热搜情景，非平台实时热搜榜",
+  "trending_keyword_evidence": [
+    {
+      "keyword": "香港曲奇伴手礼",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "heat_score": 76.0,
+      "notes": "演示热搜情景，非平台实时热搜榜；热度为可复现随机值",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "7ceb630a50f604dd"
+    },
+    {
+      "keyword": "曲奇礼盒推荐",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "heat_score": 73.0,
+      "notes": "演示热搜情景，非平台实时热搜榜；热度为可复现随机值",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "7ceb630a50f604dd"
+    },
+    {
+      "keyword": "曲奇礼盒怎么选",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "heat_score": 57.0,
+      "notes": "演示热搜情景，非平台实时热搜榜；热度为可复现随机值",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "7ceb630a50f604dd"
+    },
+    {
+      "keyword": "香港曲奇伴手礼测评",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "heat_score": 57.0,
+      "notes": "演示热搜情景，非平台实时热搜榜；热度为可复现随机值",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "7ceb630a50f604dd"
+    },
+    {
+      "keyword": "香港曲奇伴手礼送长辈",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "heat_score": 69.0,
+      "notes": "演示热搜情景，非平台实时热搜榜；热度为可复现随机值",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "7ceb630a50f604dd"
+    },
+    {
+      "keyword": "香港曲奇伴手礼商务送礼",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "heat_score": 73.0,
+      "notes": "演示热搜情景，非平台实时热搜榜；热度为可复现随机值",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "7ceb630a50f604dd"
+    },
+    {
+      "keyword": "香港旅行必买",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "heat_score": 77.0,
+      "notes": "演示热搜情景，非平台实时热搜榜；热度为可复现随机值",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "7ceb630a50f604dd"
+    },
+    {
+      "keyword": "节日礼盒推荐",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "heat_score": 90.0,
+      "notes": "演示热搜情景，非平台实时热搜榜；热度为可复现随机值",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "7ceb630a50f604dd"
+    },
+    {
+      "keyword": "低甜曲奇推荐",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "heat_score": 79.0,
+      "notes": "演示热搜情景，非平台实时热搜榜；热度为可复现随机值",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "7ceb630a50f604dd"
+    },
+    {
+      "keyword": "最好吃的伴手礼",
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "heat_score": 61.0,
+      "notes": "演示热搜情景，非平台实时热搜榜；热度为可复现随机值",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "7ceb630a50f604dd"
+    }
+  ]
+}

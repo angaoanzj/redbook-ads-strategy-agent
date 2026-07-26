@@ -1,0 +1,99 @@
+{
+  "data_type": "模拟数据（Mock）",
+  "is_mock": true,
+  "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+  "as_of": "2026-07-24",
+  "warning": "仅用于方案演示和敏感性分析，不代表真实平台、竞品或账户数据。",
+  "notes": "五类投流问题 Mock 诊断情景，挂到模块4 risk_playbook.demo_scenario",
+  "paid_risk_demo_scenarios": [
+    {
+      "issue": "冷启动无量",
+      "example_diagnosis": "Mock随机诊断：冷启动无量；曲奇四重奏·曲奇礼盒搜索单元出价低于建议价约35%，具体数值仅用于演示",
+      "demo_signals": {
+        "impressions_24h": 134,
+        "suggested_bid_gap_pct": 1,
+        "targeting_est_reach": "偏低",
+        "unit_status": "投放中-量极低"
+      },
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "notes": "Mock 投流问题演示情景，非真实账户事故；上线前用聚光后台替换",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "68aa913dc710c5f6"
+    },
+    {
+      "issue": "点击成本过高",
+      "example_diagnosis": "Mock随机诊断：点击成本过高；曲奇四重奏·曲奇礼盒信息流 CPC≈4.6（历史中位情景×1.6），具体数值仅用于演示",
+      "demo_signals": {
+        "cpc_cny": 4.8444,
+        "historical_cpc_cny": 3.0507,
+        "cpc_vs_history_ratio": 1.5833,
+        "ctr": 0.012,
+        "waste_search_terms": [
+          "零食",
+          "饼干推荐"
+        ]
+      },
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "notes": "Mock 投流问题演示情景，非真实账户事故；上线前用聚光后台替换",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "68aa913dc710c5f6"
+    },
+    {
+      "issue": "点击高但转化低",
+      "example_diagnosis": "Mock随机诊断：点击高但转化低；曲奇四重奏·曲奇礼盒点击充足但 CVR≈0.3%（演示情景1.2%的1/4），具体数值仅用于演示",
+      "demo_signals": {
+        "clicks_24h": 470,
+        "orders_24h": 1,
+        "cvr": 0.0026,
+        "demo_baseline_cvr": 0.0116,
+        "landing_issue": "笔记主推节日礼盒，落地页默认单盒无券"
+      },
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "notes": "Mock 投流问题演示情景，非真实账户事故；上线前用聚光后台替换",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "68aa913dc710c5f6"
+    },
+    {
+      "issue": "素材衰退",
+      "example_diagnosis": "Mock随机诊断：素材衰退；曲奇四重奏·曲奇礼盒「开箱对比」封面连续4日 CTR 从4.2%滑至2.6%（跌幅约38%），具体数值仅用于演示",
+      "demo_signals": {
+        "creative_name": "开箱对比-金箔礼盒封面",
+        "ctr_peak": 0.0401,
+        "ctr_latest": 0.0242,
+        "ctr_drop_pct": 37,
+        "days_in_flight": 5,
+        "frequency": 4.0001
+      },
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "notes": "Mock 投流问题演示情景，非真实账户事故；上线前用聚光后台替换",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "68aa913dc710c5f6"
+    },
+    {
+      "issue": "审核拒绝",
+      "example_diagnosis": "Mock随机诊断：审核拒绝；曲奇四重奏·曲奇礼盒标题含“最好吃伴手礼”+功效暗示，具体数值仅用于演示",
+      "demo_signals": {
+        "reject_reasons": [
+          "绝对化用语（最好吃/第一伴手礼）",
+          "食品功效/养生暗示"
+        ],
+        "reject_count_7d": 2,
+        "asset_type": "搜索推广创意"
+      },
+      "source_name": "演示 Mock 数据包（scripts/generate_mock_data.py）",
+      "collected_at": "2026-07-24",
+      "notes": "Mock 投流问题演示情景，非真实账户事故；上线前用聚光后台替换",
+      "is_mock": true,
+      "evidence_grade": "M",
+      "mock_seed": "68aa913dc710c5f6"
+    }
+  ]
+}

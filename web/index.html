@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RED Pilot｜小红书投放策略决策 Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css?v=20260726-ui33">
+</head>
+<body>
+  <header>
+    <a class="brand" href="/"><b>R</b><span>RED PILOT</span></a>
+    <div class="header-status">
+      <span class="online"><i></i>本地策略引擎</span>
+      <span id="sessionState" class="session-state">会话初始化中</span>
+      <button id="newSession" type="button" class="new-session">新建会话</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">XIAOHONGSHU STRATEGY AGENT</div>
+      <h1>从品牌数据到<br><em>可执行投放决策</em></h1>
+      <p>填写任务书，结合品牌历史数据，生成自然内容、聚光投流、预算节奏、关键词和风险控制全案。</p>
+      <div class="hero-actions">
+        <button id="loadHistory" class="primary">载入曲奇四重奏历史数据</button>
+        <button id="loadFullCase" type="button">载入填满全案示例</button>
+        <a href="#brief">从空白开始</a>
+      </div>
+      <div class="stats">
+        <div><b>06</b><span>必做模块</span></div>
+        <div><b>15</b><span>内容选题</span></div>
+        <div><b>3</b><span>投放阶段</span></div>
+        <div><b>可追溯</b><span>数据证据</span></div>
+      </div>
+    </section>
+
+    <section id="brief" class="workspace">
+      <aside>
+        <strong>投放任务书</strong>
+        <ol>
+          <li>品牌与产品</li><li>用户与目标</li><li>预算与周期</li><li>数据与证据</li>
+        </ol>
+        <p>没有证据的数据会进入缺口清单，不会由模型补造成事实。</p>
+      </aside>
+
+      <form id="form" class="card">
+        <div class="card-title"><div><small>CAMPAIGN BRIEF</small><h2>创建策略任务</h2></div><button type="reset" class="link">重置</button></div>
+        <div class="grid">
+          <label>品牌名称<input name="brand_name" required placeholder="曲奇四重奏"></label>
+          <label>所属品类<input name="category" required placeholder="香港蝴蝶酥伴手礼"></label>
+          <label class="wide">产品名称<input name="product_name" required></label>
+          <label class="wide">核心卖点（每行一条）<textarea name="selling_points" rows="5" required></textarea></label>
+          <label class="wide">可选：待审笔记草稿标题<input name="draft_title" placeholder="留空则用产品名做轻量预审"></label>
+          <label class="wide">可选：待审笔记草稿正文<textarea name="draft_body" rows="4" placeholder="成稿正文；与卖点一起走知识库规则预审"></textarea></label>
+          <label class="wide">可选：待审标签（每行一个）<textarea name="draft_tags" rows="2" placeholder="#香港伴手礼"></textarea></label>
+          <label class="wide">可选：待审图片 URL（每行一个）
+            <textarea name="draft_image_urls" rows="2" placeholder="https://.../cover.jpg"></textarea>
+            <span>OCR/Logo 识别接入前仅登记 pending，不伪造视觉审核结果。</span>
+          </label>
+          <label class="wide">可选：待审视频 URL（每行一个）
+            <textarea name="draft_video_urls" rows="2" placeholder="https://.../note.mp4"></textarea>
+            <span>抽帧/语音审核接入前仅登记 pending。</span>
+          </label>
+          <label>最低价<input name="price_min" type="number" min="0" required></label>
+          <label>最高价<input name="price_max" type="number" min="0" required></label>
+          <label>商品币种<select name="currency"><option>HKD</option><option>CNY</option><option>TWD</option></select></label>
+          <label class="wide">目标用户<textarea name="initial_audience" rows="3" required></textarea></label>
+          <label>总预算（CNY）<input name="total_budget_cny" type="number" min="1" value="100000" required></label>
+          <label>聚光预算（CNY）<input name="spotlight_budget_cny" type="number" min="1" value="70000"></label>
+          <label>投放周期<select name="campaign_days"><option value="21">21天</option><option value="30" selected>30天</option><option value="45">45天</option><option value="60">60天</option></select></label>
+          <label>核心目标<select name="goal"><option value="conversion">商品成交</option><option value="awareness">品牌曝光</option><option value="engagement">点赞收藏</option><option value="search_growth">搜索增长</option><option value="leads">客资收集</option><option value="live_traffic">直播引流</option></select></label>
+          <label>分析范围（天）
+            <input name="analysis_days" type="number" min="7" max="180" value="30" required>
+            <span>近 N 天（7–180）只约束：窗口样本/篇均近窗指标、聚光 CPC·CPM·CTR 加权用月、品牌自然月度历史筛选。发布量／互动量趋势与高峰时段使用知识库全量命中笔记，不受此限制。</span>
+          </label>
+          <label class="wide">竞品账号/笔记链接（每行一个，最多5个）
+            <textarea name="competitor_links" rows="3" placeholder="https://www.xiaohongshu.com/explore/..."></textarea>
+            <span>生成时会抓取这些给定链接的公开页，自动抽出互动/广告标识/主题/评论画像信号，并输出四章对标拆解。不做全站或千条爬取。</span>
+          </label>
+          <label class="wide upload">可选：导入已抓取的对标证据 JSON（跳过联网抓取）
+            <input id="competitorEvidenceFile" type="file" accept=".json,application/json">
+            <span id="competitorEvidenceStatus">默认留空：由脚本抓取上方链接。也可导入缓存 JSON 做离线复现。</span>
+          </label>
+          <div class="wide bench-link-row">
+            <button id="loadCompetitorBenchmark" type="button" class="link">载入珍妮曲奇 3 条对标链接</button>
+          </div>
+          <label class="wide">待识别竞品品牌（每行一个）
+            <textarea name="competitor_candidates" rows="5">奇华
+帝苑
+珍妮曲奇
+皇玥
+恒香</textarea>
+            <span>仅在本地知识库里做名称候选匹配，不会打开或爬取小红书页面；结论仍需人工确认。</span>
+          </label>
+          <label class="wide upload">导入品类笔记数据
+            <input id="categoryDataFile" type="file" accept=".json,application/json">
+            <span id="categoryDataStatus">选择采集器生成的 category_notes.json；数据将写入本机 SQLite 知识库。</span>
+          </label>
+          <label class="wide upload">导入达人候选 CSV
+            <input id="creatorCsvFile" type="file" accept=".csv,text/csv">
+            <span id="creatorCsvStatus">列：name,profile_url,followers,average_interactions,quote_cny,audience_tags,past_campaign_result,source_name,collected_at。无 CSV 时不输出推荐名单。</span>
+          </label>
+          <label class="wide">人工粘贴热搜词（每行：词 或 词|热度）
+            <textarea name="trending_keywords" rows="4" placeholder="香港伴手礼|88&#10;蝴蝶酥|76"></textarea>
+            <span>无合规趋势 API 时降级为人工粘贴后评分；留空则明确标记待接入。</span>
+          </label>
+        </div>
+        <div class="knowledge-panel">
+          <div><small>LOCAL KNOWLEDGE</small><strong>本地品类知识库</strong></div>
+          <p id="knowledgeStatus">正在读取知识库状态…</p>
+          <button id="refreshKnowledge" type="button" class="link">刷新状态</button>
+        </div>
+        <div class="data-switch">
+          <label><input id="useEvidence" type="checkbox" checked> 使用历史基准与本地知识库（推荐）</label>
+          <p class="switch-help">默认载入《数据需求.xlsx》2026年1—5月历史基准，并自动检索本地品类知识库；缺少任一来源时会显示证据缺口，不会自动用 Mock 替代。</p>
+          <label><input id="useModel" type="checkbox"> 使用大模型润色最终报告</label>
+          <label><input id="useAgentModules" type="checkbox"> 启用六模块 LLM Agent（DeepSeek 人话解读写入对标看板）</label>
+          <label class="mock-switch"><input id="allowMock" type="checkbox"> 启用多子 Agent 模拟缺失数据</label>
+          <div class="mock-seed-control">
+            <label>Mock 种子<input id="mockSeed" type="text" maxlength="128" readonly disabled></label>
+            <button id="regenerateMock" type="button" disabled>换一组 Mock</button>
+          </div>
+          <p class="mock-help">生产默认关闭。勾选「六模块 LLM Agent」后，各模块在工具约束下决策并做数字溯源；失败回退确定性引擎。勾选 Mock 后由子 Agent 按缺口补足演示数据，不得当作真实平台数据。</p>
+        </div>
+        <div id="error" class="error hidden"></div>
+        <button class="primary submit" type="submit"><span>生成全域投放方案</span><b>→</b></button>
+      </form>
+    </section>
+
+    <section id="loading" class="loading hidden"><i></i><div><b>正在生成策略</b><span>校验数据证据、计算预算并组装六个模块…</span></div></section>
+
+    <section id="result" class="result hidden">
+      <div class="result-head">
+        <div><small>DECISION OUTPUT</small><h2 id="resultTitle">投放策略全案</h2></div>
+        <div><button id="downloadJson">下载 JSON</button><button id="downloadMd" class="dark">下载 Markdown</button></div>
+      </div>
+      <div id="summary" class="summary"></div>
+      <div id="gaps"></div>
+      <nav id="resultViews" class="result-views">
+        <button type="button" data-view="benchmark" class="active">赛道与竞品深度分析</button>
+        <button type="button" data-view="audience" class="hidden">目标用户精准画像</button>
+        <button type="button" data-view="kwstrategy" class="hidden">关键词策略</button>
+        <button type="button" data-view="keywords" class="hidden">关键词与达人匹配</button>
+        <button type="button" data-view="spotlight" class="hidden">聚光投流前置决策（含执行）</button>
+        <button type="button" data-view="budget" class="hidden">全域预算与节奏规划</button>
+        <button type="button" data-view="tools">附加工具</button>
+        <button type="button" data-view="evidence">证据附录</button>
+      </nav>
+      <div class="result-body report-mode"><nav id="tabs" class="hidden"></nav><article id="module"></article></div>
+    </section>
+  </main>
+
+  <footer><span>RED PILOT · Evidence First</span><span>不伪造实时数据 · 人工最终审批</span></footer>
+  <script src="/assets/app.js?v=20260726-ui36"></script>
+</body>
+</html>

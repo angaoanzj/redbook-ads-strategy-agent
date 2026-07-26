@@ -1,0 +1,354 @@
+{
+  "competitor_links": [
+    "https://www.xiaohongshu.com/explore/69a81ab6000000002602f416?xsec_token=ABWFNkRKXwY-2Y6zpjUpn3cbRiX50xh3z6zsCSg0PkvHg=&xsec_source=pc_search",
+    "https://www.xiaohongshu.com/explore/68b11f08000000001c009d99?xsec_token=ABwe8C_sFKGdDkOgnTRhtiMPRIbfqs98SvJpUE5Bp_Ssg=&xsec_source=pc_search",
+    "https://www.xiaohongshu.com/explore/6884d75e0000000010011732?xsec_token=AB4s3r7mjk1LuhKUVlEH0UCKQGAffhwD2oYhB6epAe2Z8=&xsec_source=pc_search"
+  ],
+  "competitor_evidence": [
+    {
+      "account_name": "詹詹的市井日记",
+      "profile_or_note_url": "https://www.xiaohongshu.com/explore/69a81ab6000000002602f416",
+      "title": "香港珍妮曲奇 好吃程度排序",
+      "note_format": "图集",
+      "interactions": 2441,
+      "likes": 1396,
+      "favorites": 972,
+      "comments": 73,
+      "is_ad_labeled": false,
+      "observed_audience": [
+        "到港游客",
+        "内地代购接收者",
+        "价格敏感",
+        "机场与现金支付咨询"
+      ],
+      "content_themes": [
+        "口味排序测评",
+        "门店地址",
+        "珍妮曲奇",
+        "香港必买",
+        "香港伴手礼"
+      ],
+      "notes": "用户标注：3图口味排名+尖沙咀/上环店址；未见广告标识；评论高频问价格/限购/机场/现金；有人导流曲奇童话",
+      "campaign_duration_days": null,
+      "source_name": "用户粘贴对标笔记",
+      "collected_at": "2026-07-26",
+      "evidence_grade": "C_user_provided",
+      "is_mock": false
+    },
+    {
+      "account_name": "早点睡觉",
+      "profile_or_note_url": "https://www.xiaohongshu.com/explore/68b11f08000000001c009d99",
+      "title": "Jenny Bakery 开箱",
+      "note_format": "图集",
+      "interactions": 24,
+      "likes": 21,
+      "favorites": 3,
+      "comments": 0,
+      "is_ad_labeled": false,
+      "observed_audience": [
+        "到港游客",
+        "排队打卡"
+      ],
+      "content_themes": [
+        "花费开箱",
+        "排队购买",
+        "珍妮曲奇",
+        "口味体验"
+      ],
+      "notes": "用户标注：约300港币排队买3口味开箱；互动低；未见广告标识；作冷启动对照样本",
+      "source_name": "用户粘贴对标笔记",
+      "collected_at": "2026-07-26",
+      "evidence_grade": "C_user_provided",
+      "is_mock": false
+    },
+    {
+      "account_name": "麦芽糖碎碎念",
+      "profile_or_note_url": "https://www.xiaohongshu.com/explore/6884d75e0000000010011732",
+      "title": "香港珍妮曲奇只认这两家 省时避坑地图",
+      "note_format": "图集",
+      "interactions": 7082,
+      "likes": 3795,
+      "favorites": 3197,
+      "comments": 90,
+      "is_ad_labeled": false,
+      "observed_audience": [
+        "到港游客",
+        "避坑攻略党",
+        "伴手礼决策者",
+        "现金换汇咨询"
+      ],
+      "content_themes": [
+        "正版门店地图",
+        "避坑假店",
+        "只收现金",
+        "必买Top3",
+        "香港伴手礼",
+        "珍妮曲奇"
+      ],
+      "notes": "用户标注：8图攻略含交通/营业时间/现金避雷/Top3；未见广告标识；评论问代购快递与价格；出现原料质疑讨论",
+      "source_name": "用户粘贴对标笔记",
+      "collected_at": "2026-07-26",
+      "evidence_grade": "C_user_provided",
+      "is_mock": false
+    }
+  ],
+  "competitor_benchmark_brief": {
+    "headline": "赛道与竞品深度分析",
+    "subtitle": "基于给定的 3 条对标笔记公开页拆解，并结合曲奇四重奏投流表 / 品类知识库做对照。仅抓取用户给定链接，不做全站爬取。",
+    "pills": [
+      "对标品牌：Jenny Bakery / 珍妮曲奇",
+      "广告标识样本：0 / 3",
+      "聚光 CPC/CPM：品牌自有投流表，非竞品账户"
+    ],
+    "evidence_boundary": "三条笔记均由用户标注为未见「广告」角标，不能当作正在投流素材。投放时长与竞品预算无法从点赞反推。聚光成本用曲奇四重奏 2026-01—05 加权汇总作品类参考，不是平台公开行业均值。",
+    "hero_stats": [
+      {
+        "label": "爆款互动（麦芽糖·赞藏评）",
+        "value": "7,082"
+      },
+      {
+        "label": "中腰部互动（詹詹·赞藏评）",
+        "value": "2,441"
+      },
+      {
+        "label": "冷启动对照（早点睡觉）",
+        "value": "24",
+        "tone": "warning"
+      }
+    ],
+    "sample_notes": [
+      {
+        "account": "詹詹的市井日记",
+        "title": "香港珍妮曲奇 好吃程度排序",
+        "angle": "口味排名 + 门店地址",
+        "format": "图集 3P",
+        "likes": 1396,
+        "collects": 972,
+        "comments": 73,
+        "ad_label": "未见广告标识",
+        "published": "2026-03-04"
+      },
+      {
+        "account": "早点睡觉",
+        "title": "Jenny Bakery 开箱",
+        "angle": "300港币排队买3口味",
+        "format": "图集 3P",
+        "likes": 21,
+        "collects": 3,
+        "comments": 0,
+        "ad_label": "未见广告标识",
+        "published": "2025-08-28"
+      },
+      {
+        "account": "麦芽糖碎碎念",
+        "title": "珍妮曲奇只认这两家 / 避坑地图",
+        "angle": "正版门店 + 现金避雷 + Top3",
+        "format": "图集 8P",
+        "likes": 3795,
+        "collects": 3197,
+        "comments": 90,
+        "ad_label": "未见广告标识",
+        "published": "编辑 2025-08-26"
+      }
+    ],
+    "organic_summary": "三条对标都打「珍妮/聪明小熊/香港伴手礼」心智：攻略地图与口味排序能冲到千级赞藏，纯开箱打卡若不带决策信息则几乎沉底。",
+    "organic_commonalities": [
+      "图集为主（3/3），封面强品牌符号（铁盒小熊/店招）",
+      "标题模板：排序 / 只认这两家 / 避坑地图 / 开箱花费",
+      "正文标配：门店地址 + 营业时间 + 现金/限购信息",
+      "标签簇：香港必买、香港伴手礼、珍妮曲奇、探店",
+      "评论场：价格、现金、机场、代购、限购、真假店"
+    ],
+    "organic_gaps": [
+      "几乎不讲原料溯源（日麦/新西兰牛油）",
+      "很少做「酒店大厨/手工」品质对比叙事",
+      "缺少可快递/内地履约方案（评论大量问寄送）",
+      "负面口感/原料质疑已出现（香精/人造奶油评论）",
+      "视频占比低：KB 伴手礼相关约 142 条中视频仅 12 条"
+    ],
+    "organic_trend_caption": "曲奇四重奏自然内容：曝光（万）与篇数（1—5月）",
+    "organic_trend_categories": [
+      "1月",
+      "2月",
+      "3月",
+      "4月",
+      "5月"
+    ],
+    "organic_trend_exposure_wan": [
+      8197,
+      3348,
+      2121,
+      1749,
+      2810
+    ],
+    "organic_trend_note_counts": [
+      546,
+      355,
+      199,
+      123,
+      164
+    ],
+    "peak_caption": "高峰集中在午间与晚间种草窗（约 11:00–14:00、16:00–20:00 北京时间）。平台「扶持标签」无法从公开笔记证实；对标高频标签仅能作搜索布局候选。",
+    "peak_slots": [
+      {
+        "slot": "11-14点",
+        "count": 40
+      },
+      {
+        "slot": "16-20点",
+        "count": 53
+      },
+      {
+        "slot": "其他",
+        "count": 49
+      }
+    ],
+    "format_note": "热门形式：对标样本与 KB 均为图集绝对主导（约 9:1）。珍妮对标爆款仍是信息密度高的图文攻略，不是短视频。",
+    "spotlight_notice": "下列 CPC/CPM 为曲奇四重奏《数据需求》投流表 2026-01—05 加权，用作同赛道操作参考；不是珍妮官方投放后台，也不是平台品类均值披露。",
+    "spotlight_metrics": {
+      "cpc": 0.3,
+      "cpm": 48.2,
+      "ctr": 0.16,
+      "conversion_cost": "缺口"
+    },
+    "spotlight_monthly": [
+      {
+        "month": "2026-01",
+        "spend": "2,475,047",
+        "cpc": "0.307",
+        "cpm": "46.4",
+        "ctr": "15.1%"
+      },
+      {
+        "month": "2026-02",
+        "spend": "2,527,706",
+        "cpc": "0.320",
+        "cpm": "52.8",
+        "ctr": "16.5%"
+      },
+      {
+        "month": "2026-03",
+        "spend": "173,018",
+        "cpc": "0.245",
+        "cpm": "42.0",
+        "ctr": "17.1%"
+      },
+      {
+        "month": "2026-04",
+        "spend": "249,084",
+        "cpc": "0.223",
+        "cpm": "35.4",
+        "ctr": "15.9%"
+      },
+      {
+        "month": "2026-05",
+        "spend": "351,596",
+        "cpc": "0.244",
+        "cpm": "47.4",
+        "ctr": "19.4%"
+      }
+    ],
+    "spotlight_goal_notes": [
+      "种草/到店决策：对标笔记主战场，搜索「珍妮曲奇/香港伴手礼」承接。",
+      "成交：可用「现金难买/要快递」痛点做转化；珍妮线下只收现金，线上履约是空白。",
+      "客资：代购咨询多，但导私域/留资易触合规，不建议作为主目标。"
+    ],
+    "spotlight_traffic_notes": [
+      "引擎建议首轮：搜索 40% / 信息流 60%（成交目标下的探测结构）。",
+      "对标爆款高度依赖搜索词与攻略意图，搜索占比可偏高测试至 45–50%。",
+      "治理侧强调低质营销、低备高推、食品功效夸大——避免绝对化「最强手信」。"
+    ],
+    "commonality_rows": [
+      {
+        "dimension": "选题",
+        "observation": "排序测评、正版门店地图、避坑/假店、花费开箱"
+      },
+      {
+        "dimension": "信息密度",
+        "observation": "地址+交通+时段+支付方式+必买 TopN"
+      },
+      {
+        "dimension": "信任机制",
+        "observation": "本地人认证、限购/现金细节、实拍店招"
+      },
+      {
+        "dimension": "互动引擎",
+        "observation": "价格/代购/机场/真假店评论连环问答"
+      },
+      {
+        "dimension": "扩散风险",
+        "observation": "评论已出现「曲奇童话更好吃」导流与原料质疑"
+      }
+    ],
+    "paid_note_rows": [
+      {
+        "note": "詹詹 · 口味排序",
+        "ad_label": "否",
+        "content_type": "自然种草图集",
+        "duration_judgment": "无法认定投放；长尾仍在涨"
+      },
+      {
+        "note": "早点睡觉 · 开箱",
+        "ad_label": "否",
+        "content_type": "自然开箱图集",
+        "duration_judgment": "低互动，不像持续加热"
+      },
+      {
+        "note": "麦芽糖 · 避坑地图",
+        "ad_label": "否",
+        "content_type": "攻略种草图集",
+        "duration_judgment": "无广告角标；无连续快照，时长未知"
+      }
+    ],
+    "paid_conclusion": "当前 3 条对标应按「自然流量内容武器」拆解，不要写成竞品聚光在投素材。若要坐实投流，需 App 内截取「广告」角标 + 多日互动斜率快照。",
+    "targeting_cards": [
+      {
+        "title": "地域/场景",
+        "body": "到港游客、内地出发前攻略党；评论 IP 见江苏/广东/北京/湖南/香港/台湾/澳门。"
+      },
+      {
+        "title": "兴趣词包",
+        "body": "香港伴手礼、手信、探店、曲奇测评、现金换汇、机场购物限制。"
+      },
+      {
+        "title": "预算范围",
+        "body": "竞品预算：证据不足，不估。自身可参考品牌表 CPC≈¥0.30，用探测预算验证搜索词「珍妮曲奇替代/曲奇童话/蝴蝶酥伴手礼」。"
+      }
+    ],
+    "risk_content_signals": [
+      "「最强/只认/本地人盖章」类绝对化表述",
+      "真假店、仿品小熊饼干对抗内容（易引发举报战）",
+      "原料/香精/人造奶油质疑帖（信任崩塌点）",
+      "导流代购、留微信号、私域成交（专业号合规红线）"
+    ],
+    "risk_rejection_signals": [
+      "食品功效/治疗改善类夸大（食品行业规则）",
+      "虚假或低差营销、低备高推（治理公告）",
+      "导流微信/手机号/二维码（专业号合规）",
+      "跨境宣传与落地不一致（跨境广告规范）"
+    ],
+    "risk_note": "当前无拒审频次台账，以上是规则必检项，不是「本赛道近 30 天 Top 拒审榜」。",
+    "counter_actions": [
+      {
+        "priority": "P1",
+        "action": "做「真牛油 vs 网红曲奇」对比图集 + 门店/快递双路径攻略",
+        "gap": "原料证据 + 履约痛点"
+      },
+      {
+        "priority": "P2",
+        "action": "搜索词包承接：珍妮曲奇替代、香港伴手礼不排队、蝴蝶酥礼盒",
+        "gap": "避坑地图流量截流"
+      },
+      {
+        "priority": "P3",
+        "action": "评论区标准话术：价格表、是否限购、能否寄送、支付方式",
+        "gap": "对标评论高意向问题"
+      },
+      {
+        "priority": "合规",
+        "action": "禁用「最强/全港仅/治愈/0添加」等绝对化；合作笔记打标",
+        "gap": "拒审与限流预防"
+      }
+    ]
+  }
+}

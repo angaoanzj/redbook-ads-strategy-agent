@@ -1,0 +1,17 @@
+# Python 缓存
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# 本地 SQLite 数据（通过 volume 挂载 ./data，不打进镜像）
+data/*.db
+
+# 系统与编辑器杂项
+.DS_Store
+**/.DS_Store
+.git/
+.gitignore
+
+# 注意：tests/ 不排除，容器内需要运行单元测试

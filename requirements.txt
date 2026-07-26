@@ -1,0 +1,6 @@
+fastapi==0.136.1
+uvicorn[standard]==0.46.0
+httpx==0.28.1
+pydantic==2.11.4
+python-multipart==0.0.20
+jieba==0.42.1

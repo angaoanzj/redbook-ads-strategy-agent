@@ -1,0 +1,79 @@
+{
+  "brand_name": "曲奇四重奏",
+  "category": "香港蝴蝶酥伴手礼",
+  "product_name": "经典－原味蝴蝶酥礼盒",
+  "selling_points": [
+    "招牌经典款",
+    "采用日本小麦粉与新西兰牛油",
+    "牛油香浓、层次酥脆",
+    "250g共30片",
+    "适合作为香港伴手礼"
+  ],
+  "price_min": 228,
+  "price_max": 228,
+  "currency": "HKD",
+  "initial_audience": "30—55岁首次到港游客、家庭游客、送长辈人群、偏好经典口味者",
+  "total_budget_cny": 100000,
+  "spotlight_budget_cny": 70000,
+  "campaign_days": 30,
+  "goal": "conversion",
+  "analysis_days": 30,
+  "competitor_links": [],
+  "competitor_evidence": [],
+  "benchmark_evidence": [
+    {
+      "source_name": "数据需求.xlsx／投流数据／2026年1—5月加权汇总",
+      "collected_at": "2026-05-31",
+      "metric_name": "ctr",
+      "value": 0.1604600541,
+      "unit": "ratio",
+      "notes": "点击量合计÷曝光量合计；原表未注明平台导出来源，执行前需确认"
+    },
+    {
+      "source_name": "数据需求.xlsx／投流数据／2026年1—5月加权汇总",
+      "collected_at": "2026-05-31",
+      "metric_name": "cpc",
+      "value": 0.3005181259,
+      "unit": "CNY/click",
+      "notes": "消费合计÷点击量合计"
+    },
+    {
+      "source_name": "数据需求.xlsx／投流数据／2026年1—5月加权汇总",
+      "collected_at": "2026-05-31",
+      "metric_name": "cpm",
+      "value": 48.22115472,
+      "unit": "CNY/1000 impressions",
+      "notes": "消费合计÷曝光量合计×1000"
+    },
+    {
+      "source_name": "数据需求.xlsx／投流数据／2026年1—5月加权汇总",
+      "collected_at": "2026-05-31",
+      "metric_name": "cost_per_interaction",
+      "value": 2.895544125,
+      "unit": "CNY/interaction",
+      "notes": "消费合计÷总互动量合计"
+    },
+    {
+      "source_name": "数据需求.xlsx／内容数据／2026年1—5月加权汇总",
+      "collected_at": "2026-05-31",
+      "metric_name": "organic_content_ctr",
+      "value": 0.2047736626,
+      "unit": "ratio",
+      "notes": "内容点击量合计÷内容曝光量合计"
+    },
+    {
+      "source_name": "数据需求.xlsx／内容数据／2026年1—5月加权汇总",
+      "collected_at": "2026-05-31",
+      "metric_name": "organic_interaction_rate",
+      "value": 0.0207233251,
+      "unit": "ratio",
+      "notes": "点赞、收藏、评论合计÷曝光量合计"
+    }
+  ],
+  "creator_evidence": [],
+  "owned_history_summary": "数据需求.xlsx 含2025年6月至2026年5月投流月报，以及2026年1月至5月内容数据。2026年1—5月投流消费合计约577.65万元、曝光约1.198亿、点击约1922.16万。原工作簿未注明具体平台导出来源，需要业务方确认。",
+  "constraints": [
+    "不得虚构竞品、达人、实时热搜或平台政策",
+    "工作簿来源需在正式交付前由数据负责人确认"
+  ]
+}

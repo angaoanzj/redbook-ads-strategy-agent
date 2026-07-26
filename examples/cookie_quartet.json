@@ -1,0 +1,21 @@
+{
+  "brand_name": "曲奇四重奏",
+  "category": "香港曲奇伴手礼",
+  "product_name": "曲奇礼盒",
+  "selling_points": ["香港品牌伴手礼", "多口味组合", "礼盒适合送礼", "酥脆口感"],
+  "price_min": 120,
+  "price_max": 320,
+  "currency": "CNY",
+  "initial_audience": "25-40岁、关注香港旅行与节日送礼的女性消费者",
+  "total_budget_cny": 100000,
+  "spotlight_budget_cny": 70000,
+  "campaign_days": 30,
+  "goal": "conversion",
+  "analysis_days": 30,
+  "competitor_links": [],
+  "competitor_evidence": [],
+  "benchmark_evidence": [],
+  "creator_evidence": [],
+  "owned_history_summary": null,
+  "constraints": ["不得虚构实时平台数据", "不得使用未经授权的个人数据"]
+}
