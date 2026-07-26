@@ -1,12 +1,26 @@
+# 仅在本仓库根目录使用：
+#   cd /Users/llan/Documents/xiaohongshu-agent
+#   docker compose up -d --build
+#
+# 与课程仓 xiaozhe-E-commerce/xiaohongshu-strategy-agent 的 Docker 项目完全隔离。
+name: xiaohongshu-agent
+
 services:
   agent:
-    build: .
-    image: xiaohongshu-strategy-agent
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: xiaohongshu-agent:latest
+    container_name: xiaohongshu-agent
     ports:
       - "8010:8010"
     volumes:
+      # 代码与数据均来自本仓库路径，不依赖旧课程仓
+      - .:/app
       - ./data:/app/data
       - ./web:/app/web
+    env_file:
+      - .env
     environment:
       # Analyzer：模块 Agent / 报告（可指向 DeepSeek）
       AGENT_ANALYZER_API_KEY: "${AGENT_ANALYZER_API_KEY:-}"
@@ -23,6 +37,7 @@ services:
       AGENT_OPENAI_API_KEY: "${AGENT_OPENAI_API_KEY:-}"
       AGENT_OPENAI_BASE_URL: "${AGENT_OPENAI_BASE_URL:-https://api.siliconflow.cn/v1}"
       AGENT_OPENAI_MODEL: "${AGENT_OPENAI_MODEL:-Qwen/Qwen3-8B}"
+    working_dir: /app
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0) if urllib.request.urlopen('http://127.0.0.1:8010/health').status==200 else sys.exit(1)"]
       interval: 30s
