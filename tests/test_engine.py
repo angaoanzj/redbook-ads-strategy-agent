@@ -599,6 +599,25 @@ class StrategyEngineTests(unittest.TestCase):
         ):
             self.assertTrue(spotlight[key]["decision_conclusion"])
         self.assertIsInstance(spotlight["search_feed_budget_share"].get("search_ratio"), float)
+        # 成交目标：模块1 与模块4 搜推配比必须同为 40/60
+        self.assertEqual(spotlight["search_feed_budget_share"]["search_ratio"], 0.40)
+        self.assertEqual(spotlight["search_feed_budget_share"]["feed_ratio"], 0.60)
+        m4_split = result.modules["module_4_spotlight_decision"]["search_feed_split"]
+        self.assertEqual(m4_split["search"], 0.40)
+        self.assertEqual(m4_split["feed"], 0.60)
+        fc = result.modules["module_4_spotlight_decision"]["forecast"]
+        target = (fc.get("test_bandwidth") or {}).get("target_cpa_used_cny")
+        stop = (fc.get("stop_loss") or {}).get("cpa_stop_cny")
+        if target is not None and stop is not None:
+            self.assertAlmostEqual(stop, round(target * 1.2, 2), places=2)
+        view_fc = next(
+            s["visuals"]["forecast"]
+            for s in result.report_view["report_sections"]
+            if s.get("key") == "spotlight_decision"
+        )
+        if target is not None:
+            self.assertEqual(view_fc.get("target_cpa"), target)
+            self.assertEqual(view_fc.get("cpa"), target)
         self.assertTrue(spotlight["popular_promotion_goals"].get("market_ranking"))
         competitor = module1["competitor_full_funnel"]
         for key in (

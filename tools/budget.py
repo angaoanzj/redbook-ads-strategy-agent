@@ -93,6 +93,30 @@ GOAL_SPLIT_GUIDE: dict[str, dict[str, Any]] = {
 }
 
 
+# 搜索/信息流首轮测试配比（无分版位消耗台账时的可比较默认；非账户事实）
+# 与 engine 模块1 / 模块4 / Mock 共用，避免出现 40/60 与 64/36 两套数。
+DEFAULT_SEARCH_FEED_SHARE: dict[str, tuple[float, float]] = {
+    "conversion": (0.40, 0.60),
+    "leads": (0.45, 0.55),
+    "search_growth": (0.55, 0.45),
+    "awareness": (0.30, 0.70),
+    "engagement": (0.30, 0.70),
+    "live_traffic": (0.25, 0.75),
+}
+
+
+def search_feed_share_for_goal(goal: str) -> dict[str, float]:
+    """Return first-round search/feed probe share for a campaign goal."""
+    search, feed = DEFAULT_SEARCH_FEED_SHARE.get(goal, (0.40, 0.60))
+    return {
+        "goal": goal,
+        "search_ratio": float(search),
+        "feed_ratio": float(feed),
+        "label": f"搜索{search:.0%} / 信息流{feed:.0%}",
+        "basis": "按任务目标给出的首轮测试配比（非账户分版位消耗事实）",
+    }
+
+
 def goal_split_guide(goal: str) -> dict[str, Any]:
     """Return recommended organic/paid split + rationale for a campaign goal."""
     guide = GOAL_SPLIT_GUIDE.get(goal) or {

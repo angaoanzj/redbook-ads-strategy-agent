@@ -1724,10 +1724,24 @@ def build_spotlight_decision_section(
                 "status": forecast.get("status"),
                 "ctr": ctr_display,
                 "cpc": cpc_row.get("value"),
-                "cpa": cpa_row.get("value"),
-                "cvr_note": "CVR/ROI 仅在有完整基准时输出",
+                # 与止损同口径：目标CPA=CPC÷CVR；大盘 Mock 转化成本另字段展示，避免 140 vs 止损27 混读
+                "cpa": (forecast.get("test_bandwidth") or {}).get("target_cpa_used_cny"),
+                "target_cpa": (forecast.get("test_bandwidth") or {}).get("target_cpa_used_cny"),
+                "target_cpa_basis": "目标CPA = 基准CPC ÷ 基准CVR（与止损CPA同一公式链）",
+                "market_cpa": cpa_row.get("value"),
+                "market_cpa_is_mock": bool(cpa_row.get("is_mock")),
+                "market_cpa_note": (
+                    "大盘/Mock 转化成本情景，仅敏感性参考，不参与止损判定"
+                    if cpa_row.get("value") is not None
+                    else None
+                ),
+                "cvr_note": "CVR/ROI 仅在有完整基准时输出；ROI 客单价须换汇为 CNY",
                 "roi_point": (roi or {}).get("point_estimate"),
                 "roi_band": (roi or {}).get("band"),
+                "roi_formula": (roi or {}).get("formula"),
+                "roi_aov_cny": (roi or {}).get("aov_cny"),
+                "roi_aov_native": (roi or {}).get("aov_native"),
+                "roi_currency": (roi or {}).get("currency"),
                 "probe_budget_cny": probe,
                 "stop_loss_cpc": stop.get("cpc_stop_cny"),
                 "stop_loss_cpa": stop.get("cpa_stop_cny"),

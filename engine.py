@@ -1450,28 +1450,28 @@ def _spotlight_market_summary(
         "live_traffic": ["种草", "客资", "成交"],
     }
     goal_ranking = goal_rank_map.get(req.goal, ["种草", "成交", "客资"])
-    # 无分版位消耗时，按目标给首轮可比较默认配比（明确标注非账户事实）
-    default_share = {
-        "conversion": (0.40, 0.60),
-        "leads": (0.45, 0.55),
-        "search_growth": (0.55, 0.45),
-        "awareness": (0.30, 0.70),
-        "engagement": (0.30, 0.70),
-        "live_traffic": (0.25, 0.75),
-    }
+    # 无分版位消耗时，按目标给首轮可比较默认配比（与模块4 / Mock 共用 SSOT）
+    from tools.budget import search_feed_share_for_goal
+
+    goal_share = search_feed_share_for_goal(req.goal)
     if allow_mock:
-        search_ratio = budget_share["search_ratio"]
-        feed_ratio = budget_share["feed_ratio"]
-        share_status = "模拟测试配比，待账户数据替换"
-        share_conclusion = "按当前推广目标设置首轮搜索／信息流模拟配比；每3天依据真实转化成本替换和调整。"
+        # Mock 只可补 CPC/CPA 等情景数字；搜推比例必须与模块4一致，禁止随机第二套。
+        search_ratio = goal_share["search_ratio"]
+        feed_ratio = goal_share["feed_ratio"]
+        share_status = f"{goal_share['basis']}（Mock 场景仍用目标默认档，待账户数据替换）"
+        share_conclusion = (
+            f"首轮按搜索{search_ratio:.0%}／信息流{feed_ratio:.0%}做可比较测试；"
+            "每3天依据真实分版位消耗替换。"
+        )
     elif isinstance(budget_share.get("search_ratio"), (int, float)):
         search_ratio = budget_share["search_ratio"]
         feed_ratio = budget_share["feed_ratio"]
         share_status = "已导入分版位消耗"
         share_conclusion = "按导入的分版位消耗占比作为首轮参考，每3天用账户成本复核。"
     else:
-        search_ratio, feed_ratio = default_share.get(req.goal, (0.40, 0.60))
-        share_status = "按任务目标给出的首轮测试配比（非账户分版位消耗事实）"
+        search_ratio = goal_share["search_ratio"]
+        feed_ratio = goal_share["feed_ratio"]
+        share_status = goal_share["basis"]
         share_conclusion = (
             f"无分版位消耗台账时，首轮按搜索{search_ratio:.0%}／信息流{feed_ratio:.0%}做可比较测试；"
             "上线后用账户真实消耗替换。"
@@ -2826,6 +2826,9 @@ def _module_outputs(
         "live_traffic": "直播引流",
     }.get(req.goal, "产品种草")
     forecast_block = _forecast_block(req, paid_budget=paid_budget, benchmarks=benchmarks)
+    from tools.budget import search_feed_share_for_goal as _search_feed_share
+
+    m4_search_feed = _search_feed_share(req.goal)
     cpc_row = benchmarks.get("cpc") or {}
     cpc_val = cpc_row.get("value") if isinstance(cpc_row, dict) else None
     cold_bid = {
@@ -2922,8 +2925,8 @@ def _module_outputs(
             "stop_loss": "成本高于目标20%且达到最小样本量时暂停素材或定向包",
         },
         "search_feed_split": {
-            "search": 0.40,
-            "feed": 0.60,
+            "search": m4_search_feed["search_ratio"],
+            "feed": m4_search_feed["feed_ratio"],
             "synergy_note": (
                 "搜索计划承接主动搜索高意向词；信息流对搜索点击/互动/收藏用户做相似扩量二次触达；"
                 "创意池可复用，但预算与出价分计划控制，避免搜推抢量互抬成本。"
@@ -3195,7 +3198,7 @@ Mock 演示达人（禁止当作真实推荐）：
 
 ## 聚光账户与测试策略
 
-- 搜索/信息流预算建议：40% / 60%。
+- 搜索/信息流预算建议：{module4.get("search_feed_split", {}).get("search", 0.4):.0%} / {module4.get("search_feed_split", {}).get("feed", 0.6):.0%}。
 - 每日时段：
 {schedule_lines}
 - 精准、宽定向、达人相似三类定向包分别独立建单元。

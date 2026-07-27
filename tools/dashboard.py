@@ -352,7 +352,12 @@ def build_dashboard_payload(
             "status": forecast.get("status"),
             "ctr": forecast.get("ctr"),
             "cpc": forecast.get("cpc"),
-            "cpa": forecast.get("cpa") or forecast.get("conversion_cost"),
+            # 目标CPA（与止损同链）；勿用大盘 Mock conversion_cost 冒充
+            "cpa": forecast.get("target_cpa")
+            or forecast.get("cpa")
+            or forecast.get("conversion_cost"),
+            "target_cpa": forecast.get("target_cpa") or forecast.get("cpa"),
+            "market_cpa": forecast.get("market_cpa"),
             "roi_point": forecast.get("roi_point"),
             "roi_band": forecast.get("roi_band"),
             "stop_loss_cpc": forecast.get("stop_loss_cpc"),

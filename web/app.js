@@ -1177,8 +1177,8 @@ function buildDashboardInnerHtml(dashboard = {}, reportView = null) {
   const forecastCard = `<article class="bench-card"><h4>投放效果参考</h4>
     <ul class="bench-list">
       <li>状态：${esc(fc.status || "—")}</li>
-      <li>CTR / CPC / CPA：${fc.ctr != null ? esc(fc.ctr) : "—"} / ${fc.cpc != null ? `¥${esc(fc.cpc)}` : "—"} / ${fc.cpa != null ? `¥${esc(fc.cpa)}` : "—"}</li>
-      <li>ROI：${fc.roi_point != null ? esc(fc.roi_point) : "—"} ${Array.isArray(fc.roi_band) ? `（${esc(fc.roi_band.join(" ~ "))}）` : ""}</li>
+      <li>CTR / CPC / 目标CPA：${fc.ctr != null ? esc(fc.ctr) : "—"} / ${fc.cpc != null ? `¥${esc(fc.cpc)}` : "—"} / ${fc.cpa != null ? `¥${esc(fc.cpa)}` : "—"}</li>
+      <li>ROI（CNY口径）：${fc.roi_point != null ? esc(fc.roi_point) : "—"} ${Array.isArray(fc.roi_band) ? `（${esc(fc.roi_band.join(" ~ "))}）` : ""}</li>
       <li>探测预算：${delivery.probe_budget_cny != null ? `¥${Number(delivery.probe_budget_cny).toLocaleString()}` : "—"}</li>
       <li>启动门槛：${esc((delivery.paid_start_gate || {}).rule_text || "自然过线后再投流")}</li>
     </ul>
@@ -1521,14 +1521,22 @@ function sectionVisuals(section) {
     </div>`;
     const fc = visuals.forecast || {};
     const roiBand = Array.isArray(fc.roi_band) ? fc.roi_band.join(" ~ ") : (fc.roi_band || "—");
+    const targetCpa = fc.target_cpa != null ? fc.target_cpa : fc.cpa;
+    const marketCpaNote = fc.market_cpa != null
+      ? `¥${esc(fc.market_cpa)}${fc.market_cpa_is_mock ? "（Mock情景）" : ""}`
+      : "缺口";
+    const roiAov = fc.roi_aov_cny != null
+      ? `；客单价CNY ¥${esc(fc.roi_aov_cny)}${fc.roi_aov_native != null && fc.roi_currency ? `（原币 ${esc(fc.roi_aov_native)} ${esc(fc.roi_currency)}）` : ""}`
+      : "";
     const forecastBlock = `<article class="bench-card"><h4>效果预估</h4>
       <ul class="bench-list">
         <li>状态：${esc(fc.status || "—")}</li>
         <li>CTR参考：${fc.ctr != null && fc.ctr !== "" ? esc(fc.ctr) + (typeof fc.ctr === "number" ? "%" : "") : "缺口"}</li>
         <li>CPC参考：${fc.cpc != null ? `¥${esc(fc.cpc)}` : "缺口"}</li>
-        <li>转化成本参考：${fc.cpa != null ? `¥${esc(fc.cpa)}` : "缺口"}</li>
-        <li>ROI点估 / 区间：${fc.roi_point != null ? esc(fc.roi_point) : "—"} / ${esc(roiBand)}</li>
-        <li>止损 CPC/CPA：${fc.stop_loss_cpc != null ? `¥${esc(fc.stop_loss_cpc)}` : "—"} / ${fc.stop_loss_cpa != null ? `¥${esc(fc.stop_loss_cpa)}` : "—"}</li>
+        <li>目标CPA（CPC÷CVR）：${targetCpa != null ? `¥${esc(targetCpa)}` : "缺口"}</li>
+        <li>止损 CPC / 止损CPA：${fc.stop_loss_cpc != null ? `¥${esc(fc.stop_loss_cpc)}` : "—"} / ${fc.stop_loss_cpa != null ? `¥${esc(fc.stop_loss_cpa)}` : "—"} <small>（止损CPA=目标CPA×1.2）</small></li>
+        <li>ROI点估 / 区间（CNY口径）：${fc.roi_point != null ? esc(fc.roi_point) : "—"} / ${esc(roiBand)}${roiAov}</li>
+        <li>大盘转化成本（非止损口径）：${marketCpaNote}</li>
       </ul></article>`;
     const compliance = visuals.content_audit_gate || {};
     const complianceBlock = compliance.gate || compliance.reason

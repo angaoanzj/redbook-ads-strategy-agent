@@ -145,8 +145,11 @@ def build_mock_market_scenarios(
     cvr_base = round(rng.uniform(0.006, 0.025), 4)
     cpm_base = round(cpc_base * ctr_base * 1000, 2)
     conversion_base = round((cpc_base / cvr_base) * rng.uniform(0.95, 1.05), 2)
-    share_center = 0.60 if goal in {"conversion", "leads", "search_growth"} else 0.50
-    search_ratio = round(min(0.75, max(0.35, share_center + rng.uniform(-0.08, 0.08))), 2)
+    # 搜推配比与引擎/模块4共用目标默认档，禁止 Mock 再随机出第二套比例。
+    from tools.budget import search_feed_share_for_goal
+
+    share = search_feed_share_for_goal(goal)
+    search_ratio = float(share["search_ratio"])
     daily_budget = round(total_budget_cny / 30, 2)
     common = evidence_meta(
         MOCK_DATA_TYPE,

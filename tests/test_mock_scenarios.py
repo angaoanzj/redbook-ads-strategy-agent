@@ -40,6 +40,13 @@ class MockScenarioTests(unittest.TestCase):
             + first["budget_share"]["feed_ratio"],
             1.0,
         )
+        # 搜推配比跟目标默认档，不随 seed 漂移（避免与模块4 40/60 打架）
+        self.assertEqual(first["budget_share"]["search_ratio"], 0.40)
+        self.assertEqual(first["budget_share"]["feed_ratio"], 0.60)
+        self.assertEqual(
+            first["budget_share"]["search_ratio"],
+            second["budget_share"]["search_ratio"],
+        )
 
     def test_mock_metric_has_visible_provenance(self):
         row = metric_or_mock(
