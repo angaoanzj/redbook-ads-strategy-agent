@@ -218,12 +218,35 @@ def _gap_match(point: str, blob: str) -> bool:
     return any(phrase in compact and phrase in blob for phrase in phrases)
 
 
+def format_content_gap_reason(
+    candidate: Mapping[str, Any],
+    *,
+    occupied_themes: Sequence[str] = (),
+) -> str:
+    """Human-readable blank for counter_actions「对应空白」— not a generic status line."""
+    point = str(candidate.get("point") or "").strip() or "未命名卖点"
+    stage = str(candidate.get("stage") or "sample_uncovered")
+    themes = [str(item).strip() for item in occupied_themes if str(item).strip()][:4]
+    occupied = (
+        f"对标样本已占主题：「{'｜'.join(themes)}」"
+        if themes
+        else "对标样本尚无可对比主题"
+    )
+    blank = f"空白：缺「{point}」的对比测评/开箱体验表达；{occupied}"
+    if stage == "validated_opportunity":
+        return f"{blank}；需求与效果已验证，可优先制作"
+    if stage == "opportunity_hypothesis":
+        return f"{blank}；已有需求/搜索信号，效果待测"
+    return f"{blank}；属样本内未覆盖候选（≠市场空白），尚缺用户需求与效果证据"
+
+
 def assess_content_gaps(
     selling_points: Sequence[str],
     evidence: Sequence[CompetitorEvidence],
     *,
     demand_signals: Sequence[str] = (),
     validated_points: Sequence[str] = (),
+    occupied_themes: Sequence[str] = (),
 ) -> dict[str, Any]:
     """Return covered selling points and explicitly staged gap candidates."""
     blob = " ".join(_text(item) for item in evidence)
@@ -249,13 +272,17 @@ def assess_content_gaps(
             "opportunity_hypothesis": "当前竞品样本未覆盖；已有用户需求或搜索信号支持",
             "sample_uncovered": "当前竞品样本未覆盖该卖点",
         }[stage]
-        candidates.append({
+        candidate = {
             "point": point,
             "stage": stage,
             "conclusion_type": conclusion_type,
             "evidence_basis": evidence_basis,
             "validation_required": stage != "validated_opportunity",
-        })
+        }
+        candidate["gap_blank"] = format_content_gap_reason(
+            candidate, occupied_themes=occupied_themes
+        )
+        candidates.append(candidate)
 
     by_stage = {
         stage: [row["point"] for row in candidates if row["stage"] == stage]

@@ -5,7 +5,11 @@ import json
 import unittest
 from pathlib import Path
 
-from competitor_insight_analysis import assess_content_gaps, build_competitor_insight_rows
+from competitor_insight_analysis import (
+    assess_content_gaps,
+    build_competitor_insight_rows,
+    format_content_gap_reason,
+)
 from models import CompetitorEvidence
 
 
@@ -23,6 +27,7 @@ class CompetitorInsightAnalysisTests(unittest.TestCase):
         gaps = assess_content_gaps(
             ["招牌经典款", "采用日本小麦粉与新西兰牛油", "适合作为香港伴手礼"],
             evidence,
+            occupied_themes=["伴手礼", "避坑", "价格"],
         )
         rows = build_competitor_insight_rows(
             evidence,
@@ -35,6 +40,24 @@ class CompetitorInsightAnalysisTests(unittest.TestCase):
         self.assertEqual(by_dimension["选题"]["confidence"], "low")
         self.assertTrue(by_dimension["选题"]["evidence"])
         self.assertIn("评论", by_dimension["互动引擎"]["observation"])
+        uncovered = next(
+            row for row in gaps["candidates"] if row["point"] == "招牌经典款"
+        )
+        self.assertIn("空白：缺「招牌经典款」", uncovered["gap_blank"])
+        self.assertIn("伴手礼", uncovered["gap_blank"])
+        self.assertNotEqual(
+            uncovered["gap_blank"],
+            "当前对标样本未覆盖；尚缺用户需求与效果证据",
+        )
+
+    def test_format_content_gap_reason_names_blank_and_occupied_themes(self):
+        text = format_content_gap_reason(
+            {"point": "招牌经典款", "stage": "sample_uncovered"},
+            occupied_themes=["伴手礼清单", "避坑"],
+        )
+        self.assertIn("空白：缺「招牌经典款」", text)
+        self.assertIn("伴手礼清单", text)
+        self.assertIn("≠市场空白", text)
 
     def test_cash_alone_is_not_trust(self):
         rows = build_competitor_insight_rows([

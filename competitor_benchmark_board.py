@@ -298,11 +298,17 @@ def apply_module1_agent_overlay(
 
     counter_actions: list[dict[str, Any]] = []
     for index, gap in enumerate(gaps[:3], start=1):
+        # Agent 常只回短词；「对应空白」需写成可执行空白描述，避免与动作列同质化。
+        gap_text = (
+            gap
+            if any(token in gap for token in ("空白", "缺", "未覆盖", "待验证", "占坑"))
+            else f"空白：缺「{gap}」的对比/体验内容占位；属待验证切口（≠已证实市场空白）"
+        )
         counter_actions.append(
             {
                 "priority": f"P{index}",
                 "action": f"围绕「{gap}」做差异化探测内容并小流量验证",
-                "gap": gap,
+                "gap": gap_text,
             }
         )
     for index, alert in enumerate(risks[:3], start=len(counter_actions) + 1):

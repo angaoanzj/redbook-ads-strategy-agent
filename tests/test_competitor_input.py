@@ -245,6 +245,10 @@ class CompetitorInputTests(unittest.TestCase):
         self.assertNotIn("可规模化空白机会", gaps["decision_conclusion"])
         self.assertTrue(all(row["stage"] == "sample_uncovered" for row in gaps["candidates"]))
         self.assertIn("用户需求", " ".join(gaps["missing_evidence"]))
+        self.assertTrue(gaps["opportunities"])
+        reason0 = gaps["opportunities"][0]["reason"]
+        self.assertIn("空白：缺", reason0)
+        self.assertNotEqual(reason0, "当前对标样本未覆盖；尚缺用户需求与效果证据")
 
     def test_evidence_wins_over_duplicate_link(self) -> None:
         url = "https://www.xiaohongshu.com/explore/69a81ab6000000002602f416"

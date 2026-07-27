@@ -12,7 +12,7 @@ from uuid import uuid4
 import httpx
 
 from competitor_input import normalize_competitor_inputs
-from competitor_insight_analysis import assess_content_gaps
+from competitor_insight_analysis import assess_content_gaps, format_content_gap_reason
 from mock_agents import run_mock_subagents
 from mock_scenarios import (
     MOCK_DATA_TYPE,
@@ -1666,11 +1666,17 @@ def _competitor_market_summary(
         for theme, count in user_theme_counts.most_common(8)
     ]
     top_themes = user_theme_rows[:5] or note_clusters[:5]
-    gap_assessment = assess_content_gaps(req.selling_points, req.competitor_evidence)
+    occupied_themes = [str(item.get("theme") or "").strip() for item in top_themes if item.get("theme")]
+    gap_assessment = assess_content_gaps(
+        req.selling_points,
+        req.competitor_evidence,
+        occupied_themes=occupied_themes,
+    )
     gap_opportunities = [
         {
             "opportunity": f"测试卖点「{row['point']}」的对比/体验内容",
-            "reason": "当前对标样本未覆盖；尚缺用户需求与效果证据",
+            "reason": row.get("gap_blank")
+            or format_content_gap_reason(row, occupied_themes=occupied_themes),
             "evidence_basis": row["evidence_basis"],
             "stage": row["stage"],
             "conclusion_type": row["conclusion_type"],
