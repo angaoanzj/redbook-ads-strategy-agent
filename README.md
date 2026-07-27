@@ -1,13 +1,13 @@
 # 小红书投放策略决策 AI Agent
 
-独立可运行的本地原型（仓库路径：`/Users/llan/Documents/xiaohongshu-agent`）。  
+独立可运行的本地原型：下载或克隆本仓库后，在**仓库根目录**按下方「如何运行」操作即可。  
 把品牌输入、合规证据与预算约束编排为 **6 个策略模块 + 附加工具**，输出结构化 JSON、可执行 Markdown 与网页看板。
 
 ## 作业交付物
 
 | # | 交付项 | 入口 |
 | --- | --- | --- |
-| 1 | 可运行的 Agent 原型 | 本 README「启动」+ `web/` |
+| 1 | 可运行的 Agent 原型 | 本 README「[如何运行](#如何运行必读)」+ `web/` |
 | 2 | 使用说明书 | [docs/USER_GUIDE.md](docs/USER_GUIDE.md) |
 | 3 | 测试报告（曲奇四重奏） | [docs/TEST_REPORT.md](docs/TEST_REPORT.md) |
 | 4 | 技术架构图 | [docs/TECHNICAL_ARCHITECTURE.md](docs/TECHNICAL_ARCHITECTURE.md) |
@@ -40,95 +40,118 @@
 
 详见上述四份文档：说明书 · 测试报告 · 技术架构 · 后续优化方向。
 
-## 启动（本目录独立运行）
+## 如何运行（必读）
+
+> 以下命令默认已进入**本仓库根目录**（含 `docker-compose.yml`、`main.py`、`web/` 的那一层）。  
+> 若本机 8010 已被其它容器占用，先 `docker ps` 查看并停掉占用端口的容器。
+
+### 你需要准备什么
+
+| 方式 | 前置 | 能否不配模型 Key |
+| --- | --- | --- |
+| **Docker（推荐）** | 已安装 Docker Desktop / Docker Engine，并已启动 | **可以**：确定性引擎照常出全案 |
+| **本机 Python** | Python 3.11+（3.10 一般也可）、能建 venv | **可以**：同上 |
+
+模型 Key **不是启动门槛**。没有 Key 时：网页生成、六模块确定性输出、离线测试都能跑。  
+只有勾选「大模型润色」或「六模块 LLM Agent」时，才需要在本地 `.env` 填 Key。
+
+### 1. 配置环境变量（首次必做一次）
+
+仓库只提交**空占位**模板 `.env.example`，**不提交**真实 Key。
 
 ```bash
-cd /Users/llan/Documents/xiaohongshu-agent
+# 已在仓库根目录时：
+cp -n .env.example .env
+```
 
-# 1. 虚拟环境 + 依赖
+然后二选一：
+
+1. **先跑通（推荐）**：保持 `.env` 里所有 `*_API_KEY=` 为空即可启动。  
+2. **要用 LLM**：只在本机编辑 `.env`，填入例如：
+
+```env
+AGENT_ANALYZER_API_KEY=你的密钥
+AGENT_ANALYZER_BASE_URL=https://api.deepseek.com
+AGENT_ANALYZER_MODEL=deepseek-v4-flash
+```
+
+红线：
+
+- `.env` 已在 `.gitignore`，**不要** `git add .env`。  
+- 提交/分享仓库时只保留 `.env.example`（Key 字段保持空）。  
+- 不要把本地真实 Key 写进 example、文档或示例 JSON。
+
+可选变量说明见 `.env.example`（Embedding、Critic、5118 热度等均可空）。
+
+### 2A. Docker 启动（推荐）
+
+```bash
+docker compose up -d --build
+```
+
+验收：
+
+```bash
+curl --noproxy '*' http://127.0.0.1:8010/health
+# 期望：{"status":"ok","agent":"xiaohongshu-strategy"}
+```
+
+浏览器打开 http://127.0.0.1:8010/ 。
+
+常用命令：
+
+```bash
+docker compose ps                 # 看是否 healthy
+docker compose logs -f agent      # 看日志
+docker compose restart            # 改代码后重启（本仓挂载 .:/app）
+docker compose down               # 停止
+```
+
+离线自检（不调大模型）：
+
+```bash
+docker compose run --rm agent python -m unittest discover tests
+docker compose run --rm agent python demo_agent_loop.py --offline
+docker compose run --rm agent python bench/run_bench.py \
+  --replay bench/fixtures/regression_outputs.json --no-write
+```
+
+说明：Compose 项目名 / 容器名 / 镜像均为 `xiaohongshu-agent`；端口 `8010:8010`。
+
+### 2B. 本机 Python 启动
+
+```bash
 python3 -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 python -m pip install -r requirements.txt
 
-# 2. 模型 Key（任选其一）
-cp .env.example .env               # 编辑填入 AGENT_ANALYZER_API_KEY 等
-# 或：export AGENT_ANALYZER_API_KEY=... ; export AGENT_ANALYZER_BASE_URL=...
-
-# 3. 启动 API（保持终端打开）
+# 已按上一节准备好 .env 后：
 python -m uvicorn main:app --host 127.0.0.1 --port 8010
 ```
 
-看到下面的信息表示启动成功：
+看到 `Uvicorn running on http://127.0.0.1:8010` 即成功；停止用 `Control + C`。
 
-```text
-Uvicorn running on http://127.0.0.1:8010
-```
+不建议直接 `python main.py`（默认开 reload，部分 macOS 环境会报
+`[Errno 1] Operation not permitted`）。
 
-需要停止时，在该终端按 `Control + C`。
+### 3. 网页上怎么第一次跑出报告
 
-不建议直接运行 `python main.py`（默认开启 Uvicorn reload；部分 macOS / 受限环境可能报
-`[Errno 1] Operation not permitted`）。上面的命令不启用自动重载，更适合日常演示。
+1. 打开 http://127.0.0.1:8010/  
+2. 点 **「载入填满全案示例」**（品牌、卖点、约 40 条示例笔记、对标证据一次填齐）  
+3. 保持「使用大模型润色 / 六模块 LLM Agent」关闭即可（无 Key 路径）  
+4. 点生成，查看「赛道与竞品深度分析」等页签  
 
-可以在另一个终端检查服务：
+没有示例时：手动填任务书；可选上传 `category_notes.json`（写入本地知识库）、达人 CSV、竞品链接。
 
-```bash
-curl --noproxy '*' http://127.0.0.1:8010/health
-```
+优先用 `127.0.0.1`。若本机开了 HTTP/SOCKS 代理，`localhost` 有时会被错误代理成 `502`。
 
-正常返回：
+入口汇总：
 
-```json
-{"status":"ok","agent":"xiaohongshu-strategy"}
-```
-
-打开：
-
-- 用户操作界面：http://127.0.0.1:8010/
-- API 文档：http://127.0.0.1:8010/docs
-- 健康检查：http://127.0.0.1:8010/health
-
-优先使用 `127.0.0.1`。如果电脑配置了 HTTP/SOCKS 代理，`localhost` 有时可能被错误地
-发送给代理而出现 `502` 或连接失败。
-
-## Docker 运行
-
-Docker 配置与运行**只认本仓库路径**，不要用课程仓
-`xiaozhe-E-commerce/xiaohongshu-strategy-agent` 起服务。
-
-```bash
-cd /Users/llan/Documents/xiaohongshu-agent
-
-# 首次可复制环境变量模板后按需填写 Key
-cp -n .env.example .env
-
-# 1. 构建本仓镜像（image: xiaohongshu-agent:latest，与课程仓镜像隔离）
-docker compose build
-
-# 2. 跑全部单元测试
-docker compose run --rm agent python -m unittest discover tests
-
-# 3. 跑离线 Agent Loop 演示（不联网、不调用大模型）
-docker compose run --rm agent python demo_agent_loop.py --offline
-
-# 3b. 跑离线回归评分（不联网，期望总分 100/100）
-docker compose run --rm agent python bench/run_bench.py \
-  --replay bench/fixtures/regression_outputs.json --no-write
-
-# 4. 起 API 服务（后台常驻），访问 http://127.0.0.1:8010/
-docker compose up -d
-```
-
-说明：
-
-- Compose 项目名：`xiaohongshu-agent`；容器名：`xiaohongshu-agent`；
-  镜像：`xiaohongshu-agent:latest`。
-- 代码与数据均挂载自本目录（`.:/app`、`./data`、`./web`），改 Python / 前端后
-  `docker compose restart` 即可生效，无需依赖旧课程仓文件。
-- 服务映射 `8010:8010`，启动命令为
-  `uvicorn main:app --host 0.0.0.0 --port 8010`。
-- 模型 Key 写在本仓 `.env`（见 `.env.example`）。未配置 Key 时仍生成确定性报告。
-- 若 8010 被旧容器占用，先停掉：
-  `docker stop xiaohongshu-strategy-agent-agent-1`
+| 地址 | 用途 |
+| --- | --- |
+| http://127.0.0.1:8010/ | 用户界面 |
+| http://127.0.0.1:8010/docs | API 文档 |
+| http://127.0.0.1:8010/health | 健康检查 |
 
 ## 调用
 
@@ -321,11 +344,10 @@ xiaohongshu-agent/data/xhs_knowledge.db
 也可以在终端管理知识库：
 
 ```bash
-cd xiaohongshu-agent
-source .venv/bin/activate
+# 在仓库根目录、已激活 venv 时：
 
-# 导入（路径换成你本地的规范化笔记 JSON）
-python knowledge_base.py import path/to/category_notes.json
+# 导入（换成你本机上的规范化笔记 JSON 相对/绝对路径均可）
+python knowledge_base.py import ./examples/your_category_notes.json
 
 # 查看状态
 python knowledge_base.py status

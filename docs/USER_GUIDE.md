@@ -4,7 +4,7 @@
 > 同套交付：[技术架构](./TECHNICAL_ARCHITECTURE.md)｜[测试报告](./TEST_REPORT.md)｜[后续优化方向](./OPTIMIZATION_ROADMAP.md)｜可运行原型见 [README](../README.md)
 
 本文档面向使用者：怎么跑、怎么填、**每个模块**要什么与产出什么、注意事项与降级行为。  
-安装与启动命令见 [README](../README.md)。
+**安装、环境变量、Docker/本机启动**以仓库根目录 [README「如何运行」](../README.md#如何运行必读) 为准（无模型 Key 也可跑确定性全案；Key 只写本地 `.env`，勿提交）。
 
 ---
 
@@ -12,10 +12,9 @@
 
 ### 1.1 网页（推荐给非技术使用者）
 
-**只在独立仓启动**（不要用课程仓路径）：
+**在本仓库根目录启动**（含 `docker-compose.yml` 的那一层）：
 
 ```bash
-cd /Users/llan/Documents/xiaohongshu-agent
 docker compose up -d          # 镜像 xiaohongshu-agent:latest，整仓挂载 .:/app
 # 或本机：python -m uvicorn main:app --host 127.0.0.1 --port 8010
 ```
@@ -353,12 +352,11 @@ export AGENT_ANALYZER_MODEL=Qwen/Qwen3-8B
 ### 4.4 Docker 下的配置
 
 Compose 项目名 `xiaohongshu-agent`，容器名 `xiaohongshu-agent`，镜像
-`xiaohongshu-agent:latest`。代码与数据均挂载自本目录（`.:/app`、`./data`、`./web`），
-与课程仓 `xiaozhe-E-commerce/...` 隔离。Key 写本仓 `.env` 或先 export：
+`xiaohongshu-agent:latest`。代码与数据均挂载自本目录（`.:/app`、`./data`、`./web`）。
+Key 写本仓 `.env`（由 `.env.example` 复制，勿提交真实 Key）或先 export：
 
 ```bash
-cd /Users/llan/Documents/xiaohongshu-agent
-cp -n .env.example .env   # 填 AGENT_ANALYZER_* / 可选 AGENT_5118_API_KEY
+cp -n .env.example .env   # 按需填 AGENT_ANALYZER_* / 可选 AGENT_5118_API_KEY
 docker compose up -d
 ```
 

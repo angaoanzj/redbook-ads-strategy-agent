@@ -18,7 +18,7 @@
 
 | 项 | 配置 |
 | --- | --- |
-| 仓库路径 | `/Users/llan/Documents/xiaohongshu-agent`（独立仓；勿与课程仓混用） |
+| 仓库根目录 | 含 `docker-compose.yml` / `main.py` / `web/` 的本仓库根（下载后即用，勿混用其它同名副本） |
 | 容器 | Compose 项目 `xiaohongshu-agent`，镜像 `xiaohongshu-agent:latest`；挂载 `.:/app`、`./data`、`./web` |
 | 服务 | `uvicorn main:app --host 0.0.0.0 --port 8010`（不启用 reload；改 Python 后需 `docker compose restart`） |
 | 依赖 | `fastapi==0.136.1`、`uvicorn[standard]==0.46.0`、`httpx==0.28.1`、`pydantic==2.11.4`、`python-multipart==0.0.20` |
@@ -69,7 +69,7 @@
 ### 2.4 复现命令
 
 ```bash
-cd /Users/llan/Documents/xiaohongshu-agent
+# 在本仓库根目录执行：
 
 # 1) 自动化测试
 docker compose run --rm agent python -m unittest discover tests

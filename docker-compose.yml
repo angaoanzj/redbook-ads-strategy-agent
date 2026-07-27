@@ -1,8 +1,7 @@
 # 仅在本仓库根目录使用：
-#   cd /Users/llan/Documents/xiaohongshu-agent
 #   docker compose up -d --build
 #
-# 与课程仓 xiaozhe-E-commerce/xiaohongshu-strategy-agent 的 Docker 项目完全隔离。
+# Compose 项目名 xiaohongshu-agent，避免与其它副本抢同一 Docker 项目名/端口。
 name: xiaohongshu-agent
 
 services:

@@ -9,7 +9,7 @@
 | 4 | 技术架构图 | [TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md) |
 | 5 | 后续优化方向 | [OPTIMIZATION_ROADMAP.md](./OPTIMIZATION_ROADMAP.md) |
 
-可运行原型（交付项 1）见仓库根目录 [README.md](../README.md)。
+可运行原型（交付项 1）见仓库根目录 [README.md](../README.md) —— **如何运行**（Docker / 本机、`.env.example`、无 Key 也能跑）写在该文件最前。
 
 ## 非作业交付（实现/测试支撑，评审可不读）
 
