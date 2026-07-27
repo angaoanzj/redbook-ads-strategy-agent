@@ -11,9 +11,10 @@ class MockWebTests(unittest.TestCase):
         script = (ROOT / "app.js").read_text(encoding="utf-8")
 
         self.assertIn('id="useEvidence" type="checkbox" checked', html)
-        self.assertIn("使用历史基准与本地知识库", html)
+        self.assertIn("使用《数据需求.xlsx》历史基准", html)
         self.assertIn('const useEvidence = $("#useEvidence").checked;', script)
-        self.assertIn("const useKnowledge = useEvidence;", script)
+        # 知识库检索与历史 xlsx 解耦，避免关历史基准时加权 CTR 整卡变空
+        self.assertIn("const useKnowledge = true;", script)
         self.assertNotIn('id="useHistory"', html)
         self.assertNotIn('id="useKnowledge"', html)
 

@@ -227,7 +227,7 @@ class BuildBenchmarkSsotTest(unittest.TestCase):
 
     def test_same_level_divergent_values_escalate(self):
         # 两条同为 D_行业基准 的候选、数值分歧远超 ±1% → 不选值，升级人工裁决
-        # （docs/no-code-agent/03_跨模块依赖与冲突处理.md 第 2 节）
+        # 跨模块冲突：上游缺口不得被下游静默抹平
         ssot = rav.build_benchmark_ssot(
             [
                 {

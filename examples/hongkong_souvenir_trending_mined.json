@@ -1,0 +1,225 @@
+{
+  "seed": "香港伴手礼",
+  "source_url_attempted": "https://cw.5118.com/list/香港伴手礼",
+  "source_status": "5118长尾流量词监控页「最新热门词」为暂无数据；相关词挖掘亦为0条。本次用百度下拉+本地KB补全。",
+  "disclaimer": "5118为搜索引擎SEO流量词，不等于小红书热搜。导入Agent时不得表述为官方实时热搜。",
+  "trending_keyword_evidence": [
+    {
+      "keyword": "香港伴手礼",
+      "source_name": "百度下拉词+本地知识库（5118监控页暂无数据）",
+      "collected_at": "2026-07-26",
+      "heat_score": 92.0,
+      "notes": "种子词；5118 cw 监控「香港伴手礼」当前返回暂无数据",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "香港手信",
+      "source_name": "百度下拉词+本地知识库（5118监控页暂无数据）",
+      "collected_at": "2026-07-26",
+      "heat_score": 90.0,
+      "notes": "种子词；5118 cw 监控「香港伴手礼」当前返回暂无数据",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "香港曲奇",
+      "source_name": "百度下拉词+本地知识库（5118监控页暂无数据）",
+      "collected_at": "2026-07-26",
+      "heat_score": 88.0,
+      "notes": "种子词；5118 cw 监控「香港伴手礼」当前返回暂无数据",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "珍妮曲奇",
+      "source_name": "百度下拉词+本地知识库（5118监控页暂无数据）",
+      "collected_at": "2026-07-26",
+      "heat_score": 86.0,
+      "notes": "种子词；5118 cw 监控「香港伴手礼」当前返回暂无数据",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "香港特产",
+      "source_name": "百度下拉词+本地知识库（5118监控页暂无数据）",
+      "collected_at": "2026-07-26",
+      "heat_score": 84.0,
+      "notes": "种子词；5118 cw 监控「香港伴手礼」当前返回暂无数据",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "香港必买",
+      "source_name": "百度下拉词+本地知识库（5118监控页暂无数据）",
+      "collected_at": "2026-07-26",
+      "heat_score": 82.0,
+      "notes": "种子词；5118 cw 监控「香港伴手礼」当前返回暂无数据",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "蝴蝶酥",
+      "source_name": "百度下拉词+本地知识库（5118监控页暂无数据）",
+      "collected_at": "2026-07-26",
+      "heat_score": 80.0,
+      "notes": "种子词；5118 cw 监控「香港伴手礼」当前返回暂无数据",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "曲奇四重奏",
+      "source_name": "百度下拉词+本地知识库（5118监控页暂无数据）",
+      "collected_at": "2026-07-26",
+      "heat_score": 78.0,
+      "notes": "种子词；5118 cw 监控「香港伴手礼」当前返回暂无数据",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "聪明小熊曲奇",
+      "source_name": "百度下拉词（种子=聪明小熊）",
+      "collected_at": "2026-07-26",
+      "heat_score": 78.0,
+      "notes": "公开搜索下拉；非小红书官方热搜，也非5118实时监控",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "香港手信带什么好",
+      "source_name": "百度下拉词（种子=香港手信）",
+      "collected_at": "2026-07-26",
+      "heat_score": 78.0,
+      "notes": "公开搜索下拉；非小红书官方热搜，也非5118实时监控",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "香港曲奇哪个牌子好吃",
+      "source_name": "百度下拉词（种子=香港曲奇）",
+      "collected_at": "2026-07-26",
+      "heat_score": 78.0,
+      "notes": "公开搜索下拉；非小红书官方热搜，也非5118实时监控",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "香港曲奇礼盒",
+      "source_name": "本地知识库 search_keyword 频次",
+      "collected_at": "2026-07-26",
+      "heat_score": 78.0,
+      "notes": "来自 data/xhs_knowledge.db 品类笔记检索词",
+      "is_mock": false,
+      "evidence_grade": "B_local_kb"
+    },
+    {
+      "keyword": "香港零食",
+      "source_name": "本地知识库 search_keyword 频次",
+      "collected_at": "2026-07-26",
+      "heat_score": 78.0,
+      "notes": "来自 data/xhs_knowledge.db 品类笔记检索词",
+      "is_mock": false,
+      "evidence_grade": "B_local_kb"
+    },
+    {
+      "keyword": "曲奇四重奏门店地址",
+      "source_name": "百度下拉词（种子=曲奇四重奏）",
+      "collected_at": "2026-07-26",
+      "heat_score": 76.0,
+      "notes": "公开搜索下拉；非小红书官方热搜，也非5118实时监控",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "港式糕点",
+      "source_name": "百度下拉词+本地知识库（5118监控页暂无数据）",
+      "collected_at": "2026-07-26",
+      "heat_score": 76.0,
+      "notes": "种子词；5118 cw 监控「香港伴手礼」当前返回暂无数据",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "珍妮曲奇聪明小熊价格",
+      "source_name": "百度下拉词（种子=珍妮曲奇）",
+      "collected_at": "2026-07-26",
+      "heat_score": 76.0,
+      "notes": "公开搜索下拉；非小红书官方热搜，也非5118实时监控",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "聪明小熊和珍妮曲奇的区别",
+      "source_name": "百度下拉词（种子=聪明小熊）",
+      "collected_at": "2026-07-26",
+      "heat_score": 76.0,
+      "notes": "公开搜索下拉；非小红书官方热搜，也非5118实时监控",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "香港伴手礼必买清单",
+      "source_name": "百度下拉词（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "heat_score": 76.0,
+      "notes": "公开搜索下拉；非小红书官方热搜，也非5118实时监控",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "香港必买的十大物品",
+      "source_name": "百度下拉词（种子=香港必买）",
+      "collected_at": "2026-07-26",
+      "heat_score": 76.0,
+      "notes": "公开搜索下拉；非小红书官方热搜，也非5118实时监控",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "香港曲奇饼干排行榜",
+      "source_name": "百度下拉词（种子=香港曲奇）",
+      "collected_at": "2026-07-26",
+      "heat_score": 76.0,
+      "notes": "公开搜索下拉；非小红书官方热搜，也非5118实时监控",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "香港蝴蝶酥",
+      "source_name": "本地知识库 search_keyword 频次",
+      "collected_at": "2026-07-26",
+      "heat_score": 76.0,
+      "notes": "来自 data/xhs_knowledge.db 品类笔记检索词",
+      "is_mock": false,
+      "evidence_grade": "B_local_kb"
+    },
+    {
+      "keyword": "曲奇四重奏属于什么档次",
+      "source_name": "百度下拉词（种子=曲奇四重奏）",
+      "collected_at": "2026-07-26",
+      "heat_score": 74.0,
+      "notes": "公开搜索下拉；非小红书官方热搜，也非5118实时监控",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "珍妮曲奇在香港哪里买",
+      "source_name": "百度下拉词（种子=珍妮曲奇）",
+      "collected_at": "2026-07-26",
+      "heat_score": 74.0,
+      "notes": "公开搜索下拉；非小红书官方热搜，也非5118实时监控",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    },
+    {
+      "keyword": "聪明小熊",
+      "source_name": "百度下拉词+本地知识库（5118监控页暂无数据）",
+      "collected_at": "2026-07-26",
+      "heat_score": 74.0,
+      "notes": "种子词；5118 cw 监控「香港伴手礼」当前返回暂无数据",
+      "is_mock": false,
+      "evidence_grade": "C_user_provided"
+    }
+  ],
+  "paste_for_ui": "香港伴手礼|92\n香港手信|90\n香港曲奇|88\n珍妮曲奇|86\n香港特产|84\n香港必买|82\n蝴蝶酥|80\n曲奇四重奏|78\n聪明小熊曲奇|78\n香港手信带什么好|78\n香港曲奇哪个牌子好吃|78\n香港曲奇礼盒|78\n香港零食|78\n曲奇四重奏门店地址|76\n港式糕点|76\n珍妮曲奇聪明小熊价格|76\n聪明小熊和珍妮曲奇的区别|76\n香港伴手礼必买清单|76\n香港必买的十大物品|76\n香港曲奇饼干排行榜|76\n香港蝴蝶酥|76\n曲奇四重奏属于什么档次|74\n珍妮曲奇在香港哪里买|74\n聪明小熊|74"
+}

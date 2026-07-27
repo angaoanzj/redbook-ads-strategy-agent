@@ -1,9 +1,10 @@
 # 使用说明书
 
-> 配套文档：[技术架构](./TECHNICAL_ARCHITECTURE.md)｜[测试报告](./TEST_REPORT.md)｜[优化方向](./OPTIMIZATION_ROADMAP.md)｜[项目 README](../README.md)
+> **作业交付文档之二**（模块用法 · 输入输出 · 注意事项）。  
+> 同套交付：[技术架构](./TECHNICAL_ARCHITECTURE.md)｜[测试报告](./TEST_REPORT.md)｜[后续优化方向](./OPTIMIZATION_ROADMAP.md)｜可运行原型见 [README](../README.md)
 
-本文档面向使用者：怎么跑、怎么填、每个模块要什么、输出怎么读、出问题时系统会怎么降级。
-安装与启动命令见 [README](../README.md)，这里只补充 README 未展开的部分。
+本文档面向使用者：怎么跑、怎么填、**每个模块**要什么与产出什么、注意事项与降级行为。  
+安装与启动命令见 [README](../README.md)。
 
 ---
 
@@ -11,7 +12,15 @@
 
 ### 1.1 网页（推荐给非技术使用者）
 
-启动服务后打开 http://127.0.0.1:8010/ 。首页表单流程：
+**只在独立仓启动**（不要用课程仓路径）：
+
+```bash
+cd /Users/llan/Documents/xiaohongshu-agent
+docker compose up -d          # 镜像 xiaohongshu-agent:latest，整仓挂载 .:/app
+# 或本机：python -m uvicorn main:app --host 127.0.0.1 --port 8010
+```
+
+打开 http://127.0.0.1:8010/ 。首页表单流程：
 
 1. 填品牌、品类、产品、卖点（每行一条）、价格与币种、目标用户、预算、周期、核心目标；
 2. 可选导入：品类笔记 JSON、达人候选 CSV、人工粘贴热搜词、竞品链接、待识别竞品品牌；
@@ -19,11 +28,13 @@
 
    | 勾选项 | 对应接口参数 | 默认 |
    | --- | --- | --- |
-   | 使用《数据需求.xlsx》2026 年 1—5 月历史基准 | 前端填充 `benchmark_evidence` | 关 |
-   | 自动检索本地知识库 | `use_knowledge` | 开 |
+   | 使用《数据需求.xlsx》历史基准 | 前端填充 `benchmark_evidence` | 开 |
+   | （无单独勾选）本地知识库 | `use_knowledge` **前端固定为 true** | 开 |
    | 使用大模型润色最终报告 | `use_model` | 关 |
    | 启用六模块 LLM Agent 决策 | `use_agent_modules` | 关 |
    | 启用多子 Agent 模拟缺失数据 | `allow_mock` + `mock_seed` | 关 |
+
+   说明：聚光「加权 CPC/CPM/CTR」来自知识库 `paid_metrics` 月度加权；关闭历史基准**不会**再关掉知识库，避免近 N 天加权 CTR 整卡变空。
 
 4. 生成后按结果页签阅读（有数据才显示对应页）：
    - **赛道与竞品深度分析**：对标样本、共性/空白、趋势与高峰、聚光大盘、投流识别、定向测试包；
@@ -159,7 +170,7 @@ python demo_agent_loop.py
 | `competitor_evidence` | 模块 1 | 工具返回诚实的无竞品结论；`content_gaps` = 全部卖点；禁止推测预算 |
 | `creator_evidence` | 模块 3/5 | `matched_creators` 如实为空，`human_review_items` 提示导入 CSV/蒲公英 |
 | `benchmark_evidence` | 模块 1/3/4/5/6 | 出价区间、ROI、止损全部留 null 并标注证据缺口 |
-| `trending_keyword_evidence` | 模块 6 | `data_source_status` 标注「待接入数据源」 |
+| `trending_keyword_evidence` | 模块 6 | 有粘贴/导入词时按证据评分；**既无证据又无合规实时源**时 `data_source_status` 标「待接入数据源」 |
 | `account_violation_evidence` | 模块 1 | 风险预警退化为通用风险并标注「通用经验，待证据补充」 |
 | `official_rule_evidence` | 模块 1 | 同上 |
 | `owned_history_summary` / `owned_content_history` | 模块 5 | 联动规则的启动门槛保守设定并标注待验证 |
@@ -341,17 +352,40 @@ export AGENT_ANALYZER_MODEL=Qwen/Qwen3-8B
 
 ### 4.4 Docker 下的配置
 
-`docker-compose.yml` 已透传全部变量。运行前 export 即可：
+Compose 项目名 `xiaohongshu-agent`，容器名 `xiaohongshu-agent`，镜像
+`xiaohongshu-agent:latest`。代码与数据均挂载自本目录（`.:/app`、`./data`、`./web`），
+与课程仓 `xiaozhe-E-commerce/...` 隔离。Key 写本仓 `.env` 或先 export：
 
 ```bash
-export AGENT_ANALYZER_API_KEY=sk-...
-export AGENT_ANALYZER_BASE_URL=https://api.deepseek.com
-export AGENT_ANALYZER_MODEL=deepseek-chat
-docker compose up -d agent
+cd /Users/llan/Documents/xiaohongshu-agent
+cp -n .env.example .env   # 填 AGENT_ANALYZER_* / 可选 AGENT_5118_API_KEY
+docker compose up -d
 ```
 
-配置项里允许写行内注释（`MODEL=deepseek-chat # 说明文字`），
-`_strip_inline_comment()` 会把 `#` 之后的内容剥掉，但会保留 URL 里的 `#`。
+改 Python 后需 `docker compose restart`（未开 reload）。配置项允许行内注释，
+`_strip_inline_comment()` 会剥掉 `#` 后说明，但保留 URL 里的 `#`。
+
+### 4.5 实时搜索热度脚本（5118）
+
+`scripts/fetch_keyword_heat.py` 可拉取关键词搜索指数/日检索量，输出
+`trending_keyword_evidence` 与 `.paste.txt`，粘贴进首页热搜框即可进模块 6。
+
+```bash
+# 精确查热度（需 AGENT_5118_API_KEY，异步轮询）
+python3 scripts/fetch_keyword_heat.py lookup \
+  --keywords 香港伴手礼,珍妮曲奇,蝴蝶酥 \
+  --out examples/hongkong_souvenir_heat_live.json
+
+# 种子扩长尾 + 指数（同步）
+python3 scripts/fetch_keyword_heat.py expand --seed 香港伴手礼 --limit 30 \
+  --out examples/hongkong_souvenir_heat_expand.json
+
+# 无 Key：公开下拉代理（非真实搜索量，条目带 is_proxy）
+python3 scripts/fetch_keyword_heat.py proxy --seed 香港伴手礼 --limit 24
+```
+
+边界：5118 是搜索引擎 SEO 流量词热度，**不等于**小红书官方热搜；导入后证据等级为
+`B_5118_live` / `C_proxy_suggest`，不得写成平台实时热搜榜。
 
 ---
 
@@ -620,14 +654,17 @@ M1 赛道与竞品 → M2 人群与内容 → M6 关键词策略 → M3 达人�
 
 ### 7.3 实时数据源：合规同构接口（当前为模拟源）
 
-**先说边界。** 当前挂的是**模拟数据源**，不是真实热搜或真实竞品动态：
+**先说边界。** `/feeds/*` 当前挂的是**模拟数据源**，不是真实热搜或真实竞品动态：
 
 - 每一条 feed 数据都强制带 `is_mock=true`、`evidence_grade="M"`，
   `source_name` 带「模拟实时数据源」前缀；
 - `M` 不属于 A–E 任何真实证据等级，因此**永远不会抬高 `data_confidence`**；
 - 合并时同名热搜词、同名竞品**一律不覆盖**已有的真实证据；
-- **不得**用它做真实预算决策、达人下单或对外汇报；没有真实合规趋势源时，
-  模块6 的 `data_source_status` 仍应是「待接入数据源」。
+- **不得**用它做真实预算决策、达人下单或对外汇报；
+- 若请求里**已有**人工粘贴 / `fetch_keyword_heat.py` 导入的热搜词，模块 6 按这些证据评分，
+  **不会**仅因未开 feed 就整段标「待接入」；仅当既无证据又无合规源时才标「待接入数据源」。
+
+离线真实搜索热度见 **4.5**（5118 脚本）；接入 `FeedAdapter` 自动合流仍是后续项。
 
 这样设计的意义是接口先行：`FeedAdapter` 协议只有一个 `pull` 方法，
 将来接官方开放能力或品牌授权 API 时只换 adapter，下面这些用法一行都不用改。

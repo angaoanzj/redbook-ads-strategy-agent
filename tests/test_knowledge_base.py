@@ -115,6 +115,50 @@ class KnowledgeBaseTests(unittest.TestCase):
             self.assertEqual(monthly[0]["month"], "2026-01")
             self.assertEqual(monthly[0]["cpc"], "1.00")
 
+    def test_paid_metrics_30day_window_keeps_ctr_when_current_month_missing(self):
+        """近30天若严格只取当月，7月无导出会让 CTR 空白；应回看/回退有数月。"""
+        from datetime import datetime, timezone
+
+        with tempfile.TemporaryDirectory() as directory:
+            knowledge = KnowledgeBase(Path(directory) / "knowledge.db")
+            with sqlite3.connect(knowledge.path) as connection:
+                connection.execute(
+                    "CREATE TABLE paid_metrics "
+                    "(brand_name TEXT, year INTEGER, month INTEGER, data_json TEXT, "
+                    "source_file TEXT, collected_at TEXT)"
+                )
+                connection.execute(
+                    "INSERT INTO paid_metrics VALUES (?,?,?,?,?,?)",
+                    (
+                        "曲奇四重奏",
+                        2026,
+                        5,
+                        json.dumps(
+                            {
+                                "消费": "351596",
+                                "曝光量": "7418361",
+                                "点击量": "1439061",
+                                "点击率": "0.193986",
+                                "平均点击成本": "0.244",
+                                "平均千次展现费用": "47.4",
+                                "总互动量": "60600",
+                            },
+                            ensure_ascii=False,
+                        ),
+                        "数据需求.xlsx",
+                        "2026-07-24",
+                    ),
+                )
+            evidence = knowledge.metric_evidence_for_campaign(
+                "曲奇四重奏",
+                analysis_days=30,
+                as_of=datetime(2026, 7, 26, tzinfo=timezone.utc),
+            )
+            by_name = {item.metric_name: item for item in evidence}
+            self.assertIn("ctr", by_name)
+            self.assertAlmostEqual(by_name["ctr"].value, 0.193986, places=5)
+            self.assertIn("期间=2026-05", by_name["ctr"].notes)
+
     def test_imports_and_reads_official_rules(self):
         with tempfile.TemporaryDirectory() as directory:
             knowledge = KnowledgeBase(Path(directory) / "knowledge.db")

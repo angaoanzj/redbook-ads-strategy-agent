@@ -7,7 +7,7 @@
   注入后续模块的 user prompt（base.run_module_agent 的 upstream_context 参数）；
 - 模块6 成功后额外注入完整共享词表（build_shared_keyword_handoff），供模块3 复用，
   避免两套 build_keyword_tiers 结果冲突；
-- 硬前序检查（docs/no-code-agent/03_跨模块依赖与冲突处理.md 第 1 节）：前序模块
+- 硬前序检查：前序模块
   failed / blocked 时，本模块不执行并记 blocked，而不是继续推断；前序
   completed_with_gaps 时照常执行，但在 upstream_context 里附一行缺口提示。
 

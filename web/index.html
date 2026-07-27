@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/style.css?v=20260726-ui33">
+  <link rel="stylesheet" href="/assets/style.css?v=20260726-ui37">
 </head>
 <body>
   <header>
@@ -114,8 +114,8 @@
           <button id="refreshKnowledge" type="button" class="link">刷新状态</button>
         </div>
         <div class="data-switch">
-          <label><input id="useEvidence" type="checkbox" checked> 使用历史基准与本地知识库（推荐）</label>
-          <p class="switch-help">默认载入《数据需求.xlsx》2026年1—5月历史基准，并自动检索本地品类知识库；缺少任一来源时会显示证据缺口，不会自动用 Mock 替代。</p>
+          <label><input id="useEvidence" type="checkbox" checked> 使用《数据需求.xlsx》历史基准（推荐）</label>
+          <p class="switch-help">勾选后载入 2026 年 1—5 月投流/内容历史基准。本地知识库（品类笔记与投流月度 → 加权 CPC/CPM/CTR）默认始终检索；缺来源时显示证据缺口，不会自动用 Mock 替代。</p>
           <label><input id="useModel" type="checkbox"> 使用大模型润色最终报告</label>
           <label><input id="useAgentModules" type="checkbox"> 启用六模块 LLM Agent（DeepSeek 人话解读写入对标看板）</label>
           <label class="mock-switch"><input id="allowMock" type="checkbox"> 启用多子 Agent 模拟缺失数据</label>
@@ -154,6 +154,6 @@
   </main>
 
   <footer><span>RED PILOT · Evidence First</span><span>不伪造实时数据 · 人工最终审批</span></footer>
-  <script src="/assets/app.js?v=20260726-ui36"></script>
+  <script src="/assets/app.js?v=20260726-ui37"></script>
 </body>
 </html>

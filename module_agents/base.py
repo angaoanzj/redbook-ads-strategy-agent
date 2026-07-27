@@ -13,7 +13,7 @@
      待投手/待确认/演示补全」标记 → completed_with_gaps 并列出 unresolved_gaps，
      否则 completed（blocked 由编排层按硬前序判定，见 module_agents.orchestrator）；
      规则本体在 evidence_policy.derive_module_status，对齐
-     docs/no-code-agent/02_模块状态输出契约.md；
+     模块状态契约（ready / blocked / completed_with_gaps）；
   f. 返回统一结构的 dict。
 
 本文件只依赖 agent_core / tools / evidence_policy / pydantic，绝不 import engine。

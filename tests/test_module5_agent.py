@@ -171,7 +171,7 @@ class Module5GroundingFailureTest(unittest.TestCase):
 
 
 class Module5ModuleStatusTest(unittest.TestCase):
-    """module_state 判定三态（docs/no-code-agent/02_模块状态输出契约.md）。"""
+    """module_state 判定三态（ready / blocked / completed_with_gaps）。"""
 
     def _run(self, output: dict) -> dict:
         transport = _fake_model([

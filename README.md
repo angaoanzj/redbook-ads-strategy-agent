@@ -3,17 +3,17 @@
 独立可运行的本地原型（仓库路径：`/Users/llan/Documents/xiaohongshu-agent`）。  
 把品牌输入、合规证据与预算约束编排为 **6 个策略模块 + 附加工具**，输出结构化 JSON、可执行 Markdown 与网页看板。
 
-## 作业交付物（五份）
+## 作业交付物
 
 | # | 交付项 | 入口 |
 | --- | --- | --- |
-| 1 | 可运行的 Agent 原型 | 本 README「启动」+ `web/` 网页输入参数生成 |
+| 1 | 可运行的 Agent 原型 | 本 README「启动」+ `web/` |
 | 2 | 使用说明书 | [docs/USER_GUIDE.md](docs/USER_GUIDE.md) |
 | 3 | 测试报告（曲奇四重奏） | [docs/TEST_REPORT.md](docs/TEST_REPORT.md) |
-| 4 | 技术架构图 | [docs/ARCHITECTURE_OVERVIEW.md](docs/ARCHITECTURE_OVERVIEW.md) |
-| 5 | 后续优化方向 | [docs/OPTIMIZATION_ROADMAP.md](docs/OPTIMIZATION_ROADMAP.md) |
+| 4 | 技术架构图 | [docs/TECHNICAL_ARCHITECTURE.md](docs/TECHNICAL_ARCHITECTURE.md) |
+| 5 | 后续优化方向（3–5 项） | [docs/OPTIMIZATION_ROADMAP.md](docs/OPTIMIZATION_ROADMAP.md) |
 
-完整索引：[docs/DELIVERABLES.md](docs/DELIVERABLES.md)
+文档索引：[docs/README.md](docs/README.md)（标明主交付 vs 支撑材料）
 
 ## 核心原则
 
@@ -38,9 +38,7 @@
 - 缺少证据时明确标记 `待接入数据源`，不会生成虚假达人名单或伪实时数字。
 - 数据可信度不会被 Mock 补足抬高；最终投放上线、预算放量与达人下单均由人工拍板。
 
-详见 [架构总览](docs/ARCHITECTURE_OVERVIEW.md)、[技术架构详述](docs/TECHNICAL_ARCHITECTURE.md)、
-[测试报告](docs/TEST_REPORT.md)、[使用说明书](docs/USER_GUIDE.md)、[优化方向](docs/OPTIMIZATION_ROADMAP.md)。  
-需求逐条覆盖对照见 [REQUIREMENTS_COVERAGE.md](docs/REQUIREMENTS_COVERAGE.md)。
+详见上述四份文档：说明书 · 测试报告 · 技术架构 · 后续优化方向。
 
 ## 启动（本目录独立运行）
 
@@ -94,14 +92,19 @@ curl --noproxy '*' http://127.0.0.1:8010/health
 
 ## Docker 运行
 
-无需在本机安装 Python 依赖，用 Docker 即可构建并运行。以下命令在本项目目录
-（`xiaohongshu-agent/`）执行。
+Docker 配置与运行**只认本仓库路径**，不要用课程仓
+`xiaozhe-E-commerce/xiaohongshu-strategy-agent` 起服务。
 
 ```bash
-# 1. 构建镜像
+cd /Users/llan/Documents/xiaohongshu-agent
+
+# 首次可复制环境变量模板后按需填写 Key
+cp -n .env.example .env
+
+# 1. 构建本仓镜像（image: xiaohongshu-agent:latest，与课程仓镜像隔离）
 docker compose build
 
-# 2. 跑全部单元测试（29 个文件 / 332 个方法）
+# 2. 跑全部单元测试
 docker compose run --rm agent python -m unittest discover tests
 
 # 3. 跑离线 Agent Loop 演示（不联网、不调用大模型）
@@ -112,19 +115,20 @@ docker compose run --rm agent python bench/run_bench.py \
   --replay bench/fixtures/regression_outputs.json --no-write
 
 # 4. 起 API 服务（后台常驻），访问 http://127.0.0.1:8010/
-docker compose up -d agent
+docker compose up -d
 ```
 
 说明：
 
-- 服务监听容器内 8010 端口并映射到宿主机 `8010:8010`，启动方式为
-  `uvicorn main:app --host 0.0.0.0 --port 8010`（不启用 reload）。
-- 模型 Key 通过环境变量传入。可在运行前 `export AGENT_OPENAI_API_KEY=...`，
-  compose 会自动透传；同理可覆盖 `AGENT_OPENAI_BASE_URL`
-  （默认 `https://api.siliconflow.cn/v1`）和 `AGENT_OPENAI_MODEL`
-  （默认 `Qwen/Qwen3-8B`）。未配置 Key 时 Agent 仍会生成确定性报告并标记降级。
-- SQLite 数据通过 `./data:/app/data` 卷持久化，容器重建后
-  `xhs_knowledge.db`、`agent_state.db` 等数据仍保留在宿主机 `data/` 目录。
+- Compose 项目名：`xiaohongshu-agent`；容器名：`xiaohongshu-agent`；
+  镜像：`xiaohongshu-agent:latest`。
+- 代码与数据均挂载自本目录（`.:/app`、`./data`、`./web`），改 Python / 前端后
+  `docker compose restart` 即可生效，无需依赖旧课程仓文件。
+- 服务映射 `8010:8010`，启动命令为
+  `uvicorn main:app --host 0.0.0.0 --port 8010`。
+- 模型 Key 写在本仓 `.env`（见 `.env.example`）。未配置 Key 时仍生成确定性报告。
+- 若 8010 被旧容器占用，先停掉：
+  `docker stop xiaohongshu-strategy-agent-agent-1`
 
 ## 调用
 

@@ -19,7 +19,7 @@ class MetricEvidence(BaseModel):
     evidence_grade: str = "C_user_provided"
     is_mock: bool = False
     mock_seed: str | None = None
-    # 指标单一事实源规范（docs/no-code-agent/04_指标单一事实源规范.md）：
+    # 指标单一事实源（SSOT）字段约定：
     # 统计期 / 计算口径 / 数值类型。全部可选且默认 None，旧 example 与存档不受影响；
     # 缺失时 evidence_policy 只能判定为「口径不可比」，不会伪造精度。
     period: str | None = Field(

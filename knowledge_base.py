@@ -764,7 +764,11 @@ class KnowledgeBase:
         raw monthly values, so this method preserves the source and period in notes.
         """
         end = as_of or datetime.now(timezone.utc)
-        start_ordinal = end.year * 12 + end.month - max(1, (analysis_days + 29) // 30) + 1
+        # 投流表是「月」粒度：近 30 天至少回看 3 个自然月，避免当前月尚无导出行时
+        # CPC/CPM/CTR 整卡变空（例如今天 7 月、表只到 5 月）。
+        months_back = max(3, (max(1, analysis_days) + 29) // 30)
+        start_ordinal = end.year * 12 + end.month - months_back + 1
+        end_ordinal = end.year * 12 + end.month
         with self._connect() as connection:
             try:
                 rows = connection.execute(
@@ -782,10 +786,13 @@ class KnowledgeBase:
         selected = []
         for row in rows:
             period_ordinal = int(row["year"]) * 12 + int(row["month"])
-            if period_ordinal >= start_ordinal and period_ordinal <= end.year * 12 + end.month:
+            if start_ordinal <= period_ordinal <= end_ordinal:
                 selected.append(row)
-        if not selected:
-            selected = rows[:1]
+        window_fallback = False
+        if not selected and rows:
+            # 分析窗内无月度行时，回退最近最多 3 个有数月份，避免加权 CTR 整卡空白
+            selected = list(rows[:3])
+            window_fallback = True
 
         definitions = {
             "cpc": ("平均点击成本", "CNY/click"),
@@ -825,13 +832,22 @@ class KnowledgeBase:
             )
             periods = ", ".join(f"{item[1]['year']}-{int(item[1]['month']):02d}" for item in values)
             source_files = sorted({item[1]["source_file"] for item in values if item[1]["source_file"]})
+            coverage = (
+                f"分析窗近{analysis_days}天折合{months_back}个自然月无导出行，已回退最近有数月"
+                if window_fallback
+                else f"分析窗近{analysis_days}天折合{months_back}个自然月"
+            )
             output.append(MetricEvidence(
                 source_name=source_files[0] if source_files else "paid_metrics",
                 collected_at=max(item[1]["collected_at"] for item in values),
                 metric_name=metric_name,
                 value=value,
                 unit=unit,
-                notes=f"真实月度投放数据；期间={periods}；按曝光/点击/互动加权聚合（搜索转化率除外）；样本月数={len(values)}；来源={','.join(source_files)}",
+                notes=(
+                    f"真实月度投放数据；{coverage}；期间={periods}；"
+                    f"按曝光/点击/互动加权聚合（搜索转化率除外）；"
+                    f"样本月数={len(values)}；来源={','.join(source_files)}"
+                ),
                 evidence_grade="C_user_provided",
                 is_mock=False,
             ))

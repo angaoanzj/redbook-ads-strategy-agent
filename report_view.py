@@ -390,7 +390,7 @@ def build_spotlight_section(
                     "unit": cpc.get("unit"),
                     "is_mock": cpc.get("is_mock"),
                     "scope": "window",
-                    "scope_label": f"近{req.analysis_days}天加权",
+                    "scope_label": f"近{req.analysis_days}天折合月加权",
                 },
                 {
                     "label": "CPM",
@@ -398,7 +398,7 @@ def build_spotlight_section(
                     "unit": cpm.get("unit"),
                     "is_mock": cpm.get("is_mock"),
                     "scope": "window",
-                    "scope_label": f"近{req.analysis_days}天加权",
+                    "scope_label": f"近{req.analysis_days}天折合月加权",
                 },
                 {
                     "label": "CTR",
@@ -410,7 +410,7 @@ def build_spotlight_section(
                     "unit": "%" if isinstance(ctr.get("value"), (int, float)) else (ctr.get("unit") or ""),
                     "is_mock": ctr.get("is_mock"),
                     "scope": "window",
-                    "scope_label": f"近{req.analysis_days}天加权",
+                    "scope_label": f"近{req.analysis_days}天折合月加权",
                 },
                 {
                     "label": "单次互动成本",
@@ -419,7 +419,7 @@ def build_spotlight_section(
                     "is_mock": interaction.get("is_mock"),
                     "hint": "≠CPA",
                     "scope": "window",
-                    "scope_label": f"近{req.analysis_days}天加权",
+                    "scope_label": f"近{req.analysis_days}天折合月加权",
                 },
                 {
                     "label": "转化成本",

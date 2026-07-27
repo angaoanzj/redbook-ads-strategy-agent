@@ -492,7 +492,8 @@ form.addEventListener("submit", async (event) => {
     }
     const useModel = $("#useModel").checked;
     // 历史基准与本地知识库是同一套默认证据入口；保留后端 use_knowledge 参数兼容 API。
-    const useKnowledge = useEvidence;
+    // 聚光卡片近 N 天加权 CTR 整卡变空。历史 xlsx 基准仍由 useEvidence 控制。
+    const useKnowledge = true;
     const useAgentModules = $("#useAgentModules").checked;
     const allowMock = $("#allowMock").checked;
     if (allowMock) ensureMockSeed();

@@ -1,0 +1,289 @@
+{
+  "mode": "proxy",
+  "seed": "香港伴手礼",
+  "requested_keywords": null,
+  "fetched_at": "2026-07-26T14:18:39-0500",
+  "count": 12,
+  "disclaimer": "热度为搜索引擎侧指数/检索量（或下拉代理分），不等于小红书官方热搜；导入 Agent 模块6 时勿表述为平台实时热搜榜。",
+  "trending_keyword_evidence": [
+    {
+      "keyword": "香港伴手礼",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "heat_score": 95.0,
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼必买清单",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "heat_score": 90.8,
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼排名",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "heat_score": 86.7,
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼排行榜前十名",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "heat_score": 82.5,
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼哪里买合适",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "heat_score": 78.3,
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼买什么",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "heat_score": 74.2,
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼纪念品",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "heat_score": 70.0,
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼哪里买便宜",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "heat_score": 65.8,
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼著名品牌",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "heat_score": 61.7,
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼送领导",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "heat_score": 57.5,
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼必买",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "heat_score": 53.3,
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港必买手信",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "heat_score": 49.2,
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "evidence_grade": "C_proxy_suggest"
+    }
+  ],
+  "rows_with_raw_metrics": [
+    {
+      "keyword": "香港伴手礼",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "collected_at_precise": "2026-07-26T14:18:39-0500",
+      "heat_score": 95.0,
+      "raw_metrics": {
+        "suggest_rank": 1
+      },
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "is_proxy": true,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼必买清单",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "collected_at_precise": "2026-07-26T14:18:39-0500",
+      "heat_score": 90.8,
+      "raw_metrics": {
+        "suggest_rank": 2
+      },
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "is_proxy": true,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼排名",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "collected_at_precise": "2026-07-26T14:18:39-0500",
+      "heat_score": 86.7,
+      "raw_metrics": {
+        "suggest_rank": 3
+      },
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "is_proxy": true,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼排行榜前十名",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "collected_at_precise": "2026-07-26T14:18:39-0500",
+      "heat_score": 82.5,
+      "raw_metrics": {
+        "suggest_rank": 4
+      },
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "is_proxy": true,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼哪里买合适",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "collected_at_precise": "2026-07-26T14:18:39-0500",
+      "heat_score": 78.3,
+      "raw_metrics": {
+        "suggest_rank": 5
+      },
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "is_proxy": true,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼买什么",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "collected_at_precise": "2026-07-26T14:18:39-0500",
+      "heat_score": 74.2,
+      "raw_metrics": {
+        "suggest_rank": 6
+      },
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "is_proxy": true,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼纪念品",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "collected_at_precise": "2026-07-26T14:18:39-0500",
+      "heat_score": 70.0,
+      "raw_metrics": {
+        "suggest_rank": 7
+      },
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "is_proxy": true,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼哪里买便宜",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "collected_at_precise": "2026-07-26T14:18:39-0500",
+      "heat_score": 65.8,
+      "raw_metrics": {
+        "suggest_rank": 8
+      },
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "is_proxy": true,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼著名品牌",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "collected_at_precise": "2026-07-26T14:18:39-0500",
+      "heat_score": 61.7,
+      "raw_metrics": {
+        "suggest_rank": 9
+      },
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "is_proxy": true,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼送领导",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "collected_at_precise": "2026-07-26T14:18:39-0500",
+      "heat_score": 57.5,
+      "raw_metrics": {
+        "suggest_rank": 10
+      },
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "is_proxy": true,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港伴手礼必买",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "collected_at_precise": "2026-07-26T14:18:39-0500",
+      "heat_score": 53.3,
+      "raw_metrics": {
+        "suggest_rank": 11
+      },
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "is_proxy": true,
+      "evidence_grade": "C_proxy_suggest"
+    },
+    {
+      "keyword": "香港必买手信",
+      "source_name": "百度下拉代理（种子=香港伴手礼）",
+      "collected_at": "2026-07-26",
+      "collected_at_precise": "2026-07-26T14:18:39-0500",
+      "heat_score": 49.2,
+      "raw_metrics": {
+        "suggest_rank": 12
+      },
+      "notes": "PROXY：非真实搜索热度，仅为下拉排序相对分；请配置 AGENT_5118_API_KEY 后用 lookup/expand 拉取正式指数",
+      "is_mock": false,
+      "is_proxy": true,
+      "evidence_grade": "C_proxy_suggest"
+    }
+  ],
+  "paste_for_ui": "香港伴手礼|95\n香港伴手礼必买清单|90\n香港伴手礼排名|86\n香港伴手礼排行榜前十名|82\n香港伴手礼哪里买合适|78\n香港伴手礼买什么|74\n香港伴手礼纪念品|70\n香港伴手礼哪里买便宜|65\n香港伴手礼著名品牌|61\n香港伴手礼送领导|57\n香港伴手礼必买|53\n香港必买手信|49"
+}
